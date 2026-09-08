@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trainee Portal - RORIRI ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="login-page" class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <h4>RORIRI <span>NexGen IT</span></h4>
+      <p class="login-sub">Trainee Portal</p>
+    </div>
+    <form onsubmit="return portalLogin(event)">
+      <fieldset>
+        <label>Trainee Name</label>
+        <input type="text" id="login-name" class="form-control" placeholder="e.g. Deepika" value="Deepika R" required>
+      </fieldset>
+      <fieldset>
+        <label>Password</label>
+        <input type="password" id="login-pass" class="form-control" placeholder="Any password" value="pass" required>
+      </fieldset>
+      <button type="submit" class="btn btn-primary btn-block">Login to My Dashboard</button>
+    </form>
+    <p class="login-hint">Demo: any name &amp; password works</p>
+    <div class="portal-nav" style="text-align:center;margin-top:12px;">
+      <a href="index.html">Admin</a> &bull;
+      <a href="employee.html">Employee</a> &bull;
+      <a href="client.html">Client</a> &bull;
+      <a href="intern.html">Intern</a>
+    </div>
+  </div>
+</div>
+
+<div id="portal-app" class="portal-page">
+  <header class="portal-top">
+    <div>
+      <h4 class="logo">RORIRI <span class="color-primary">NexGen IT Academy</span></h4>
+      <small class="color-muted" id="portal-date"></small>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="portal-user" id="portal-user"></div>
+      <button class="btn btn-outline-danger btn-sm" onclick="portalLogout()">Logout</button>
+    </div>
+  </header>
+  <main class="portal-body" id="portal-body"></main>
+</div>
+
+<script src="portal-common.js"></script>
+<script>
+window.PORTAL_TYPE = 'Trainee Portal';
+
+var ME_ID = 'T001';
+var me = PORTAL_DATA.trainees.find(function (t) { return t.id === ME_ID; });
+var myCourse = PORTAL_DATA.courses.find(function (c) { return c.name === me.course; });
+var myPayments = PORTAL_DATA.traineePayments.filter(function (p) { return p.traineeId === ME_ID; });
+var myProjects = PORTAL_DATA.miniProjects.filter(function (mp) { return mp.traineeId === ME_ID; });
+var paid = myPayments.filter(function (p) { return p.status === 'Paid'; }).reduce(function (a, p) { return a + p.amount; }, 0);
+var due = myCourse.fee - paid;
+
+function portalDashboard() {
+  var hour = new Date().getHours();
+  var greet = hour < 12 ? 'Good morning' : (hour < 17 ? 'Good afternoon' : 'Good evening');
+
+  var html = '';
+  html += '<div class="portal-greet"><h3>' + greet + ', ' + me.name.split(' ')[0] + '!</h3><p class="color-muted">Track your course, mini projects and fees.</p></div>';
+
+  html += '<div class="portal-grid">';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Course</label><b>' + es(myCourse.name) + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Subjects</label><b>' + myCourse.subjects.length + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Fee Paid</label><b class="color-success">' + inr(paid) + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Balance Due</label><b class="color-danger">' + inr(due) + '</b></div></div></div>';
+  html += '</div>';
+
+  html += '<div class="portal-row" style="margin-top:1rem;">';
+
+  html += '<div class="card"><div class="card-body">';
+  html += '<div style="display:flex;align-items:center;gap:14px;">';
+  html += '<div class="av-sq" style="width:64px;height:64px;font-size:1.5rem;">' + avatar(me.name) + '</div>';
+  html += '<div><h5 style="margin:0;">' + es(me.name) + '</h5><span class="badge ' + (me.feeStatus === 'Paid' ? 'badge-success' : 'badge-warning') + '">Fees ' + es(me.feeStatus) + '</span></div>';
+  html += '</div><hr>';
+  html += '<div class="detail-row"><label>Course</label><span>' + es(myCourse.name) + '</span></div>';
+  html += '<div class="detail-row"><label>Duration</label><span>' + es(myCourse.duration) + '</span></div>';
+  html += '<div class="detail-row"><label>Email</label><span>' + es(me.email) + '</span></div>';
+  html += '<div class="detail-row"><label>Phone</label><span>' + es(me.phone) + '</span></div>';
+  html += '</div></div>';
+
+  html += '<div class="card"><div class="card-body">';
+  html += '<h5 style="margin-top:0;">Syllabus / Subjects</h5>';
+  myCourse.subjects.forEach(function (s) {
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--border-color);">';
+    html += '<span>' + es(s) + '</span><i class="bx bx-check-circle color-success"></i>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+
+  html += '</div>';
+
+  html += '<div class="portal-section"><h4><i class="bx bxs-folder-open"></i> My Mini Projects</h4>';
+  html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
+  html += '<thead><tr><th>Project</th><th>Course</th><th>Status</th></tr></thead><tbody>';
+  myProjects.forEach(function (mp) {
+    html += '<tr><td>' + es(mp.name) + '</td><td>' + es(mp.course) + '</td><td>' + clStatusBadge(mp.status) + '</td></tr>';
+  });
+  html += '</tbody></table></div></div></div>';
+
+  html += '<div class="portal-section"><h4><i class="bx bxs-wallet"></i> Fee Payments</h4>';
+  html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
+  html += '<thead><tr><th>Amount</th><th>Date</th><th>Status</th></tr></thead><tbody>';
+  myPayments.forEach(function (p) {
+    html += '<tr><td>' + inr(p.amount) + '</td><td>' + es(p.date) + '</td><td>' + clStatusBadge(p.status) + '</td></tr>';
+  });
+  html += '<tr><td colspan="2"><b>Remaining balance</b></td><td class="color-danger"><b>' + inr(due) + '</b></td></tr>';
+  html += '</tbody></table></div></div></div>';
+
+  document.getElementById('portal-body').innerHTML = html;
+}
+
+startPage();
+</script>
+</body>
+</html>

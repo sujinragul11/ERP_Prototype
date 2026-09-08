@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intern Portal - RORIRI ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="login-page" class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <h4>RORIRI <span>Software</span></h4>
+      <p class="login-sub">Internship Portal</p>
+    </div>
+    <form onsubmit="return portalLogin(event)">
+      <fieldset>
+        <label>Your Name</label>
+        <input type="text" id="login-name" class="form-control" placeholder="e.g. Sneha" value="Sneha L" required>
+      </fieldset>
+      <fieldset>
+        <label>Password</label>
+        <input type="password" id="login-pass" class="form-control" placeholder="Any password" value="pass" required>
+      </fieldset>
+      <button type="submit" class="btn btn-primary btn-block">Login to My Dashboard</button>
+    </form>
+    <p class="login-hint">Demo: any name &amp; password works</p>
+    <div class="portal-nav" style="text-align:center;margin-top:12px;">
+      <a href="index.html">Admin</a> &bull;
+      <a href="employee.html">Employee</a> &bull;
+      <a href="client.html">Client</a> &bull;
+      <a href="trainee.html">Trainee</a>
+    </div>
+  </div>
+</div>
+
+<div id="portal-app" class="portal-page">
+  <header class="portal-top">
+    <div>
+      <h4 class="logo">RORIRI <span class="color-primary">Interns</span></h4>
+      <small class="color-muted" id="portal-date"></small>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="portal-user" id="portal-user"></div>
+      <button class="btn btn-outline-danger btn-sm" onclick="portalLogout()">Logout</button>
+    </div>
+  </header>
+  <main class="portal-body" id="portal-body"></main>
+</div>
+
+<script src="portal-common.js"></script>
+<script>
+window.PORTAL_TYPE = 'Intern Portal';
+
+var MY_NAME = 'Sneha L';
+var openPosts = PORTAL_DATA.internPosts.filter(function (p) { return p.status === 'Open'; });
+var myApps = PORTAL_DATA.internApplications.filter(function (a) { return a.intern === MY_NAME; });
+var myTasks = PORTAL_DATA.internTasks.filter(function (t) { return t.intern === MY_NAME; });
+
+function portalDashboard() {
+  var hour = new Date().getHours();
+  var greet = hour < 12 ? 'Good morning' : (hour < 17 ? 'Good afternoon' : 'Good evening');
+  var interviews = myApps.filter(function (a) { return a.status === 'Interview'; }).length;
+
+  var html = '';
+  html += '<div class="portal-greet"><h3>' + greet + ', ' + MY_NAME.split(' ')[0] + '!</h3><p class="color-muted">Explore internships and track your applications.</p></div>';
+
+  html += '<div class="portal-grid">';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Open Positions</label><b>' + openPosts.length + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>My Applications</label><b>' + myApps.length + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Interviews</label><b>' + interviews + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Assigned Tasks</label><b>' + myTasks.length + '</b></div></div></div>';
+  html += '</div>';
+
+  html += '<div class="portal-section"><h4><i class="bx bxs-briefcase"></i> Open Internship Positions</h4>';
+  html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
+  html += '<thead><tr><th>Position</th><th>Domain</th><th>Duration</th><th>Stipend</th><th>Openings</th><th>Status</th><th></th></tr></thead><tbody>';
+  openPosts.forEach(function (p) {
+    var applied = myApps.some(function (a) { return a.post === p.position; });
+    html += '<tr><td><b>' + es(p.position) + '</b></td><td>' + es(p.domain) + '</td><td>' + es(p.duration) + '</td><td>' + inr(p.stipend) + '</td><td>' + p.openings + '</td><td>' + clStatusBadge(p.status) + '</td>';
+    html += '<td><button class="btn ' + (applied ? 'btn-outline-primary' : 'btn-primary') + ' btn-sm" onclick="applyJob(\'' + p.id + '\')">' + (applied ? 'Applied' : 'Apply') + '</button></td></tr>';
+  });
+  html += '</tbody></table></div></div></div>';
+
+  html += '<div class="portal-section"><h4><i class="bx bxs-file-blank"></i> My Applications</h4>';
+  html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
+  html += '<thead><tr><th>Position</th><th>Applied On</th><th>Status</th></tr></thead><tbody>';
+  if (!myApps.length) { html += '<tr><td colspan="3" class="color-muted">You have not applied yet.</td></tr>'; }
+  myApps.forEach(function (a) {
+    html += '<tr><td>' + es(a.post) + '</td><td>' + es(a.applied) + '</td><td>' + clStatusBadge(a.status) + '</td></tr>';
+  });
+  html += '</tbody></table></div></div></div>';
+
+  html += '<div class="portal-row">';
+
+  html += '<div class="card"><div class="card-body">';
+  html += '<h5 style="margin-top:0;">My Intern Tasks</h5>';
+  if (!myTasks.length) { html += '<p class="color-muted">No tasks assigned yet.</p>'; }
+  myTasks.forEach(function (t) {
+    var mentor = PORTAL_DATA.employees.find(function (e) { return e.name === t.mentor; }) || { name: t.mentor };
+    html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">';
+    html += '<div class="av-sq sm">' + avatar(mentor.name) + '</div>';
+    html += '<div style="flex:1;"><b>' + es(t.task) + '</b><br><small class="color-muted">Mentor: ' + es(t.mentor) + '</small></div>';
+    html += clStatusBadge(t.status);
+    html += '</div>';
+  });
+  html += '</div></div>';
+
+  html += '<div class="card"><div class="card-body">';
+  html += '<h5 style="margin-top:0;">Internship Program</h5>';
+  html += '<div class="detail-row"><label>Duration</label><span>3 months</span></div>';
+  html += '<div class="detail-row"><label>Stipend</label><span>' + inr(4000) + ' - ' + inr(5000) + ' / month</span></div>';
+  html += '<div class="detail-row"><label>Certificate</label><span>Provided on completion</span></div>';
+  html += '<div class="detail-row"><label>Pre-placement Offer</label><span>Possible based on performance</span></div>';
+  html += '</div></div>';
+
+  html += '</div>';
+
+  document.getElementById('portal-body').innerHTML = html;
+}
+
+function applyJob(postId) {
+  var p = PORTAL_DATA.internPosts.find(function (x) { return x.id === postId; });
+  if (!p) { return; }
+  var already = myApps.some(function (a) { return a.post === p.position && a.intern === MY_NAME; });
+  if (already) { toast('You already applied for ' + p.position, 'danger'); return; }
+  PORTAL_DATA.internApplications.push({ id:'IA' + Date.now(), intern:MY_NAME, post:p.position, applied:new Date().toISOString().slice(0,10), status:'Applied' });
+  myApps = PORTAL_DATA.internApplications.filter(function (a) { return a.intern === MY_NAME; });
+  portalDashboard();
+  toast('Application submitted for ' + p.position + '!', 'success');
+}
+
+startPage();
+</script>
+</body>
+</html>

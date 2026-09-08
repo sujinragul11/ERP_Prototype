@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal - RORIRI ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="login-page" class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <h4>RORIRI <span>Software</span></h4>
+      <p class="login-sub">Client Portal</p>
+    </div>
+    <form onsubmit="return portalLogin(event)">
+      <fieldset>
+        <label>Company / Contact Name</label>
+        <input type="text" id="login-name" class="form-control" placeholder="e.g. Jeno University" value="Jeno University" required>
+      </fieldset>
+      <fieldset>
+        <label>Password</label>
+        <input type="password" id="login-pass" class="form-control" placeholder="Any password" value="pass" required>
+      </fieldset>
+      <button type="submit" class="btn btn-primary btn-block">Login to My Dashboard</button>
+    </form>
+    <p class="login-hint">Demo: any name &amp; password works</p>
+    <div class="portal-nav" style="text-align:center;margin-top:12px;">
+      <a href="index.html">Admin</a> &bull;
+      <a href="employee.html">Employee</a> &bull;
+      <a href="intern.html">Intern</a> &bull;
+      <a href="trainee.html">Trainee</a>
+    </div>
+  </div>
+</div>
+
+<div id="portal-app" class="portal-page">
+  <header class="portal-top">
+    <div>
+      <h4 class="logo">RORIRI <span class="color-primary">Clients</span></h4>
+      <small class="color-muted" id="portal-date"></small>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="portal-user" id="portal-user"></div>
+      <button class="btn btn-outline-danger btn-sm" onclick="portalLogout()">Logout</button>
+    </div>
+  </header>
+  <main class="portal-body" id="portal-body"></main>
+</div>
+
+<script src="portal-common.js"></script>
+<script>
+window.PORTAL_TYPE = 'Client Portal';
+
+var activeClientId = 'C001';
+
+function clientOf(id) { return PORTAL_DATA.clients.find(function (c) { return c.id === id; }); }
+function projectsOfClient(id) { return PORTAL_DATA.projects.filter(function (p) { return p.clientId === id; }); }
+function empsOfClient(id) {
+  return (PORTAL_DATA.clientEmps[id] || []).map(function (eid) {
+    return PORTAL_DATA.employees.find(function (e) { return e.id === eid; });
+  }).filter(Boolean);
+}
+
+function switchClient(id) { activeClientId = id; portalDashboard(); }
+
+function portalDashboard() {
+  var c = clientOf(activeClientId);
+  if (!c) { return; }
+  var projects = projectsOfClient(c.id);
+  var totalAmt = projects.reduce(function (a, p) { return a + p.amount; }, 0);
+  var totalBal = projects.reduce(function (a, p) { return a + p.balance; }, 0);
+  var paid = totalAmt - totalBal;
+  var emps = empsOfClient(c.id);
+
+  var html = '';
+  html += '<div class="portal-greet">';
+  html += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">';
+  html += '<div><h3>' + es(c.company) + '</h3><p class="color-muted">Welcome to your client dashboard, ' + es(c.person) + '.</p></div>';
+  html += '<div><label class="color-muted" style="display:block;">Viewing company</label><select class="form-control" onchange="switchClient(this.value)">';
+  PORTAL_DATA.clients.forEach(function (x) {
+    html += '<option value="' + x.id + '"' + (x.id === c.id ? ' selected' : '') + '>' + es(x.company) + '</option>';
+  });
+  html += '</select></div>';
+  html += '</div></div>';
+
+  html += '<div class="portal-grid">';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Active Projects</label><b>' + projects.length + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Amount Paid</label><b class="color-success">' + inr(paid) + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Balance Due</label><b class="color-danger">' + inr(totalBal) + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Assignees</label><b>' + emps.length + '</b></div></div></div>';
+  html += '</div>';
+
+  html += '<div class="portal-row" style="margin-top:1rem;">';
+
+  html += '<div class="card"><div class="card-body">';
+  html += '<div style="display:flex;align-items:center;gap:14px;">';
+  html += '<div class="av-sq" style="width:64px;height:64px;font-size:1.5rem;">' + avatar(c.company) + '</div>';
+  html += '<div><h5 style="margin:0;">' + es(c.company) + '</h5><span class="badge badge-success">' + es(c.status) + '</span></div>';
+  html += '</div><hr>';
+  html += '<div class="detail-row"><label>Contact Person</label><span>' + es(c.person) + '</span></div>';
+  html += '<div class="detail-row"><label>Email</label><span>' + es(c.email) + '</span></div>';
+  html += '<div class="detail-row"><label>Phone</label><span>' + es(c.phone) + '</span></div>';
+  html += '<div class="detail-row"><label>Location</label><span>' + es(c.location) + '</span></div>';
+  html += '</div></div>';
+
+  html += '<div class="card"><div class="card-body">';
+  html += '<h5 style="margin-top:0;">Assigned Team (' + emps.length + ')</h5>';
+  if (!emps.length) {
+    html += '<p class="color-muted">No employees assigned yet. Contact the admin to assign a team.</p>';
+  }
+  emps.forEach(function (e) {
+    var conv = PORTAL_DATA.convos[c.id] || [];
+    var mine = conv.slice().reverse().find(function (m) { return m.employeeId === e.id; });
+    var last = mine ? mine.text : 'No messages yet';
+    html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">';
+    html += '<div class="av-sq sm">' + avatar(e.name) + '</div>';
+    html += '<div style="flex:1;">';
+    html += '<b>' + es(e.name) + '</b> <small class="color-muted">' + es(e.role) + '</small><br>';
+    html += '<small class="color-muted">' + es(last) + '</small>';
+    html += '</div>';
+    html += '<button class="btn btn-info btn-sm" onclick="showChat(\'' + e.id + '\')">Chat</button>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+
+  html += '</div>';
+
+  html += '<div class="portal-section"><h4><i class="bx bxs-briefcase"></i> My Projects</h4>';
+  html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
+  html += '<thead><tr><th>Project</th><th>Tech</th><th>Status</th><th>Pay Status</th><th>Amount</th><th>Paid</th><th>Balance</th></tr></thead><tbody>';
+  projects.forEach(function (p) {
+    var paidAmt = p.amount - p.balance;
+    html += '<tr><td>' + es(p.name) + '</td><td>' + es(p.tech) + '</td><td>' + clStatusBadge(p.status) + '</td><td>' + clStatusBadge(p.payStatus) + '</td><td>' + inr(p.amount) + '</td><td class="color-success">' + inr(paidAmt) + '</td><td class="color-danger">' + inr(p.balance) + '</td></tr>';
+  });
+  html += '</tbody></table></div></div></div>';
+
+  html += '<div class="portal-section"><h4><i class="bx bxs-chat"></i> Messages with my team</h4>';
+  html += '<div class="card"><div class="card-body">';
+  html += '<div class="msg-thread" id="chat-thread"></div>';
+  html += '<div class="msg-input-row">';
+  html += '<input type="text" id="chat-input" class="form-control" placeholder="Send a message to your assigned team...">';
+  html += '<button class="btn btn-primary" onclick="sendMsg()">Send</button>';
+  html += '</div>';
+  html += '</div></div></div>';
+
+  document.getElementById('portal-body').innerHTML = html;
+  renderThread();
+}
+
+var activeEmp = null;
+
+function partnerFor(m) {
+  var emp = PORTAL_DATA.employees.find(function (e) { return e.id === m.employeeId; });
+  return emp ? emp.name : 'Team';
+}
+
+function showChat(empId) {
+  activeEmp = empId;
+  renderThread();
+  var box = document.getElementById('chat-thread');
+  if (box) { box.scrollIntoView({ behavior:'smooth', block:'center' }); }
+}
+
+function renderThread() {
+  var el = document.getElementById('chat-thread');
+  if (!el) { return; }
+  var c = clientOf(activeClientId);
+  if (!c) { return; }
+  var conv = PORTAL_DATA.convos[c.id] || [];
+  var filtered = conv;
+  if (activeEmp) { filtered = conv.filter(function (m) { return m.employeeId === activeEmp; }); }
+  var html = filtered.map(function (m) {
+    var mine = m.from === 'client';
+    return '<div class="msg ' + (mine ? 'from' : 'to') + '">' + es(m.text) + '<small>' + es(m.time) + ' &bull; ' + (mine ? 'from ' : 'from ') + es(partnerFor(m)) + '</small></div>';
+  }).join('');
+  el.innerHTML = html || '<p class="color-muted">' + (activeEmp ? 'No conversation with this member yet.' : 'No messages yet.') + '</p>';
+  el.scrollTop = el.scrollHeight;
+}
+
+function sendMsg() {
+  var inp = document.getElementById('chat-input');
+  var text = inp.value.trim();
+  if (!text) { return; }
+  var c = clientOf(activeClientId);
+  if (!PORTAL_DATA.convos[c.id]) { PORTAL_DATA.convos[c.id] = []; }
+  PORTAL_DATA.convos[c.id].push({ from:'client', employeeId:(activeEmp || (PORTAL_DATA.clientEmps[c.id] || [])[0] || 'E001'), text:text, time:new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}) });
+  inp.value = '';
+  renderThread();
+  toast('Message sent to your team', 'success');
+}
+
+startPage();
+</script>
+</body>
+</html>

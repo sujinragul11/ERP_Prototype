@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RORIRI ERP - Prototype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/lineicons@4.2.0/assets/lineicons/css/lineicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ==========================================
+     LOGIN PAGE
+     ========================================== -->
+<div id="login-page" class="login-page">
+    <div class="login-left">
+        <div class="illustration">
+            <i class="bx bx-buildings"></i>
+            <h2 style="margin-top:1rem;font-size:32px;font-weight:700;">RORIRI ERP</h2>
+            <p style="opacity:0.8;margin-top:0.5rem;font-size:16px;">Enterprise Resource Planning System</p>
+            <p style="opacity:0.6;margin-top:1rem;font-size:13px;max-width:400px;margin-left:auto;margin-right:auto;">
+                Manage your employees, clients, projects, academy, expenses, assets and more — all in one place.
+            </p>
+        </div>
+    </div>
+    <div class="login-right">
+        <div class="login-card">
+            <div class="logo">
+                <h2>RORIRI</h2>
+                <p>Software Solutions</p>
+            </div>
+            <h5>Login</h5>
+            <form onsubmit="doLogin(event)">
+                <div style="margin-bottom:1rem;">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="login-username" class="form-control" placeholder="Enter username" value="ragu">
+                </div>
+                <div style="margin-bottom:1.5rem;">
+                    <label class="form-label">Password</label>
+                    <div style="position:relative;">
+                        <input type="password" id="login-password" class="form-control" placeholder="Enter password" value="pass" style="padding-right:40px;">
+                        <a href="javascript:void(0)" class="password-toggle" onclick="togglePasswordVisibility()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#aaa;">
+                            <i class="bx bx-hide"></i>
+                        </a>
+                    </div>
+                </div>
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+            <p style="text-align:center;margin-top:1.5rem;font-size:11px;color:#aaa;">
+                Hint: username=<strong>ragu</strong> password=<strong>pass</strong> (any value works in prototype)
+            </p>
+            <p style="text-align:center;margin-top:0.6rem;font-size:12px;">
+                <strong>Other portals:</strong>
+                <a href="employee.html">Employee</a> &bull;
+                <a href="client.html">Client</a> &bull;
+                <a href="intern.html">Intern</a> &bull;
+                <a href="trainee.html">Trainee</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================
+     APP WRAPPER
+     ========================================== -->
+<div id="app-page" class="app-wrapper">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-icon">R</div>
+            <span class="logo-text">RORIRI</span>
+            <button class="toggle-btn" onclick="toggleSidebar()"><i class="bx bx-menu"></i></button>
+        </div>
+        <ul class="sidebar-nav" id="sidebar-nav"></ul>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-content">
+        <header class="topbar">
+            <button class="mobile-toggle" onclick="toggleMobileSidebar()"><i class="bx bx-menu"></i></button>
+            <div class="topbar-right">
+                <button class="icon-btn" onclick="showNotification('Search feature','info')"><i class="bx bx-search"></i></button>
+                <button class="icon-btn"><i class="bx bx-bell"></i><span class="badge-count">7</span></button>
+                <button class="icon-btn" onclick="showNotification('Dark mode toggle','info')"><i class="bx bx-moon"></i></button>
+                <div class="user-dropdown" onclick="toggleDropdown('user-dropdown-menu')">
+                    <div class="user-avatar" id="topbar-user-avatar">R</div>
+                    <div class="user-info">
+                        <div class="user-name" id="topbar-user-name">Ragupathi</div>
+                        <div class="user-role" id="topbar-user-role">Super Admin</div>
+                    </div>
+                    <i class="bx bx-chevron-down" style="font-size:14px;color:#aaa;"></i>
+                    <div class="dropdown-menu-custom" id="user-dropdown-menu">
+                        <a href="javascript:void(0)" onclick="showModal('editPasswordModal')"><i class="bx bx-user"></i> Edit Password</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="javascript:void(0)" onclick="doLogout()"><i class="bx bx-log-out-circle"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="page-content" id="page-content"></div>
+        <footer class="page-footer">Copyright &copy; 2024. RORIRI Software Solutions. All rights reserved.</footer>
+    </div>
+</div>
+
+<!-- ===== MODAL CONTAINER ===== -->
+<div id="modal-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
