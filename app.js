@@ -1308,7 +1308,10 @@ function doDelete(listKey, id, msg) {
 }
 
 // ---------- TOGGLES ----------
-function toggleSubmenu(li) { li.classList.toggle('open'); }
+function toggleSubmenu(li) {
+  document.querySelectorAll('.sidebar-nav > li').forEach(sib => { if (sib !== li) sib.classList.remove('open'); });
+  li.classList.toggle('open');
+}
 function toggleSidebar() { document.querySelector('.sidebar').classList.toggle('collapsed'); }
 function toggleMobileSidebar() { document.querySelector('.sidebar').classList.toggle('mobile-open'); }
 function toggleDropdown(id) { const el = document.getElementById(id); if (el) el.classList.toggle('show'); }
