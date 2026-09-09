@@ -378,6 +378,24 @@ const SIDEBAR = [
     { id:'documents', icon:'bx bx-folder', label:'Documents' },
     { id:'enquiries', icon:'bx bx-message-square-detail', label:'Enquiry' }
   ]},
+  { type:'sub', icon:'bx bx-user-pin', label:'Freelancer', children:[
+    { id:'freelancer-dashboard', icon:'bx bx-grid-alt', label:'Dashboard' },
+    { id:'freelancer-list', icon:'bx bx-user-check', label:'Freelancers' },
+    { id:'freelancer-projects', icon:'bx bx-briefcase', label:'Projects' },
+    { id:'freelancer-tasks', icon:'bx bx-task', label:'Tasks' },
+    { id:'freelancer-time', icon:'bx bx-time-five', label:'Time Tracker' },
+    { id:'freelancer-daily-updates', icon:'bx bx-edit', label:'Daily Work Update' },
+    { id:'freelancer-messages', icon:'bx bx-message-square-dots', label:'Messages' },
+    { id:'freelancer-meetings', icon:'bx bx-video', label:'Meetings' },
+    { id:'freelancer-documents', icon:'bx bx-folder-open', label:'Files & Documents' },
+    { id:'freelancer-issues', icon:'bx bx-bug', label:'Issues / Bugs' },
+    { id:'freelancer-change-requests', icon:'bx bx-git-pull-request', label:'Change Requests' },
+    { id:'freelancer-deliverables', icon:'bx bx-package', label:'Deliverables' },
+    { id:'freelancer-deployments', icon:'bx bx-cloud-upload', label:'Deployments' },
+    { id:'freelancer-daily-reports', icon:'bx bx-file', label:'Daily Reports' },
+    { id:'freelancer-payments', icon:'bx bx-wallet', label:'Earnings & Payments' },
+    { id:'freelancer-notifications', icon:'bx bx-bell', label:'Notifications' }
+  ]},
   { type:'sub', icon:'lni lni-code-alt', label:'NexGen IT Academy', children:[
     { id:'academy-trainees', icon:'bx bx-graduation', label:'Trainee' },
     { id:'academy-subjects', icon:'bx bx-pencil', label:'Subject' },
@@ -455,6 +473,10 @@ function buildSidebar() {
   nav.innerHTML = html;
 }
 
+function handleFreelancerParentClick(li) {
+  toggleSubmenu(li);
+}
+
 function navigate(page, params) {
   currentPage = page;
   window._params = params || {};
@@ -464,6 +486,9 @@ function navigate(page, params) {
   if (link) {
     link.classList.add('active');
     const parentLi = link.closest('.sub-menu')?.closest('li');
+    if (parentLi) parentLi.classList.add('open');
+  } else if (page.startsWith('freelancer-')) {
+    const parentLi = document.getElementById('nav-freelancer');
     if (parentLi) parentLi.classList.add('open');
   }
   document.querySelector('.sidebar')?.classList.remove('mobile-open');
