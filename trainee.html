@@ -28,7 +28,7 @@
       </fieldset>
       <button type="submit" class="btn btn-primary btn-block">Login to My Dashboard</button>
     </form>
-    <p class="login-hint">Demo: any name &amp; password works</p>
+    <p class="login-hint">Demo: enter a trainee name, e.g. <strong>deepika</strong> (any password)</p>
     <div class="portal-nav" style="text-align:center;margin-top:12px;">
       <a href="index.html">Admin</a> &bull;
       <a href="employee.html">Employee</a> &bull;
@@ -56,15 +56,31 @@
 <script>
 window.PORTAL_TYPE = 'Trainee Portal';
 
-var ME_ID = 'T001';
-var me = PORTAL_DATA.trainees.find(function (t) { return t.id === ME_ID; });
-var myCourse = PORTAL_DATA.courses.find(function (c) { return c.name === me.course; });
-var myPayments = PORTAL_DATA.traineePayments.filter(function (p) { return p.traineeId === ME_ID; });
-var myProjects = PORTAL_DATA.miniProjects.filter(function (mp) { return mp.traineeId === ME_ID; });
-var paid = myPayments.filter(function (p) { return p.status === 'Paid'; }).reduce(function (a, p) { return a + p.amount; }, 0);
-var due = myCourse.fee - paid;
+var ME_ID = null;
+var me = null;
+var myCourse = null;
+var myPayments = [];
+var myProjects = [];
+var paid = 0;
+var due = 0;
 
-function portalDashboard() {
+function resolveTrainee(name) {
+  var hit = findRecord(PORTAL_DATA.trainees, name, ['name', 'id', 'email']);
+  return hit ? hit.id : null;
+}
+
+function portalDashboard(name) {
+  if (name !== undefined) {
+    ME_ID = resolveTrainee(name);
+    if (!ME_ID) { return; }
+  }
+  if (!ME_ID) { return; }
+  me = PORTAL_DATA.trainees.find(function (t) { return t.id === ME_ID; });
+  myCourse = PORTAL_DATA.courses.find(function (c) { return c.name === me.course; });
+  myPayments = PORTAL_DATA.traineePayments.filter(function (p) { return p.traineeId === ME_ID; });
+  myProjects = PORTAL_DATA.miniProjects.filter(function (mp) { return mp.traineeId === ME_ID; });
+  paid = myPayments.filter(function (p) { return p.status === 'Paid'; }).reduce(function (a, p) { return a + p.amount; }, 0);
+  due = myCourse.fee - paid;
   var hour = new Date().getHours();
   var greet = hour < 12 ? 'Good morning' : (hour < 17 ? 'Good afternoon' : 'Good evening');
 
@@ -121,6 +137,8 @@ function portalDashboard() {
 
   document.getElementById('portal-body').innerHTML = html;
 }
+
+function portalValidate(name) { return !!resolveTrainee(name); }
 
 startPage();
 </script>

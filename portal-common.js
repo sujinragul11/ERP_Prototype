@@ -89,9 +89,39 @@ var PORTAL_DATA = {
 
 var CURRENT = { name:'Guest', type:'' };
 
+// ---- Shared data store (fed by the admin via localStorage) ----
+var LS_KEY = 'roriri_portal_data_v1';
+var __lsMem = (typeof window !== 'undefined' && window.__lsMem) ? window.__lsMem : {};
+if (typeof window !== 'undefined' && !window.__lsMem) { window.__lsMem = __lsMem; }
+function lsGet(k) {
+  var v = null;
+  try { if (typeof localStorage !== 'undefined') v = localStorage.getItem(k); } catch (e) {}
+  if (v != null) { return v; }
+  return (k in __lsMem) ? __lsMem[k] : null;
+}
+function lsSet(k, v) {
+  __lsMem[k] = v;
+  try { if (typeof localStorage !== 'undefined') localStorage.setItem(k, v); } catch (e) {}
+}
+(function overlayPortalData() {
+  var raw = lsGet(LS_KEY);
+  if (!raw) { return; }
+  var o; try { o = JSON.parse(raw); } catch (e) { return; }
+  ['employees','clients','projects','tasks','attendance','trainees','courses','traineePayments','miniProjects','clientEmps','convos','internApplications','internTasks'].forEach(function (key) {
+    if (o && o[key] && Array.isArray(o[key])) { PORTAL_DATA[key] = o[key]; }
+  });
+})();
+
 function es(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function inr(n) { return '₹ ' + Number(n || 0).toLocaleString('en-IN'); }
 function avatar(name) { return es((name || '?').trim().charAt(0).toUpperCase()); }
+function findRecord(list, q, keys) {
+  var s = String(q || '').trim().toLowerCase();
+  if (!s) { return null; }
+  return list.find(function (it) {
+    return keys.some(function (k) { return String(it[k] || '').toLowerCase().indexOf(s) !== -1; });
+  }) || null;
+}
 function toast(msg, type) {
   var colors = { success:'#27ae60', danger:'#e74c3c', info:'#2e86de' };
   var d = document.createElement('div');
@@ -113,6 +143,10 @@ function clStatusBadge(s) {
 function portalLogin(e) {
   if (e && e.preventDefault) e.preventDefault();
   var u = (document.getElementById('login-name') ? document.getElementById('login-name').value.trim() : '') || 'Guest';
+  if (typeof window.portalValidate === 'function' && !window.portalValidate(u)) {
+    toast('Login failed: "' + u + '" not found in this portal', 'danger');
+    return false;
+  }
   CURRENT = { name: u, type: window.PORTAL_TYPE || '' };
   document.getElementById('login-page').style.display = 'none';
   var app = document.getElementById('portal-app');
@@ -130,5 +164,5 @@ function startPage() {
   var today = new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
   var fmt = document.getElementById('portal-date');
   if (fmt) fmt.textContent = today;
-  if (typeof window.portalDashboard === 'function') { portalDashboard(CURRENT.name || 'Guest'); }
+  if (CURRENT && CURRENT.type && typeof window.portalDashboard === 'function') { portalDashboard(CURRENT.name || 'Guest'); }
 }

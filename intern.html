@@ -28,7 +28,7 @@
       </fieldset>
       <button type="submit" class="btn btn-primary btn-block">Login to My Dashboard</button>
     </form>
-    <p class="login-hint">Demo: any name &amp; password works</p>
+    <p class="login-hint">Demo: enter an intern name, e.g. <strong>sneha</strong> (any password)</p>
     <div class="portal-nav" style="text-align:center;margin-top:12px;">
       <a href="index.html">Admin</a> &bull;
       <a href="employee.html">Employee</a> &bull;
@@ -56,12 +56,32 @@
 <script>
 window.PORTAL_TYPE = 'Intern Portal';
 
-var MY_NAME = 'Sneha L';
+var MY_NAME = null;
 var openPosts = PORTAL_DATA.internPosts.filter(function (p) { return p.status === 'Open'; });
-var myApps = PORTAL_DATA.internApplications.filter(function (a) { return a.intern === MY_NAME; });
-var myTasks = PORTAL_DATA.internTasks.filter(function (t) { return t.intern === MY_NAME; });
+var myApps = [];
+var myTasks = [];
 
-function portalDashboard() {
+function internNames() {
+  var set = {};
+  PORTAL_DATA.internApplications.forEach(function (a) { set[a.intern] = 1; });
+  PORTAL_DATA.internTasks.forEach(function (t) { set[t.intern] = 1; });
+  return Object.keys(set);
+}
+
+function findIntern(name) {
+  var s = String(name || '').trim().toLowerCase();
+  if (!s) { return null; }
+  return internNames().find(function (n) { return n.toLowerCase().indexOf(s) !== -1; }) || null;
+}
+
+function portalDashboard(name) {
+  if (name !== undefined) {
+    MY_NAME = findIntern(name);
+    if (!MY_NAME) { return; }
+  }
+  if (!MY_NAME) { return; }
+  myApps = PORTAL_DATA.internApplications.filter(function (a) { return a.intern === MY_NAME; });
+  myTasks = PORTAL_DATA.internTasks.filter(function (t) { return t.intern === MY_NAME; });
   var hour = new Date().getHours();
   var greet = hour < 12 ? 'Good morning' : (hour < 17 ? 'Good afternoon' : 'Good evening');
   var interviews = myApps.filter(function (a) { return a.status === 'Interview'; }).length;
@@ -133,6 +153,8 @@ function applyJob(postId) {
   portalDashboard();
   toast('Application submitted for ' + p.position + '!', 'success');
 }
+
+function portalValidate(name) { return !!findIntern(name); }
 
 startPage();
 </script>

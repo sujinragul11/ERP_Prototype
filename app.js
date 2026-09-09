@@ -340,8 +340,28 @@ const MOCK = {
 };
 
 // ============ SIDEBAR STRUCTURE ============
+const DEPARTMENTS = [
+  { id:'management', name:'Management', icon:'bx bxs-crown', roles:['Director','Managing Director','CEO','COO','CFO','CTO','Business Head','General Manager'] },
+  { id:'project', name:'Project Management', icon:'bx bx-timeline', roles:['Project Manager','Program Manager','Delivery Manager','Scrum Master','Project Coordinator'] },
+  { id:'development', name:'Development', icon:'bx bx-code-alt', roles:['Team Lead','Technical Lead','Full Stack Developer','Frontend Developer','Backend Developer','Mobile App Developer','Software Engineer','Junior Developer','WordPress Developer','Database Developer'] },
+  { id:'design', name:'Design', icon:'bx bxs-palette', roles:['Creative Director','UI/UX Designer','Graphic Designer','Motion Designer','Brand Designer','Web Designer'] },
+  { id:'qa', name:'Quality Assurance', icon:'bx bx-check-shield', roles:['QA Lead','Automation Tester','Manual Tester','Software Tester','QA Engineer'] },
+  { id:'hr', name:'Human Resources', icon:'bx bx-user-pin', roles:['HR Manager','HR Executive','Recruiter','HR Generalist','HR Coordinator','Training & Development'] },
+  { id:'accounts', name:'Accounts & Finance', icon:'bx bx-money', roles:['Finance Manager','Accountant','Accounts Executive','Payroll Specialist','Tax Executive','Auditor'] },
+  { id:'marketing', name:'Marketing', icon:'bx bx-megaphone', roles:['Marketing Manager','Digital Marketing','SEO Specialist','Content Writer','Social Media Executive','Brand Executive'] },
+  { id:'sales', name:'Sales', icon:'bx bx-cart-alt', roles:['Sales Manager','Business Development Executive','Sales Executive','Inside Sales','Account Manager'] },
+  { id:'operations', name:'Operations', icon:'bx bx-cog', roles:['Operations Manager','Operations Executive','Administrator','Office Manager'] },
+  { id:'admin', name:'Administration', icon:'bx bx-home-circle', roles:['Admin Manager','Office Administrator','Receptionist','Front Office Executive','Facilities Executive'] },
+  { id:'support', name:'IT / Client Support', icon:'bx bx-support', roles:['IT Support Engineer','System Administrator','Network Engineer','Help Desk Executive','Customer Support Executive'] },
+  { id:'training', name:'Training & Academy', icon:'bx bxs-graduation', roles:['Academy Head','Trainer','Mentor','Course Coordinator','Placement Officer'] },
+  { id:'content', name:'Content & Communication', icon:'bx bx-edit-alt', roles:['Content Lead','Copywriter','Technical Writer','Social Media Executive','Video Editor'] }
+];
+
 const SIDEBAR = [
   { type:'item', id:'dashboard', icon:'bx bx-home-alt', label:'Dashboard' },
+  { type:'section', label:'Organization' },
+  { type:'item', id:'org-directory', icon:'bx bx-network-chart', label:'Department Directory' },
+  { type:'sub', icon:'bx bx-buildings', label:'Roles & Departments', children: DEPARTMENTS.map(d => ({ id:'dept-root', page:'org-directory', dept:d.id, icon:d.icon, label:d.name })) },
   { type:'section', label:'Entity' },
   { type:'sub', icon:'lni lni-laptop-phone', label:'Roriri Software Solution', children:[
     { id:'employees', icon:'bx bx-group', label:'Employee' },
@@ -425,8 +445,9 @@ function buildSidebar() {
     } else if (item.type === 'sub') {
       html += `<li id="nav-${item.label.replace(/\s+/g,'-').toLowerCase()}"><a href="javascript:void(0)" onclick="toggleSubmenu(this.parentElement)"><i class="${item.icon}"></i><span class="menu-text">${item.label}</span><i class="bx bx-chevron-right arrow"></i></a><ul class="sub-menu">`;
       item.children.forEach(child => {
-        const iconTag = child.icon ? `<i class="${child.icon}"></i> ` : '';
-        html += `<li><a href="javascript:void(0)" data-page="${child.id}" onclick="navigate('${child.id}')">${iconTag}${child.label}</a></li>`;
+        const cpage = child.page || child.id;
+        const cextra = child.dept ? `,{dept:'${child.dept}'}` : '';
+        html += `<li><a href="javascript:void(0)" data-page="${cpage}" onclick="navigate('${cpage}'${cextra})"><i class="${child.icon}"></i> ${child.label}</a></li>`;
       });
       html += `</ul></li>`;
     }
@@ -456,11 +477,137 @@ function navigate(page, params) {
   } else {
     container.innerHTML = buildPlaceholderPage(page);
   }
+  saveAdminDB();
+  syncPortalsToStorage();
+}
+
+// ---------- PORTAL DATA SYNC ----------
+// Pushes a portal-ready snapshot of MOCK to localStorage so the standalone
+// portal pages (employee/client/trainee/intern) pick up newly added records.
+const PORTALS_KEY = 'roriri_portal_data_v1';
+const ADMIN_KEY = 'roriri_admin_db_v1';
+function portalStore() {
+  const empIdByName = {};
+  MOCK.employees.forEach(e => {
+    empIdByName[String(e.name).toLowerCase()] = e.id;
+    if (e.username) empIdByName[String(e.username).toLowerCase()] = e.id;
+  });
+  const clientByName = {};
+  MOCK.clients.forEach(c => {
+    clientByName[String(c.name).toLowerCase()] = c.id;
+    if (c.company) clientByName[String(c.company).toLowerCase()] = c.id;
+  });
+  const traineeByName = {};
+  MOCK.trainees.forEach(t => { traineeByName[String(t.name).toLowerCase()] = t.id; });
+
+  const employees = MOCK.employees.map(e => ({
+    id: e.id, name: e.name, role: e.role || '', dept: e.department || e.role || '',
+    email: e.companyEmail || e.email || '', phone: e.phone || '', joinDate: e.joinDate || '',
+    username: e.username || ''
+  }));
+
+  const clients = MOCK.clients.map(c => ({
+    id: c.id, company: c.company || c.name, person: c.name || '',
+    location: c.location || '', email: c.email || '', phone: c.phone || '', status: c.status || ''
+  }));
+
+  const projects = MOCK.projects.map(p => ({
+    id: p.id, name: p.name, clientId: clientByName[String(p.client || '').toLowerCase()] || p.client || '',
+    tech: p.tech || p.services || '', status: p.status || '', payStatus: p.payStatus || '',
+    amount: p.amount || 0, balance: p.balance || 0, duration: p.duration || '',
+    developers: (p.developers || []).map(d => empIdByName[String(d).toLowerCase()] || '').filter(Boolean)
+  }));
+
+  const tasks = MOCK.taskAssignments.map(t => ({
+    id: t.id, task: t.task, project: t.project, empId: empIdByName[String(t.employee).toLowerCase()] || t.employee || '',
+    priority: t.priority || '', due: t.dueDate || '', status: t.status || ''
+  }));
+
+  const attendance = MOCK.attendance.map(a => ({ date: a.date, status: a.status }));
+
+  const trainees = MOCK.trainees.map(t => ({
+    id: t.id, name: t.name, course: t.course || '', email: t.email || '', phone: t.phone || '',
+    feeStatus: (MOCK.academyPayments || []).some(p => p.trainee === t.name && p.status === 'Paid') ? 'Paid' : 'Due'
+  }));
+
+  const courses = MOCK.courses.map(c => ({
+    id: c.id, name: c.name, duration: c.duration || '', fee: c.fee || 0,
+    subjects: MOCK.subjects.filter(s => s.course === c.name).map(s => s.name)
+  }));
+  courses.forEach(c => { if (!c.subjects.length) c.subjects = [c.name]; });
+
+  const traineePayments = (MOCK.academyPayments || []).map(p => {
+    const t = MOCK.trainees.find(x => String(x.name).toLowerCase() === String(p.trainee).toLowerCase());
+    return { traineeId: t ? t.id : p.trainee, amount: p.amount || 0, date: p.date || '', status: p.status || 'Paid' };
+  });
+
+  const miniProjects = MOCK.miniProjects.map(mp => {
+    const t = MOCK.trainees.find(x => String(x.name).toLowerCase() === String(mp.trainee).toLowerCase());
+    return { id: mp.id, traineeId: t ? t.id : mp.trainee, name: mp.name, course: mp.course || '', status: mp.status || 'Pending' };
+  });
+
+  const clientEmps = {};
+  (MOCK.clientAssignments || []).forEach(a => {
+    if (!clientEmps[a.clientId]) clientEmps[a.clientId] = [];
+    if (clientEmps[a.clientId].indexOf(a.employeeId) === -1) clientEmps[a.clientId].push(a.employeeId);
+  });
+
+  const convos = {};
+  (MOCK.clientMessages || []).forEach(cm => {
+    if (!convos[cm.clientId]) convos[cm.clientId] = [];
+    (cm.messages || []).forEach(m => convos[cm.clientId].push({
+      employeeId: cm.employeeId,
+      from: m.from === 'client' ? 'client' : 'employee', text: m.text || '', time: m.time || ''
+    }));
+  });
+
+  return {
+    employees, clients, projects, tasks, attendance,
+    trainees, courses, traineePayments, miniProjects,
+    clientEmps, convos
+  };
+}
+function storeGet(k) {
+  let v = null;
+  try { if (typeof localStorage !== 'undefined') v = localStorage.getItem(k); } catch (e) {}
+  if (v != null) { return v; }
+  return (k in (window.__lsMem || {})) ? window.__lsMem[k] : null;
+}
+function storeSet(k, v) {
+  window.__lsMem = window.__lsMem || {};
+  window.__lsMem[k] = v;
+  try { if (typeof localStorage !== 'undefined') localStorage.setItem(k, v); } catch (e) {}
+}
+function saveAdminDB() {
+  try {
+    if (typeof MOCK === 'undefined') return;
+    const d = { nextId: MOCK.nextId };
+    Object.keys(MOCK).forEach(k => { if (Array.isArray(MOCK[k])) d[k] = MOCK[k]; });
+    storeSet(ADMIN_KEY, JSON.stringify(d));
+  } catch (e) { /* ignore storage errors */ }
+}
+function loadAdminDB() {
+  try {
+    const raw = storeGet(ADMIN_KEY);
+    if (!raw) { return; }
+    const d = JSON.parse(raw);
+    Object.keys(d).forEach(k => {
+      if (k === 'nextId' && typeof d[k] === 'number') { MOCK.nextId = d[k]; }
+      else if (Array.isArray(d[k]) && Array.isArray(MOCK[k])) { MOCK[k] = d[k]; }
+    });
+  } catch (e) { /* ignore corrupt storage */ }
+}
+function syncPortalsToStorage() {
+  try {
+    if (typeof MOCK === 'undefined') return;
+    storeSet(PORTALS_KEY, JSON.stringify(portalStore()));
+  } catch (e) { /* ignore storage errors */ }
 }
 
 // ============ RENDERERS ============
 const RENDERERS = {
   'dashboard': renderDashboard,
+  'org-directory': renderOrgDirectory,
   'employees': renderEmployees,
   'employee-detail': renderEmployeeDetail,
   'clients': renderClients,
@@ -1204,6 +1351,75 @@ function renderCreditDebit() {
 // ============================================
 // RUNTIME - HELPERS & APP SHELL
 // ============================================
+
+function renderOrgDirectory() {
+  const p = window._params || {};
+  const sel = p.dept || '';
+  const byDept = {};
+  MOCK.employees.forEach(e => {
+    const key = String(e.department || 'Unassigned').trim();
+    (byDept[key] = byDept[key] || []).push(e);
+  });
+  const totalStaff = MOCK.employees.length;
+
+  const head = sel
+    ? pageHeader(sel.replace(/-/g, ' '), 'People and roles in this department.', `<button class="btn btn-sm btn-outline-primary" onclick="navigate('org-directory')"><i class="bx bx-arrow-back"></i> All Departments</button>`)
+    : pageHeader('Department Directory', 'All departments, roles and the people who belong to them at RORIRI Software Solutions.', `<div class="font-13 text-secondary"><b>${totalStaff}</b> staff &bull; <b>${DEPARTMENTS.length}</b> departments</div>`);;
+
+  let html = head;
+
+  let cards = '';
+  DEPARTMENTS.forEach(d => {
+    if (sel && d.id !== sel) { return; }
+    const emps = (byDept[d.name] || []).filter(e => e.status !== 'Left');
+    const roleMap = {};
+    d.roles.forEach(r => { roleMap[r] = []; });
+    roleMap['Other Roles'] = [];
+    emps.forEach(e => {
+      const match = d.roles.find(r => r.toLowerCase() === String(e.role || '').trim().toLowerCase());
+      const key = match || 'Other Roles';
+      if (e.entity && String(e.entity).toLowerCase().indexOf('academy') !== -1 && key === 'Other Roles') { roleMap['Other Roles'].push(e); }
+      else { roleMap[key].push(e); }
+    });
+
+    const filled = Object.keys(roleMap).filter(k => roleMap[k].length).length;
+    let body = '';
+    d.roles.forEach(r => {
+      body += roleRow(r, roleMap[r]);
+    });
+    if (roleMap['Other Roles'].length) {
+      body += roleRow('Other Roles (custom)', roleMap['Other Roles']);
+    }
+
+    cards += `<div class="card dept-card">`;
+    cards += `<div class="dept-head"><div class="dept-ic"><i class="${d.icon}"></i></div><div><h5>${d.name}</h5><div class="font-13 text-secondary">${emps.length} staff &bull; ${filled}/${d.roles.length} roles filled</div></div><a href="javascript:void(0)" class="dept-open" onclick="navigate('org-directory',{dept:'${d.id}'})"><i class="bx bx-chevron-right"></i></a></div>`;
+    cards += `<div class="dept-body">${body || '<div class="empty-state"><i class="bx bx-user-x"></i><p>No staff in this department yet.</p></div>'}</div>`;
+    cards += `</div>`;
+  });
+
+  if (sel) {
+    html += `<div class="dept-grid single">${cards}</div>`;
+  } else {
+    html += `<div class="dept-grid">${cards}</div>`;
+  }
+
+  const unlisted = MOCK.employees.filter(e => !DEPARTMENTS.some(d => d.name === String(e.department || '').trim()));
+  if (!sel && unlisted.length) {
+    html += `<div class="portal-section" style="margin-top:1rem;"><h4 style="margin:0 0 0.75rem;font-size:1rem;"><i class="bx bx-folder-minus"></i> People with unlisted departments</h4><div class="card"><div class="card-body">${unlisted.map(e => `${empChip(e)}`).join(' ')}</div></div></div>`;
+  }
+
+  return html;
+}
+
+function roleRow(role, emps) {
+  const chips = emps.map(e => empChip(e)).join('') || `<span class="font-13 text-secondary">No staff yet — add them via <a href="javascript:void(0)" onclick="navigate('employees')">Employees</a></span>`;
+  return `<div class="role-row"><div class="role-name"><i class="bx bx-user"></i> <span>${role}</span>${emps.length ? `<b class="role-count">${emps.length}</b>` : ''}</div><div class="role-people">${chips}</div></div>`;
+}
+
+function empChip(e) {
+  const init = (e.name || '?').trim().split(/\s+/).map(w => w.charAt(0)).join('').slice(0, 2).toUpperCase();
+  return `<a href="javascript:void(0)" class="emp-chip" onclick="navigate('employee-detail',{id:'${e.id}'})"><span class="chip-av">${init}</span><span>${e.name}</span></a>`;
+}
 
 function today() {
   const d = new Date();
@@ -2547,8 +2763,11 @@ function deleteIvBanner(id) {
 
 // ============ INIT ============
 function initApp() {
+  loadAdminDB();
   document.getElementById('app-page').style.display = 'none';
   buildSidebar();
+  saveAdminDB();
+  syncPortalsToStorage();
 }
 document.addEventListener('DOMContentLoaded', initApp);
 // ============================================
