@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workspace Portal - RORIRI ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="login-page" class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <h4>RORIRI <span>Software</span></h4>
+      <p class="login-sub">Workspace Portal</p>
+    </div>
+    <form onsubmit="return portalLogin(event)">
+      <fieldset>
+        <label>Workspace Lead Name</label>
+        <input type="text" id="login-name" class="form-control" placeholder="e.g. Anushiya" value="Anushiya" required>
+      </fieldset>
+      <fieldset>
+        <label>Password</label>
+        <input type="password" id="login-pass" class="form-control" placeholder="Any password" value="pass" required>
+      </fieldset>
+      <button type="submit" class="btn btn-primary btn-block">Login to Workspace</button>
+    </form>
+    <p class="login-hint">Demo: any name &amp; password works</p>
+    <div class="portal-nav" style="text-align:center;margin-top:12px;">
+      <a href="index.html">Admin</a> &bull;
+      <a href="employee.html">Employee</a> &bull;
+      <a href="client.html">Client</a> &bull;
+      <a href="intern.html">Intern</a> &bull;
+      <a href="trainee.html">Trainee</a>
+    </div>
+  </div>
+</div>
+
+<div id="portal-app" class="portal-page">
+  <header class="portal-top">
+    <div>
+      <h4 class="logo">RORIRI <span class="color-primary">Workspace Hub</span></h4>
+      <small class="color-muted" id="portal-date"></small>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="portal-user" id="portal-user"></div>
+      <button class="btn btn-outline-danger btn-sm" onclick="portalLogout()">Logout</button>
+    </div>
+  </header>
+  <main class="portal-body" id="portal-body"></main>
+</div>
+
+<script src="portal-common.js"></script>
+<script>
+window.PORTAL_TYPE = 'Workspace Portal';
+
+var workspaces = [
+  { id:'WS001', name:'Employee Cabin', code:'EMP-CBN', lead:'Anushiya P', membersCount:8, projectsCount:5, status:'Active', createdAt:'2024-01-15' },
+  { id:'WS002', name:'MD Cabin', code:'MD-CBN', lead:'Ragupathi', membersCount:2, projectsCount:4, status:'Active', createdAt:'2024-01-15' },
+  { id:'WS003', name:'HR Cabin', code:'HR-CBN', lead:'Priya', membersCount:3, projectsCount:2, status:'Active', createdAt:'2024-02-01' },
+  { id:'WS004', name:'Conference Cabin', code:'CONF-CBN', lead:'Sherlin JR', membersCount:12, projectsCount:6, status:'Active', createdAt:'2024-02-10' }
+];
+
+function portalDashboard() {
+  var activeCount = workspaces.filter(function(w){ return w.status==='Active'; }).length;
+  var totalMembers = workspaces.reduce(function(acc, w){ return acc + w.membersCount; }, 0);
+  var totalProjects = workspaces.reduce(function(acc, w){ return acc + w.projectsCount; }, 0);
+
+  var html = '';
+  html += '<div class="portal-greet"><h3>Welcome to Workspace Manager</h3><p class="color-muted">Overview of your active workspace cabins and office allocations.</p></div>';
+
+  html += '<div class="portal-grid">';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Total Workspaces</label><b>' + workspaces.length + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Active Workspaces</label><b>' + activeCount + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Assigned Projects</label><b>' + totalProjects + '</b></div></div></div>';
+  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Total Members</label><b>' + totalMembers + '</b></div></div></div>';
+  html += '</div>';
+
+  html += '<div class="card" style="margin-top:1rem;"><div class="card-body">';
+  html += '<h5 style="margin-bottom:1rem;"><i class="bx bx-layer"></i> Workspaces Summary</h5>';
+  html += '<div class="table-responsive"><table class="data-table"><thead><tr><th>ID</th><th>Workspace Name</th><th>Code</th><th>Lead</th><th>Members</th><th>Projects</th><th>Status</th></tr></thead><tbody>';
+  
+  workspaces.forEach(function(w) {
+    var badgeCls = w.status === 'Active' ? 'badge-success' : 'badge-danger';
+    html += '<tr>';
+    html += '<td><b>' + w.id + '</b></td>';
+    html += '<td><b>' + w.name + '</b></td>';
+    html += '<td><code>' + w.code + '</code></td>';
+    html += '<td>' + w.lead + '</td>';
+    html += '<td><span class="badge badge-info">' + w.membersCount + ' members</span></td>';
+    html += '<td><span class="badge badge-primary">' + w.projectsCount + ' projects</span></td>';
+    html += '<td><span class="badge ' + badgeCls + '">' + w.status + '</span></td>';
+    html += '</tr>';
+  });
+
+  html += '</tbody></table></div>';
+  html += '</div></div>';
+
+  document.getElementById('portal-body').innerHTML = html;
+}
+</script>
+</body>
+</html>

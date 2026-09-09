@@ -22,7 +22,8 @@ const MOCK = {
     { id:7, name:'RIYA NEET ACADEMY', icon:'lni-target', color:'#1cc88a', income:'0' },
     { id:8, name:'RIYA CONSULTANCY', icon:'lni-star-half', color:'#f6c23e', income:'0' },
     { id:9, name:'RITHISH FARMS', icon:'lni-store', color:'#f6c23e', income:'0' },
-    { id:10, name:'NEXEMY', icon:'lni-globe', color:'#1cc88a', income:'32,500' }
+    { id:10, name:'NEXEMY', icon:'lni-globe', color:'#1cc88a', income:'32,500' },
+    { id:11, name:'WORKSPACE', icon:'lni-layout', color:'#6f42c1', income:'0' }
   ],
 
   employees: [
@@ -328,7 +329,14 @@ const MOCK = {
   departments: ['Development','Design','Marketing','Training','HR','Management'],
   services: ['ERP','Website(Static)','Website(Dynamic)','Logo Design','Mobile Application','Multimedia','Marketing'],
   technologies: ['PHP','React JS','React Native','Flutter','Python','Node.js','Angular'],
-  expenseMethods: ['Cash','Gpay','Phonepe','Cheque','Paytm','Net Banking','Online Payment']
+  expenseMethods: ['Cash','Gpay','Phonepe','Cheque','Paytm','Net Banking','Online Payment'],
+
+  workspaces: [
+    { id:'WS001', name:'Employee Cabin', code:'EMP-CBN', lead:'Anushiya P', membersCount:8, projectsCount:5, status:'Active', createdAt:'2024-01-15' },
+    { id:'WS002', name:'III Cabin', code:'MD-CBN', lead:'Ragupathi', membersCount:2, projectsCount:4, status:'Active', createdAt:'2024-01-15' },
+    { id:'WS003', name:'HR Cabin', code:'HR-CBN', lead:'Priya', membersCount:3, projectsCount:2, status:'Active', createdAt:'2024-02-01' },
+    { id:'WS004', name:'Conference Cabin', code:'CONF-CBN', lead:'Sherlin JR', membersCount:12, projectsCount:6, status:'Active', createdAt:'2024-02-10' }
+  ]
 };
 
 // ============ SIDEBAR STRUCTURE ============
@@ -389,6 +397,7 @@ const SIDEBAR = [
   ]},
   { type:'sub', icon:'lni lni-world', label:'Other Entities', children:[
     { id:'nexemy', icon:'lni lni-world', label:'Nexemy' },
+    { id:'workspace', label:'Workspace' },
     { id:'riya-ias', icon:'lni lni-surf-board', label:'Riya IAS Academy' },
     { id:'riya-neet', icon:'lni lni-target', label:'Riya NEET Academy' },
     { id:'riya-consultancy', icon:'lni lni-star-half', label:'Riya Consultancy' },
@@ -666,6 +675,7 @@ const RENDERERS = {
   'database-report': renderExternal,
   'social-media': renderExternal,
   'web-tracking': renderExternal,
+  'workspace': renderWorkspace,
   'nexemy': renderExternal,
   'riya-ias': renderExternal,
   'riya-neet': renderExternal,
@@ -2910,4 +2920,222 @@ function sendClientMessage(clientId) {
   conv.messages.push({ from: 'employee', text, time: nowTime() });
   if (input) input.value = '';
   renderConversationThread(clientId);
+}
+
+// ============ WORKSPACE MODULE ============
+function renderWorkspace() {
+  const workspaces = MOCK.workspaces || [];
+  const activeWS = workspaces.filter(w => w.status === 'Active').length;
+  const inactiveWS = workspaces.filter(w => w.status === 'Inactive').length;
+
+  let html = pageHeader('Workspace Dashboard', 'Manage company workspaces, project allocations, and team leads', `<button class="btn btn-primary" onclick="showWorkspaceAddModal()"><i class="bx bx-plus"></i> Add Workspace</button>`);
+  
+  html += `<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mb-3">`;
+  html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">Total Workspaces</p><h4>${workspaces.length}</h4></div><div class="stat-icon bg-light-primary text-primary"><i class="bx bx-layer"></i></div></div></div></div>`;
+  html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">Active Workspaces</p><h4>${activeWS}</h4></div><div class="stat-icon bg-light-success text-success"><i class="bx bx-check-circle"></i></div></div></div></div>`;
+  html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">Inactive Workspaces</p><h4>${inactiveWS}</h4></div><div class="stat-icon bg-light-danger text-danger"><i class="bx bx-x-circle"></i></div></div></div></div>`;
+
+  html += `</div>`;
+
+  html += `<div class="data-card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5>Workspace List</h5>
+      <div class="d-flex gap-2 align-items-center">
+        <select class="form-control" style="width:130px;padding:0.4rem;font-size:12px;" onchange="filterWorkspaceStatus(this.value)">
+          <option value="All">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+        <input type="text" class="form-control" placeholder="Search workspace..." style="width:200px;padding:0.4rem 0.7rem;font-size:12px;" oninput="searchTable(this,'workspace-tbody')">
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="overflow-x">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:80px">ID</th>
+              <th style="text-align:center">Workspace Name</th>
+              <th style="width:150px;text-align:center">Assigned To</th>
+              <th style="width:120px">Created</th>
+              <th style="width:100px">Status</th>
+              <th style="width:130px;text-align:center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="workspace-tbody">`;
+
+  workspaces.forEach((w) => {
+    html += `<tr data-status="${w.status}">
+      <td><strong>${w.id}</strong></td>
+      <td style="vertical-align:middle;text-align:center;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
+          <div class="stat-icon bg-light-primary text-primary" style="width:30px;height:30px;min-width:30px;font-size:13px;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+            <i class="bx bx-folder"></i>
+          </div>
+          <div style="text-align:left;">
+            <div style="font-weight:600;font-size:13px;white-space:nowrap;">${w.name}</div>
+            <div style="font-size:11px;color:#888;white-space:nowrap;">${w.code}</div>
+          </div>
+        </div>
+      </td>
+      <td style="text-align:center;vertical-align:middle;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#f0f4ff;color:#4e73df;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500;white-space:nowrap;">
+          <i class="bx bx-buildings" style="font-size:13px;"></i>
+          ${w.assignedTo || '—'}
+        </span>
+      </td>
+      <td>${w.createdAt}</td>
+      <td><span class="badge ${w.status === 'Active' ? 'badge-success' : 'badge-danger'}">${w.status}</span></td>
+      <td style="text-align:center">
+        <div class="d-flex align-items-center justify-content-center gap-1">
+          <button class="btn btn-sm btn-outline-info" onclick="showWorkspaceViewModal('${w.id}')" title="View"><i class="bx bx-show"></i></button>
+          <button class="btn btn-sm btn-outline-warning" onclick="showWorkspaceEditModal('${w.id}')" title="Edit"><i class="bx bx-edit"></i></button>
+          <button class="btn btn-sm btn-outline-danger" onclick="deleteWorkspace('${w.id}')" title="Delete"><i class="bx bx-trash"></i></button>
+        </div>
+      </td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+
+function filterWorkspaceStatus(val) {
+  const rows = document.querySelectorAll('#workspace-tbody tr');
+  rows.forEach(r => {
+    if (val === 'All' || r.getAttribute('data-status') === val) {
+      r.style.display = '';
+    } else {
+      r.style.display = 'none';
+    }
+  });
+}
+
+function showWorkspaceViewModal(id) {
+  const ws = MOCK.workspaces.find(w => w.id === id);
+  if (!ws) return;
+  const badgeCls = ws.status === 'Active' ? 'badge-success' : 'badge-danger';
+  const body = `
+    <div style="display:grid;gap:0.75rem;">
+      <div class="detail-row"><label>Workspace ID</label><b>${ws.id}</b></div>
+      <div class="detail-row"><label>Workspace Name</label><b>${ws.name}</b></div>
+      <div class="detail-row"><label>Code</label><code>${ws.code}</code></div>
+      <div class="detail-row"><label>Assigned To</label><span>${ws.assignedTo || ws.lead || '—'}</span></div>
+      <div class="detail-row"><label>Status</label><span class="badge ${badgeCls}">${ws.status}</span></div>
+      <div class="detail-row"><label>Created</label><span>${ws.createdAt}</span></div>
+    </div>`;
+  openModal(modalHeader('Workspace Details – ' + ws.id) + `<div class="modal-body">${body}</div>` + `<div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Close</button></div>`);
+}
+
+function showWorkspaceAddModal() {
+  const body = `
+    <form id="workspace-form">
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Workspace Name</label>
+        <input type="text" id="ws-name" class="form-control" placeholder="e.g. Mobile App Workspace" required>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Workspace Code</label>
+        <input type="text" id="ws-code" class="form-control" placeholder="e.g. MOB-WS" required>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Assigned To</label>
+        <select id="ws-assigned" class="form-control">
+          <option value="">-- Select Type --</option>
+          <option value="Startup Company">Startup Company</option>
+          <option value="Freelancer">Freelancer</option>
+          <option value="Entrepreneur">Entrepreneur</option>
+        </select>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Status</label>
+        <select id="ws-status" class="form-control">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+    </form>`;
+  openModal(modalHeader('Add New Workspace') + `<div class="modal-body">${body}</div>` + modalFooter('saveNewWorkspace()', 'Create Workspace'));
+}
+
+function saveNewWorkspace() {
+  const name = document.getElementById('ws-name')?.value.trim();
+  const code = document.getElementById('ws-code')?.value.trim();
+  const assignedTo = document.getElementById('ws-assigned')?.value;
+  const status = document.getElementById('ws-status')?.value || 'Active';
+
+  if (!name || !code) {
+    showNotification('Please fill in all required fields', 'error');
+    return;
+  }
+
+  const newWs = {
+    id: 'WS00' + (MOCK.workspaces.length + 1),
+    name,
+    code,
+    assignedTo: assignedTo || 'Unassigned',
+    lead: '',
+    membersCount: 0,
+    projectsCount: 0,
+    status,
+    createdAt: new Date().toISOString().split('T')[0]
+  };
+
+  MOCK.workspaces.push(newWs);
+  closeModal();
+  showNotification('Workspace created successfully', 'success');
+  navigate('workspace');
+}
+
+function showWorkspaceEditModal(id) {
+  const ws = MOCK.workspaces.find(w => w.id === id);
+  if (!ws) return;
+  let empOptions = MOCK.employees.map(e => `<option value="${e.name}" ${e.name === ws.lead ? 'selected' : ''}>${e.name} (${e.role})</option>`).join('');
+  const body = `
+    <form id="workspace-edit-form">
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Workspace Name</label>
+        <input type="text" id="ws-edit-name" class="form-control" value="${ws.name}" required>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Assigned To</label>
+        <select id="ws-edit-assigned" class="form-control">
+          <option value="">-- Select Type --</option>
+          <option value="Startup Company" ${(ws.assignedTo||'') === 'Startup Company' ? 'selected' : ''}>Startup Company</option>
+          <option value="Freelancer" ${(ws.assignedTo||'') === 'Freelancer' ? 'selected' : ''}>Freelancer</option>
+          <option value="Entrepreneur" ${(ws.assignedTo||'') === 'Entrepreneur' ? 'selected' : ''}>Entrepreneur</option>
+        </select>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Status</label>
+        <select id="ws-edit-status" class="form-control">
+          <option value="Active" ${ws.status === 'Active' ? 'selected' : ''}>Active</option>
+          <option value="Inactive" ${ws.status === 'Inactive' ? 'selected' : ''}>Inactive</option>
+        </select>
+      </div>
+    </form>`;
+  openModal(modalHeader('Edit Workspace – ' + ws.id) + `<div class="modal-body">${body}</div>` + modalFooter(`updateWorkspace('${ws.id}')`, 'Save Changes'));
+}
+
+function updateWorkspace(id) {
+  const ws = MOCK.workspaces.find(w => w.id === id);
+  if (!ws) return;
+  ws.name = document.getElementById('ws-edit-name')?.value.trim() || ws.name;
+  ws.assignedTo = document.getElementById('ws-edit-assigned')?.value || ws.assignedTo;
+  ws.status = document.getElementById('ws-edit-status')?.value || ws.status;
+
+  closeModal();
+  showNotification('Workspace updated', 'success');
+  navigate('workspace');
+}
+
+function deleteWorkspace(id) {
+  if (confirm('Are you sure you want to delete this workspace?')) {
+    const idx = MOCK.workspaces.findIndex(w => w.id === id);
+    if (idx !== -1) {
+      MOCK.workspaces.splice(idx, 1);
+      showNotification('Workspace deleted', 'info');
+      navigate('workspace');
+    }
+  }
 }
