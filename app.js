@@ -348,7 +348,9 @@ const SIDEBAR = [
     { id:'id-cards', icon:'bx bx-card', label:'ID Card' },
     { id:'mou', icon:'bx bx-file-blank', label:'MOU' },
     { id:'documents', icon:'bx bx-folder', label:'Documents' },
-    { id:'enquiries', icon:'bx bx-message-square-detail', label:'Enquiry' }
+    { id:'enquiries', icon:'bx bx-message-square-detail', label:'Enquiry' },
+    { id:'it-companies', icon:'bx bx-buildings', label:'IT Companies' },
+    { id:'consultancies', icon:'bx bxs-institution', label:'Consultancies' }
   ]},
   { type:'sub', icon:'lni lni-code-alt', label:'NexGen IT Academy', children:[
     { id:'academy-trainees', icon:'bx bx-graduation', label:'Trainee' },
@@ -367,11 +369,21 @@ const SIDEBAR = [
     { id:'college-enquiries', icon:'bx bx-message', label:'Enquiry' },
     { id:'college-payments', icon:'bx bx-money', label:'Payment' }
   ]},
+  { type:'sub', icon:'lni lni-star-half', label:'Riya Consultancy', children:[
+    { id:'rc-dashboard', icon:'bx bx-home-alt', label:'Dashboard' },
+    { id:'rc-candidates', icon:'bx bx-user', label:'Candidates' },
+    { id:'rc-assessments', icon:'bx bx-check-shield', label:'Assessments' },
+    { id:'rc-attendance', icon:'bx bx-calendar-check', label:'Attendance' },
+    { id:'rc-placement', icon:'bx bx-target-lock', label:'Placement Readiness' },
+    { id:'rc-messages', icon:'bx bx-chat', label:'Communication' },
+    { id:'rc-announcements', icon:'bx bx-broadcast', label:'Announcements' },
+    { id:'rc-documents', icon:'bx bx-folder', label:'Documents' },
+    { id:'rc-reports', icon:'bx bx-file', label:'Reports' }
+  ]},
   { type:'sub', icon:'lni lni-world', label:'Other Entities', children:[
     { id:'nexemy', icon:'lni lni-world', label:'Nexemy' },
     { id:'riya-ias', icon:'lni lni-surf-board', label:'Riya IAS Academy' },
     { id:'riya-neet', icon:'lni lni-target', label:'Riya NEET Academy' },
-    { id:'riya-consultancy', icon:'lni lni-star-half', label:'Riya Consultancy' },
     { id:'roriri-foundation', icon:'lni lni-heart', label:'Roriri Foundation' },
     { id:'rithish-farms', icon:'lni lni-home', label:'Rithish Farms' }
   ]},
@@ -425,6 +437,19 @@ function buildSidebar() {
 }
 
 function navigate(page, params) {
+  if (page === 'it-companies') {
+    sessionStorage.setItem('roriri_logged_in', 'true');
+    window.location.href = 'it-companies.html';
+    return;
+  }
+  if (page === 'consultancies') {
+    sessionStorage.setItem('roriri_logged_in', 'true');
+    window.location.href = 'consultancies.html';
+    return;
+  }
+  if (page === 'riya-consultancy') {
+    page = 'rc-dashboard';
+  }
   currentPage = page;
   window._params = params || {};
   document.querySelectorAll('.page-view,.page-content-render').forEach(v => v.remove());
@@ -466,6 +491,24 @@ const RENDERERS = {
   'mou': renderMou,
   'documents': renderDocuments,
   'enquiries': renderEnquiries,
+  'it-companies': renderITCompaniesModule,
+  'consultancies': renderConsultanciesModule,
+  'riya-consultancy': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('dashboard') : (typeof renderRiyaConsultancyModule === 'function' ? renderRiyaConsultancyModule() : buildPlaceholderPage('riya-consultancy')); },
+  'rc-dashboard': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('dashboard') : buildPlaceholderPage('rc-dashboard'); },
+  'rc-candidates': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('all-candidates') : buildPlaceholderPage('rc-candidates'); },
+  'rc-add-candidate': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('add-candidate') : buildPlaceholderPage('rc-add-candidate'); },
+  'rc-payments': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('candidate-payments') : buildPlaceholderPage('rc-payments'); },
+  'rc-pending-payments': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('pending-payments') : buildPlaceholderPage('rc-pending-payments'); },
+  'rc-revenue': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('revenue-overview') : buildPlaceholderPage('rc-revenue'); },
+  'rc-skills': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('skills') : buildPlaceholderPage('rc-skills'); },
+  'rc-assessments': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('assessments') : buildPlaceholderPage('rc-assessments'); },
+  'rc-attendance': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('attendance') : buildPlaceholderPage('rc-attendance'); },
+  'rc-placement': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('placement-readiness') : buildPlaceholderPage('rc-placement'); },
+  'rc-messages': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('candidate-messages') : buildPlaceholderPage('rc-messages'); },
+  'rc-announcements': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('announcements') : buildPlaceholderPage('rc-announcements'); },
+  'rc-documents': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('documents') : buildPlaceholderPage('rc-documents'); },
+  'rc-reports': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('reports') : buildPlaceholderPage('rc-reports'); },
+  'rc-candidate-profile': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('candidate-profile', window._params) : buildPlaceholderPage('rc-candidate-profile'); },
   'employee-clients': renderEmployeeClients,
   'academy-trainees': renderAcademyTrainees,
   'trainee-detail': renderTraineeDetail,
@@ -521,7 +564,6 @@ const RENDERERS = {
   'nexemy': renderExternal,
   'riya-ias': renderExternal,
   'riya-neet': renderExternal,
-  'riya-consultancy': renderExternal,
   'roriri-foundation': renderExternal,
   'rithish-farms': renderExternal
 };
@@ -1341,12 +1383,13 @@ function filterEmployeeStatus(status) {
 
 // ---------- LOGIN / LOGOUT ----------
 function doLogin(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
   const u = document.getElementById('login-username').value.trim();
   const p = document.getElementById('login-password').value;
   let user = MOCK.admin.find(a => a.username === u && a.password === p);
   if (!user && MOCK.admin.length) user = MOCK.admin[0];
   currentUser = user;
+  sessionStorage.setItem('roriri_logged_in', 'true');
   window._params = {};
   document.getElementById('login-page').style.display = 'none';
   document.getElementById('app-page').style.display = 'flex';
@@ -1359,6 +1402,7 @@ function doLogin(e) {
 }
 function doLogout() {
   currentUser = null;
+  sessionStorage.removeItem('roriri_logged_in');
   document.getElementById('app-page').style.display = 'none';
   document.getElementById('login-page').style.display = '';
   showNotification('Logged out successfully', 'info');
@@ -2536,10 +2580,43 @@ function deleteIvBanner(id) {
 
 // ============ INIT ============
 function initApp() {
-  document.getElementById('app-page').style.display = 'none';
-  buildSidebar();
+  const urlParams = new URLSearchParams(window.location.search);
+  const isBackToDashboard = urlParams.get('view') === 'dashboard' || window.location.hash === '#dashboard' || sessionStorage.getItem('roriri_logged_in') === 'true';
+
+  if (isBackToDashboard) {
+    let user = MOCK.admin[0];
+    currentUser = user;
+    sessionStorage.setItem('roriri_logged_in', 'true');
+    const loginPage = document.getElementById('login-page');
+    const appPage = document.getElementById('app-page');
+    if (loginPage) loginPage.style.display = 'none';
+    if (appPage) appPage.style.display = 'flex';
+    const nameEl = document.getElementById('topbar-user-name');
+    const roleEl = document.getElementById('topbar-user-role');
+    const avatarEl = document.getElementById('topbar-user-avatar');
+    if (nameEl) nameEl.textContent = user.name.split(' ')[0];
+    if (roleEl) roleEl.textContent = user.role;
+    if (avatarEl) avatarEl.textContent = user.name.charAt(0);
+    buildSidebar();
+    navigate('dashboard');
+  } else {
+    document.getElementById('app-page').style.display = 'none';
+    buildSidebar();
+  }
 }
 document.addEventListener('DOMContentLoaded', initApp);
+window.addEventListener('pageshow', (event) => {
+  if (sessionStorage.getItem('roriri_logged_in') === 'true') {
+    const loginPage = document.getElementById('login-page');
+    const appPage = document.getElementById('app-page');
+    if (loginPage && appPage && appPage.style.display === 'none') {
+      loginPage.style.display = 'none';
+      appPage.style.display = 'flex';
+      buildSidebar();
+      navigate('dashboard');
+    }
+  }
+});
 // ============================================
 // EMPLOYEE CLIENT ASSIGNMENT & CONVERSATIONS
 // ============================================
@@ -2691,3 +2768,73 @@ function sendClientMessage(clientId) {
   if (input) input.value = '';
   renderConversationThread(clientId);
 }
+
+// ============ IT COMPANIES PORTAL INTEGRATION ============
+function renderITCompaniesModule() {
+  return `
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <h4 style="font-size:20px;font-weight:700;color:var(--text-dark);margin:0;display:flex;align-items:center;gap:8px;">
+          <i class="bx bx-buildings" style="color:var(--primary);"></i> IT Companies Portal
+        </h4>
+        <p class="text-secondary" style="font-size:13px;color:#858796;margin:3px 0 0 0;">
+          Roriri Software Solutions &bull; Corporate Partner Registry, Job Opportunities &amp; Student Placements
+        </p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <a href="it-companies.html" target="_blank" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:13px;font-weight:600;background:var(--primary);color:#fff;border-radius:6px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
+          <i class="bx bx-window-open"></i> Launch Standalone Portal
+        </a>
+      </div>
+    </div>
+    <div class="card" style="border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);border:1px solid #e3e6f0;background:#fff;margin-bottom:1.5rem;">
+      <div style="background:#0e2238;color:#fff;padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.1);">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:28px;height:28px;border-radius:6px;background:#4e73df;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">R</div>
+          <span style="font-size:13px;font-weight:600;letter-spacing:0.5px;">RORIRI SOFTWARE SOLUTIONS &rarr; IT COMPANIES</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <a href="it-companies.html" class="btn btn-sm" style="background:rgba(255,255,255,0.12);color:#fff;font-size:11.5px;padding:4px 10px;border-radius:4px;text-decoration:none;">
+            Full Screen <i class="bx bx-fullscreen"></i>
+          </a>
+        </div>
+      </div>
+      <iframe src="it-companies.html" style="width:100%;height:920px;border:none;background:#f8f9fc;" title="IT Companies Portal"></iframe>
+    </div>
+  `;
+}
+
+// ============ CONSULTANCIES PORTAL INTEGRATION ============
+function renderConsultanciesModule() {
+  return `
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <h4 style="font-size:20px;font-weight:700;color:var(--text-dark);margin:0;display:flex;align-items:center;gap:8px;">
+          <i class="bx bxs-institution" style="color:var(--primary);"></i> Consultancies Portal
+        </h4>
+        <p class="text-secondary" style="font-size:13px;color:#858796;margin:3px 0 0 0;">
+          Roriri Software Solutions &bull; Tied-up Consultancies, Student Profiles &amp; Placement Readiness
+        </p>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <a href="consultancies.html" target="_blank" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:13px;font-weight:600;background:var(--primary);color:#fff;border-radius:6px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
+          <i class="bx bx-window-open"></i> Launch Standalone Portal
+        </a>
+      </div>
+    </div>
+    <div class="card" style="border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);border:1px solid #e3e6f0;background:#fff;margin-bottom:1.5rem;">
+      <div style="background:#0e2238;color:#fff;padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.1);">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:28px;height:28px;border-radius:6px;background:#4e73df;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">R</div>
+          <span style="font-size:13px;font-weight:600;letter-spacing:0.5px;">RORIRI SOFTWARE SOLUTIONS &rarr; CONSULTANCIES</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <a href="consultancies.html" class="btn btn-sm" style="background:rgba(255,255,255,0.12);color:#fff;font-size:11.5px;padding:4px 10px;border-radius:4px;text-decoration:none;">
+            Full Screen <i class="bx bx-fullscreen"></i>
+          </a>
+        </div>
+      </div>
+      <iframe src="consultancies.html" style="width:100%;height:920px;border:none;background:#f8f9fc;" title="Consultancies Portal"></iframe>
+    </div>
+  `;
+}
