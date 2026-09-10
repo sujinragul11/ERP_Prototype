@@ -1,0 +1,4756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freelancer Portal - RORIRI ERP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --fl-primary: #4e73df;
+      --fl-primary-dark: #224abe;
+      --fl-primary-light: #eaecf4;
+      --fl-sidebar-bg: #0e2238;
+      --fl-sidebar-hover: #1a3a5c;
+      --fl-sidebar-active: #4e73df;
+      --fl-success: #1cc88a;
+      --fl-warning: #f6c23e;
+      --fl-danger: #e74a3b;
+      --fl-info: #36b9cc;
+      --fl-purple: #8549ba;
+      --fl-border: #e3e6f0;
+      --fl-bg: #f8f9fc;
+      --fl-card-bg: #ffffff;
+      --fl-text-dark: #3a3b3d;
+      --fl-text-muted: #6e707e;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--fl-bg);
+      color: var(--fl-text-muted);
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Auth Page */
+    .fl-login-wrapper {
+      display: flex;
+      min-height: 100vh;
+      background: #fff;
+    }
+    .fl-login-banner {
+      flex: 1.1;
+      background: linear-gradient(135deg, #102a45 0%, #1e429f 50%, #4e73df 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .fl-login-banner::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      top: -100px;
+      left: -100px;
+      border-radius: 50%;
+    }
+    .fl-banner-content {
+      max-width: 480px;
+      z-index: 2;
+    }
+    .fl-banner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(4px);
+    }
+    .fl-banner-title {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+    .fl-banner-desc {
+      font-size: 15px;
+      opacity: 0.88;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .fl-banner-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .fl-banner-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+    .fl-banner-features li i {
+      color: #1cc88a;
+      font-size: 18px;
+    }
+    .fl-login-form-area {
+      flex: 0.9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem;
+      background: #fff;
+    }
+    .fl-login-box {
+      width: 100%;
+      max-width: 420px;
+    }
+    .fl-brand-header {
+      margin-bottom: 2rem;
+    }
+    .fl-brand-header .fl-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.75rem;
+    }
+    .fl-logo-badge {
+      width: 42px;
+      height: 42px;
+      background: var(--fl-primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(78,115,223,0.3);
+    }
+    .fl-brand-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--fl-text-dark);
+      margin: 0;
+      line-height: 1;
+    }
+    .fl-brand-sub {
+      font-size: 12px;
+      color: var(--fl-text-muted);
+      margin-top: 3px;
+    }
+    .fl-portal-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #eef2ff;
+      color: var(--fl-primary);
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      border: 1px solid #dbeafe;
+    }
+    .fl-quick-login-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .fl-quick-pill {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .fl-quick-pill:hover {
+      background: #e2e8f0;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+
+    /* Portal Layout */
+    .fl-app-container {
+      display: flex;
+      min-height: 100vh;
+    }
+    .fl-sidebar {
+      width: 260px;
+      background: var(--fl-sidebar-bg);
+      color: #b0c4de;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      transition: transform 0.3s ease, width 0.3s ease;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.15) transparent;
+    }
+    .fl-sidebar-head {
+      padding: 1.25rem 1.25rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .fl-sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+    }
+    .fl-sidebar-logo .icon {
+      width: 34px;
+      height: 34px;
+      background: var(--fl-primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .fl-sidebar-logo .title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .fl-sidebar-logo .sub {
+      font-size: 10px;
+      color: #8aa2c0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .fl-sidebar-nav {
+      list-style: none;
+      padding: 0.75rem 0 2rem;
+      margin: 0;
+      flex: 1;
+    }
+    .fl-nav-section-title {
+      padding: 1rem 1.25rem 0.35rem;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #5a7aa5;
+    }
+    .fl-nav-item a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.65rem 1.25rem;
+      color: #b0c4de;
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .fl-nav-item a:hover {
+      background: var(--fl-sidebar-hover);
+      color: #fff;
+    }
+    .fl-nav-item a.active {
+      background: var(--fl-sidebar-active);
+      color: #fff;
+      font-weight: 600;
+    }
+    .fl-nav-item a i {
+      font-size: 18px;
+      width: 20px;
+      text-align: center;
+    }
+    .fl-nav-badge {
+      margin-left: auto;
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .fl-nav-badge.bg-danger { background: var(--fl-danger); color: #fff; }
+    .fl-nav-badge.bg-warning { background: var(--fl-warning); color: #212529; }
+    .fl-nav-badge.bg-info { background: var(--fl-info); color: #fff; }
+
+    /* Main Content */
+    .fl-main {
+      flex: 1;
+      margin-left: 260px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: var(--fl-bg);
+      transition: margin-left 0.3s ease;
+    }
+
+    /* Topbar */
+    .fl-topbar {
+      height: 64px;
+      background: #fff;
+      border-bottom: 1px solid var(--fl-border);
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }
+    .fl-topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .fl-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      color: var(--fl-text-dark);
+      cursor: pointer;
+      padding: 4px;
+    }
+    .fl-breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--fl-text-muted);
+    }
+    .fl-breadcrumbs a {
+      color: var(--fl-primary);
+      text-decoration: none;
+    }
+    .fl-breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+    .fl-breadcrumbs span.current {
+      color: var(--fl-text-dark);
+      font-weight: 600;
+    }
+    .fl-topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .fl-search-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f1f3fa;
+      border: 1px solid transparent;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--fl-text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .fl-search-btn:hover {
+      background: #e8ecf4;
+      color: var(--fl-text-dark);
+    }
+    .fl-search-btn kbd {
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 10px;
+      color: #64748b;
+    }
+    .fl-icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: none;
+      background: #f1f3fa;
+      color: var(--fl-text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s, color 0.2s;
+    }
+    .fl-icon-btn:hover {
+      background: #e2e5ea;
+      color: var(--fl-text-dark);
+    }
+    .fl-icon-btn .badge-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background: var(--fl-danger);
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+    .fl-avail-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(28,200,138,0.12);
+      color: #169b6b;
+      cursor: pointer;
+      border: 1px solid rgba(28,200,138,0.25);
+    }
+    .fl-avail-pill.busy {
+      background: rgba(246,194,62,0.15);
+      color: #b78103;
+      border-color: rgba(246,194,62,0.3);
+    }
+    .fl-avail-pill.leave {
+      background: rgba(231,74,59,0.12);
+      color: var(--fl-danger);
+      border-color: rgba(231,74,59,0.25);
+    }
+    .fl-avail-pill .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .fl-user-menu-trigger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+    }
+    .fl-user-menu-trigger:hover {
+      background: #f1f3fa;
+    }
+    .fl-user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--fl-primary), #224abe);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .fl-user-meta {
+      text-align: left;
+      line-height: 1.2;
+    }
+    .fl-user-meta .name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fl-text-dark);
+    }
+    .fl-user-meta .role {
+      font-size: 11px;
+      color: var(--fl-text-muted);
+    }
+
+    /* Dropdown Menus */
+    .fl-dropdown-card {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      border: 1px solid var(--fl-border);
+      min-width: 220px;
+      display: none;
+      z-index: 1100;
+      animation: flFadeIn 0.2s ease;
+    }
+    .fl-dropdown-card.show {
+      display: block;
+    }
+    .fl-dropdown-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--fl-border);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fl-text-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .fl-dropdown-list {
+      padding: 6px 0;
+      margin: 0;
+      list-style: none;
+    }
+    .fl-dropdown-list a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--fl-text-dark);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .fl-dropdown-list a:hover {
+      background: #f8f9fc;
+      color: var(--fl-primary);
+    }
+    .fl-dropdown-divider {
+      height: 1px;
+      background: var(--fl-border);
+      margin: 4px 0;
+    }
+
+    /* Page Content Area */
+    .fl-content {
+      padding: 1.75rem 2rem;
+      flex: 1;
+    }
+    .fl-page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .fl-page-title h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--fl-text-dark);
+    }
+    .fl-page-title p {
+      margin: 3px 0 0;
+      font-size: 13px;
+      color: var(--fl-text-muted);
+    }
+    .fl-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Action Buttons */
+    .fl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .fl-btn-primary {
+      background: var(--fl-primary);
+      color: #fff;
+    }
+    .fl-btn-primary:hover {
+      background: #2e59d9;
+      color: #fff;
+    }
+    .fl-btn-secondary {
+      background: #fff;
+      color: var(--fl-text-dark);
+      border-color: var(--fl-border);
+    }
+    .fl-btn-secondary:hover {
+      background: #f1f3fa;
+      border-color: #cbd5e1;
+    }
+    .fl-btn-success {
+      background: var(--fl-success);
+      color: #fff;
+    }
+    .fl-btn-success:hover {
+      background: #17a673;
+    }
+    .fl-btn-warning {
+      background: var(--fl-warning);
+      color: #212529;
+    }
+    .fl-btn-danger {
+      background: var(--fl-danger);
+      color: #fff;
+    }
+    .fl-btn-danger:hover {
+      background: #be2617;
+    }
+    .fl-btn-sm {
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+
+    /* Terms Alert Banner */
+    .fl-alert-banner {
+      background: #fff8e6;
+      border: 1px solid #ffeeba;
+      border-left: 5px solid #f6c23e;
+      border-radius: 10px;
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 2px 6px rgba(246,194,62,0.1);
+    }
+    .fl-alert-banner.locked {
+      background: #fef2f2;
+      border-color: #fecaca;
+      border-left-color: #ef4444;
+    }
+    .fl-alert-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .fl-alert-icon {
+      font-size: 28px;
+      color: #d97706;
+      line-height: 1;
+    }
+    .fl-alert-banner.locked .fl-alert-icon {
+      color: #dc2626;
+    }
+    .fl-alert-text h4 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: #92400e;
+    }
+    .fl-alert-banner.locked .fl-alert-text h4 {
+      color: #991b1b;
+    }
+    .fl-alert-text p {
+      margin: 3px 0 0;
+      font-size: 13px;
+      color: #78350f;
+    }
+    .fl-alert-banner.locked .fl-alert-text p {
+      color: #7f1d1d;
+    }
+
+    /* Dashboard Summary Grid (8 Cards) */
+    .fl-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .fl-stat-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.15rem 1.25rem;
+      border: 1px solid var(--fl-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .fl-stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+      border-color: #cbd5e1;
+    }
+    .fl-stat-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--fl-primary);
+    }
+    .fl-stat-card.c-success::before { background: var(--fl-success); }
+    .fl-stat-card.c-warning::before { background: var(--fl-warning); }
+    .fl-stat-card.c-danger::before { background: var(--fl-danger); }
+    .fl-stat-card.c-info::before { background: var(--fl-info); }
+    .fl-stat-card.c-purple::before { background: var(--fl-purple); }
+
+    .fl-stat-body .label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--fl-text-muted);
+      margin-bottom: 4px;
+    }
+    .fl-stat-body .val {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--fl-text-dark);
+      line-height: 1.1;
+    }
+    .fl-stat-body .sub {
+      font-size: 11.5px;
+      color: #858796;
+      margin-top: 5px;
+    }
+    .fl-stat-icon-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: #f1f5f9;
+      color: var(--fl-primary);
+    }
+    .fl-stat-card.c-success .fl-stat-icon-wrap { background: rgba(28,200,138,0.12); color: var(--fl-success); }
+    .fl-stat-card.c-warning .fl-stat-icon-wrap { background: rgba(246,194,62,0.16); color: #d4a017; }
+    .fl-stat-card.c-danger .fl-stat-icon-wrap { background: rgba(231,74,59,0.12); color: var(--fl-danger); }
+    .fl-stat-card.c-info .fl-stat-icon-wrap { background: rgba(54,185,204,0.14); color: var(--fl-info); }
+    .fl-stat-card.c-purple .fl-stat-icon-wrap { background: rgba(133,73,186,0.12); color: var(--fl-purple); }
+
+    /* Layout Columns */
+    .fl-grid-2col {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .fl-grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Cards */
+    .fl-card {
+      background: #fff;
+      border: 1px solid var(--fl-border);
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .fl-card-header {
+      padding: 1.1rem 1.4rem;
+      border-bottom: 1px solid var(--fl-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+    }
+    .fl-card-header h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--fl-text-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .fl-card-header h3 i {
+      color: var(--fl-primary);
+      font-size: 18px;
+    }
+    .fl-card-body {
+      padding: 1.4rem;
+    }
+
+    /* Project Cards */
+    .fl-project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+    .fl-project-card {
+      background: #fff;
+      border: 1px solid var(--fl-border);
+      border-radius: 12px;
+      padding: 1.3rem;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .fl-project-card:hover {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+      border-color: #b0c4de;
+    }
+    .fl-project-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 0.75rem;
+    }
+    .fl-project-title h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--fl-text-dark);
+    }
+    .fl-project-client {
+      font-size: 12px;
+      color: var(--fl-text-muted);
+      margin-top: 3px;
+    }
+    .fl-project-meta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 1rem 0;
+      background: #f8f9fc;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    .fl-meta-item .key {
+      color: #858796;
+      display: block;
+      font-size: 11px;
+    }
+    .fl-meta-item .val {
+      color: var(--fl-text-dark);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    .fl-progress-wrap {
+      margin: 0.75rem 0 1.25rem;
+    }
+    .fl-progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 6px;
+      color: var(--fl-text-dark);
+      font-weight: 600;
+    }
+    .fl-progress-bar {
+      height: 7px;
+      background: #eaecf4;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .fl-progress-fill {
+      height: 100%;
+      background: var(--fl-primary);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .fl-progress-fill.success { background: var(--fl-success); }
+    .fl-progress-fill.warning { background: var(--fl-warning); }
+
+    /* Badges */
+    .fl-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .fl-badge-success { background: rgba(28,200,138,0.14); color: #169b6b; }
+    .fl-badge-warning { background: rgba(246,194,62,0.18); color: #b78103; }
+    .fl-badge-danger { background: rgba(231,74,59,0.14); color: #dc2626; }
+    .fl-badge-info { background: rgba(54,185,204,0.16); color: #0284c7; }
+    .fl-badge-primary { background: rgba(78,115,223,0.14); color: #2563eb; }
+    .fl-badge-secondary { background: #e2e8f0; color: #475569; }
+
+    /* Timer Widget */
+    .fl-timer-box {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-radius: 12px;
+      padding: 1.4rem;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .fl-timer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .fl-timer-clock {
+      font-size: 38px;
+      font-weight: 700;
+      font-family: monospace;
+      letter-spacing: 2px;
+      color: #38bdf8;
+      margin: 8px 0;
+      text-shadow: 0 0 16px rgba(56,189,248,0.3);
+    }
+    .fl-timer-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    /* Enterprise Table */
+    .fl-table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+    .fl-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .fl-table th {
+      background: #f8f9fc;
+      color: #4b5563;
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--fl-border);
+      white-space: nowrap;
+    }
+    .fl-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #edf2f7;
+      color: var(--fl-text-dark);
+      vertical-align: middle;
+    }
+    .fl-table tr:hover td {
+      background: #fbfcfe;
+    }
+
+    /* Stepper / Workflow */
+    .fl-stepper {
+      display: flex;
+      overflow-x: auto;
+      padding: 1rem 0;
+      gap: 10px;
+      scrollbar-width: thin;
+    }
+    .fl-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: #f8f9fc;
+      border: 1px solid var(--fl-border);
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      color: #64748b;
+    }
+    .fl-step.done {
+      background: rgba(28,200,138,0.12);
+      border-color: rgba(28,200,138,0.3);
+      color: #169b6b;
+    }
+    .fl-step.current {
+      background: rgba(78,115,223,0.14);
+      border-color: rgba(78,115,223,0.4);
+      color: #2563eb;
+    }
+    .fl-step .num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+    .fl-step.done .num { background: #1cc88a; }
+    .fl-step.current .num { background: #4e73df; }
+
+    /* Tabs */
+    .fl-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--fl-border);
+      margin-bottom: 1.5rem;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .fl-tabs::-webkit-scrollbar { display: none; }
+    .fl-tab-btn {
+      padding: 10px 18px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--fl-text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .fl-tab-btn:hover {
+      color: var(--fl-primary);
+      background: rgba(78,115,223,0.04);
+    }
+    .fl-tab-btn.active {
+      color: var(--fl-primary);
+      border-bottom-color: var(--fl-primary);
+    }
+
+    /* Modal System */
+    .fl-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15,23,42,0.55);
+      backdrop-filter: blur(2px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1.5rem;
+      animation: flFadeIn 0.2s ease;
+    }
+    .fl-modal-backdrop.show {
+      display: flex;
+    }
+    .fl-modal {
+      background: #fff;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      animation: flScaleUp 0.25s ease;
+    }
+    .fl-modal-lg { max-width: 840px; }
+    .fl-modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--fl-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .fl-modal-header h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--fl-text-dark);
+    }
+    .fl-modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #94a3b8;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .fl-modal-close:hover { color: #1e293b; }
+    .fl-modal-body {
+      padding: 1.5rem;
+    }
+    .fl-modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--fl-border);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #f8f9fc;
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+    }
+
+    /* Forms */
+    .fl-form-group {
+      margin-bottom: 1.2rem;
+    }
+    .fl-form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fl-text-dark);
+      margin-bottom: 6px;
+    }
+    .fl-form-control {
+      width: 100%;
+      padding: 9px 12px;
+      font-size: 13.5px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      color: #1e293b;
+      box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .fl-form-control:focus {
+      outline: none;
+      border-color: var(--fl-primary);
+      box-shadow: 0 0 0 3px rgba(78,115,223,0.18);
+    }
+    .fl-form-control[readonly], .fl-form-control:disabled {
+      background: #f1f5f9;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+    textarea.fl-form-control {
+      resize: vertical;
+      min-height: 85px;
+    }
+
+    /* Chat UI */
+    .fl-chat-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      border: 1px solid var(--fl-border);
+      border-radius: 12px;
+      overflow: hidden;
+      height: 540px;
+      background: #fff;
+    }
+    .fl-chat-list {
+      border-right: 1px solid var(--fl-border);
+      overflow-y: auto;
+      background: #f8f9fc;
+    }
+    .fl-chat-item {
+      padding: 12px 14px;
+      border-bottom: 1px solid #edf2f7;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .fl-chat-item:hover { background: #eef2ff; }
+    .fl-chat-item.active { background: #e0e7ff; }
+    .fl-chat-main {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .fl-chat-msgs {
+      flex: 1;
+      padding: 1.25rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .fl-msg {
+      max-width: 70%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      line-height: 1.45;
+      position: relative;
+    }
+    .fl-msg.from-me {
+      align-self: flex-end;
+      background: var(--fl-primary);
+      color: #fff;
+      border-bottom-right-radius: 2px;
+    }
+    .fl-msg.from-other {
+      align-self: flex-start;
+      background: #f1f5f9;
+      color: var(--fl-text-dark);
+      border-bottom-left-radius: 2px;
+    }
+    .fl-msg-meta {
+      font-size: 10.5px;
+      opacity: 0.75;
+      margin-top: 4px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    .fl-chat-input-bar {
+      padding: 10px 14px;
+      border-top: 1px solid var(--fl-border);
+      display: flex;
+      gap: 10px;
+      background: #fff;
+    }
+
+    /* Empty States */
+    .fl-empty-state {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      color: #858796;
+    }
+    .fl-empty-state i {
+      font-size: 44px;
+      opacity: 0.4;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+    .fl-empty-state h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--fl-text-dark);
+      margin: 0 0 6px;
+    }
+    .fl-empty-state p {
+      font-size: 13px;
+      margin: 0 auto;
+      max-width: 400px;
+    }
+
+    /* Locked Access Screen */
+    .fl-locked-view {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px dashed #fca5a5;
+    }
+    .fl-locked-view .lock-icon {
+      width: 68px;
+      height: 68px;
+      background: #fee2e2;
+      color: #ef4444;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      margin: 0 auto 1.25rem;
+    }
+
+    /* Toast Container */
+    #fl-toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .fl-toast {
+      background: #1e293b;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: flSlideIn 0.3s ease;
+      min-width: 260px;
+    }
+    .fl-toast.success { background: #059669; }
+    .fl-toast.danger { background: #dc2626; }
+    .fl-toast.warning { background: #d97706; }
+    .fl-toast.info { background: #2563eb; }
+
+    /* Animations */
+    @keyframes flFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes flSlideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes flScaleUp {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .fl-stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .fl-grid-2col { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .fl-login-wrapper { flex-direction: column; }
+      .fl-login-banner { padding: 2rem 1.5rem; }
+      .fl-sidebar { transform: translateX(-100%); }
+      .fl-sidebar.open { transform: translateX(0); }
+      .fl-main { margin-left: 0; }
+      .fl-menu-toggle { display: block; }
+      .fl-stats-grid { grid-template-columns: 1fr; }
+      .fl-content { padding: 1.25rem 1rem; }
+      .fl-chat-layout { grid-template-columns: 1fr; height: auto; }
+      .fl-chat-list { max-height: 180px; }
+      .fl-user-meta { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="fl-toast-container"></div>
+
+<!-- ==========================================
+     1. FREELANCER LOGIN VIEW
+     ========================================== -->
+<div id="fl-login-view" class="fl-login-wrapper">
+  <div class="fl-login-banner">
+    <div class="fl-banner-content">
+      <div class="fl-banner-badge">
+        <i class="bx bx-shield-quarter"></i> SECURE ENTERPRISE WORKSPACE
+      </div>
+      <h1 class="fl-banner-title">RORIRI ERP Freelancer Execution Portal</h1>
+      <p class="fl-banner-desc">
+        Welcome to your dedicated project execution dashboard. Track your assigned tasks, monitor milestones, log billable hours, communicate with project leads, and submit deliverables seamlessly.
+      </p>
+      <ul class="fl-banner-features">
+        <li><i class="bx bx-check-circle"></i> View Authorized Projects & Scoped Resources</li>
+        <li><i class="bx bx-check-circle"></i> Interactive Time Tracking & Task Progress</li>
+        <li><i class="bx bx-check-circle"></i> Direct Client & Lead Messaging Channels</li>
+        <li><i class="bx bx-check-circle"></i> Formal Daily Reports & Audited Deliverables</li>
+        <li><i class="bx bx-check-circle"></i> Read-Only Transparent Earnings & Payments</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fl-login-form-area">
+    <div class="fl-login-box">
+      <div class="fl-brand-header">
+        <div class="fl-logo-row">
+          <div class="fl-logo-badge">R</div>
+          <div>
+            <h2 class="fl-brand-name">RORIRI</h2>
+            <div class="fl-brand-sub">Software Solutions</div>
+          </div>
+        </div>
+        <span class="fl-portal-tag"><i class="bx bx-user-pin"></i> Freelancer User Portal</span>
+      </div>
+
+      <h3 style="margin:0 0 6px;font-size:18px;color:var(--fl-text-dark);font-weight:700;">Sign in to your account</h3>
+      <p style="margin:0 0 1.5rem;font-size:13px;color:var(--fl-text-muted);">
+        Enter your authorized credentials or click a demo freelancer below.
+      </p>
+
+      <form onsubmit="handlePortalLogin(event)">
+        <div class="fl-form-group">
+          <label>Username / Email</label>
+          <input type="text" id="fl-auth-user" class="fl-form-control" placeholder="e.g. arun" value="arun" required>
+        </div>
+        <div class="fl-form-group">
+          <label>Password</label>
+          <input type="password" id="fl-auth-pass" class="fl-form-control" placeholder="Enter password" value="pass" required>
+        </div>
+        <button type="submit" class="fl-btn fl-btn-primary" style="width:100%;justify-content:center;padding:10px;font-size:14px;">
+          <i class="bx bx-log-in-circle"></i> Access My Workspace
+        </button>
+      </form>
+
+      <div style="margin-top:1.5rem;">
+        <span style="font-size:11.5px;font-weight:600;text-transform:uppercase;color:#94a3b8;letter-spacing:0.5px;">Quick Demo Freelancer Logins:</span>
+        <div class="fl-quick-login-pills">
+          <button type="button" class="fl-quick-pill" onclick="quickFill('arun')">
+            <i class="bx bx-code-alt"></i> Arun Kumar (Full Stack Dev)
+          </button>
+          <button type="button" class="fl-quick-pill" onclick="quickFill('priya')">
+            <i class="bx bx-palette"></i> Priya S (UI/UX Designer)
+          </button>
+          <button type="button" class="fl-quick-pill" onclick="quickFill('hari')">
+            <i class="bx bx-mobile-alt"></i> Hari Prasad (Mobile Dev)
+          </button>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid #edf2f7;font-size:12px;text-align:center;color:#64748b;">
+        <strong>Other portals:</strong>
+        <a href="index.html" style="color:var(--fl-primary);margin:0 4px;">Admin</a> &bull;
+        <a href="employee.html" style="color:var(--fl-primary);margin:0 4px;">Employee</a> &bull;
+        <a href="client.html" style="color:var(--fl-primary);margin:0 4px;">Client</a> &bull;
+        <a href="intern.html" style="color:var(--fl-primary);margin:0 4px;">Intern</a> &bull;
+        <a href="trainee.html" style="color:var(--fl-primary);margin:0 4px;">Trainee</a> &bull;
+        <a href="workspace.html" style="color:var(--fl-primary);margin:0 4px;">Workspace</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     2. FREELANCER APP WRAPPER
+     ========================================== -->
+<div id="fl-app-view" class="fl-app-container" style="display:none;">
+
+  <!-- Sidebar -->
+  <aside class="fl-sidebar" id="fl-sidebar">
+    <div class="fl-sidebar-head">
+      <a href="javascript:void(0)" onclick="navTo('dashboard')" class="fl-sidebar-logo">
+        <div class="icon">R</div>
+        <div>
+          <div class="title">RORIRI ERP</div>
+          <div class="sub">Freelancer Portal</div>
+        </div>
+      </a>
+      <button class="fl-menu-toggle" style="color:#fff;" onclick="toggleSidebar()"><i class="bx bx-x"></i></button>
+    </div>
+
+    <ul class="fl-sidebar-nav">
+      <li class="fl-nav-section-title">FREELANCER</li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-dashboard" class="active" onclick="navTo('dashboard')">
+          <i class="bx bxs-dashboard"></i> Dashboard
+        </a>
+      </li>
+
+      <li class="fl-nav-section-title">WORK</li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-projects" onclick="navTo('projects')">
+          <i class="bx bx-briefcase"></i> My Projects
+          <span class="fl-nav-badge bg-info" id="badge-active-proj">3</span>
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-tasks" onclick="navTo('tasks')">
+          <i class="bx bx-task"></i> My Tasks
+          <span class="fl-nav-badge bg-warning" id="badge-pending-tasks">7</span>
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-time" onclick="navTo('time')">
+          <i class="bx bx-time-five"></i> Time Tracker
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-daily-updates" onclick="navTo('daily-updates')">
+          <i class="bx bx-edit-alt"></i> Daily Work Update
+        </a>
+      </li>
+
+      <li class="fl-nav-section-title">COLLABORATION</li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-messages" onclick="navTo('messages')">
+          <i class="bx bx-chat"></i> Messages
+          <span class="fl-nav-badge bg-danger" id="badge-unread-msgs">2</span>
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-meetings" onclick="navTo('meetings')">
+          <i class="bx bx-video"></i> Meetings
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-documents" onclick="navTo('documents')">
+          <i class="bx bx-file"></i> Files & Documents
+        </a>
+      </li>
+
+      <li class="fl-nav-section-title">PROJECT</li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-issues" onclick="navTo('issues')">
+          <i class="bx bx-bug"></i> Issues / Bugs
+          <span class="fl-nav-badge bg-danger">1</span>
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-change-requests" onclick="navTo('change-requests')">
+          <i class="bx bx-git-pull-request"></i> Change Requests
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-deliverables" onclick="navTo('deliverables')">
+          <i class="bx bx-package"></i> Deliverables
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-deployments" onclick="navTo('deployments')">
+          <i class="bx bx-cloud-upload"></i> Deployments
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-daily-reports" onclick="navTo('daily-reports')">
+          <i class="bx bx-file-blank"></i> Daily Reports
+        </a>
+      </li>
+
+      <li class="fl-nav-section-title">FINANCE</li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-payments" onclick="navTo('payments')">
+          <i class="bx bx-credit-card"></i> Earnings & Payments
+        </a>
+      </li>
+
+      <li class="fl-nav-section-title">ACCOUNT</li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-notifications" onclick="navTo('notifications')">
+          <i class="bx bx-bell"></i> Notifications
+          <span class="fl-nav-badge bg-danger" id="badge-top-notif">4</span>
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-profile" onclick="navTo('profile')">
+          <i class="bx bx-user"></i> My Profile
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" id="nav-settings" onclick="navTo('settings')">
+          <i class="bx bx-cog"></i> Settings
+        </a>
+      </li>
+      <li class="fl-nav-item">
+        <a href="javascript:void(0)" onclick="confirmLogout()">
+          <i class="bx bx-log-out"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main Area -->
+  <div class="fl-main">
+    <!-- Topbar -->
+    <header class="fl-topbar">
+      <div class="fl-topbar-left">
+        <button class="fl-menu-toggle" onclick="toggleSidebar()"><i class="bx bx-menu"></i></button>
+        <div class="fl-breadcrumbs" id="fl-breadcrumbs">
+          <a href="javascript:void(0)" onclick="navTo('dashboard')">Freelancer</a>
+          <i class="bx bx-chevron-right"></i>
+          <span class="current" id="fl-current-crumb">Dashboard</span>
+        </div>
+      </div>
+
+      <div class="fl-topbar-right">
+        <!-- Authorized Global Search -->
+        <button class="fl-search-btn" onclick="openSearchModal()">
+          <i class="bx bx-search"></i>
+          <span>Search tasks, projects...</span>
+          <kbd>Ctrl+K</kbd>
+        </button>
+
+        <!-- Availability Toggle -->
+        <div class="fl-avail-pill" id="fl-top-avail" onclick="toggleAvailModal()">
+          <span class="dot"></span>
+          <span id="fl-top-avail-text">Available</span>
+          <i class="bx bx-chevron-down"></i>
+        </div>
+
+        <!-- Notification Bell -->
+        <button class="fl-icon-btn" onclick="toggleNotifDropdown(event)">
+          <i class="bx bx-bell"></i>
+          <span class="badge-dot" id="fl-notif-dot"></span>
+          <div class="fl-dropdown-card" id="fl-notif-dropdown" style="width:300px;">
+            <div class="fl-dropdown-header">
+              <span>Notifications (4)</span>
+              <a href="javascript:void(0)" onclick="markAllNotifRead()" style="font-size:11px;color:var(--fl-primary);text-decoration:none;">Mark all read</a>
+            </div>
+            <div id="fl-quick-notif-list" style="max-height:260px;overflow-y:auto;padding:6px 0;"></div>
+            <div style="padding:8px;text-align:center;border-top:1px solid var(--fl-border);">
+              <a href="javascript:void(0)" onclick="navTo('notifications')" style="font-size:12px;color:var(--fl-primary);font-weight:600;text-decoration:none;">View All Notifications</a>
+            </div>
+          </div>
+        </button>
+
+        <!-- User Dropdown -->
+        <div class="fl-user-menu-trigger" onclick="toggleUserDropdown(event)">
+          <div class="fl-user-avatar" id="fl-top-avatar">A</div>
+          <div class="fl-user-meta">
+            <div class="name" id="fl-top-name">Arun Kumar</div>
+            <div class="role">Freelancer</div>
+          </div>
+          <i class="bx bx-chevron-down" style="color:#858796;"></i>
+
+          <div class="fl-dropdown-card" id="fl-user-dropdown">
+            <div class="fl-dropdown-header">
+              <div>
+                <strong id="fl-dd-name">Arun Kumar</strong>
+                <div style="font-size:11px;color:#858796;" id="fl-dd-email">arun.kumar@gmail.com</div>
+              </div>
+            </div>
+            <ul class="fl-dropdown-list">
+              <li><a href="javascript:void(0)" onclick="navTo('profile')"><i class="bx bx-user"></i> My Profile</a></li>
+              <li><a href="javascript:void(0)" onclick="navTo('settings')"><i class="bx bx-cog"></i> Settings</a></li>
+              <li><a href="javascript:void(0)" onclick="navTo('time')"><i class="bx bx-time"></i> Time Tracker</a></li>
+              <div class="fl-dropdown-divider"></div>
+              <li><a href="javascript:void(0)" onclick="confirmLogout()" style="color:var(--fl-danger);"><i class="bx bx-log-out"></i> Sign Out</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Body Container -->
+    <main class="fl-content" id="fl-content-view"></main>
+
+    <!-- Footer -->
+    <footer style="padding:1rem 2rem;border-top:1px solid var(--fl-border);font-size:12px;color:#858796;display:flex;justify-content:space-between;align-items:center;background:#fff;">
+      <div>Copyright &copy; 2026. <strong>RORIRI Software Solutions</strong>. All rights reserved.</div>
+      <div>Freelancer Portal v2.4 &bull; ERP Connected</div>
+    </footer>
+  </div>
+</div>
+
+<!-- ==========================================
+     3. UNIVERSAL MODALS
+     ========================================== -->
+
+<!-- Search Modal -->
+<div class="fl-modal-backdrop" id="modal-search" onclick="closeModalOnBackdrop(event, 'modal-search')">
+  <div class="fl-modal" style="max-width:540px;">
+    <div class="fl-modal-header" style="border-bottom:none;padding-bottom:0;">
+      <div style="position:relative;width:100%;">
+        <i class="bx bx-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:20px;color:#94a3b8;"></i>
+        <input type="text" id="fl-global-search-inp" class="fl-form-control" placeholder="Search authorized projects, tasks, documents..." style="padding-left:40px;font-size:15px;" oninput="runGlobalSearch(this.value)">
+      </div>
+      <button class="fl-modal-close" onclick="closeModal('modal-search')">&times;</button>
+    </div>
+    <div class="fl-modal-body" style="padding-top:0.75rem;">
+      <div style="font-size:11.5px;color:#94a3b8;font-weight:600;margin-bottom:8px;text-transform:uppercase;">Authorized Search Results</div>
+      <div id="fl-search-results-list" style="max-height:300px;overflow-y:auto;">
+        <p style="text-align:center;color:#94a3b8;font-size:13px;padding:1.5rem 0;">Type to search authorized resources...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="fl-modal-backdrop" id="modal-terms" onclick="closeModalOnBackdrop(event, 'modal-terms')">
+  <div class="fl-modal fl-modal-lg">
+    <div class="fl-modal-header">
+      <h3><i class="bx bx-file-blank" style="color:var(--fl-warning);"></i> Project Terms & Conditions Agreement</h3>
+      <button class="fl-modal-close" onclick="closeModal('modal-terms')">&times;</button>
+    </div>
+    <div class="fl-modal-body">
+      <div id="fl-terms-modal-body"></div>
+    </div>
+    <div class="fl-modal-footer">
+      <button class="fl-btn fl-btn-secondary" onclick="declineTermsModal()">Decline Terms</button>
+      <button class="fl-btn fl-btn-success" onclick="acceptTermsModal()"><i class="bx bx-check-shield"></i> I Accept the Project Terms</button>
+    </div>
+  </div>
+</div>
+
+<!-- Save Time Entry Modal -->
+<div class="fl-modal-backdrop" id="modal-time-entry" onclick="closeModalOnBackdrop(event, 'modal-time-entry')">
+  <div class="fl-modal">
+    <div class="fl-modal-header">
+      <h3><i class="bx bx-time" style="color:var(--fl-primary);"></i> Save Time Entry</h3>
+      <button class="fl-modal-close" onclick="closeModal('modal-time-entry')">&times;</button>
+    </div>
+    <div class="fl-modal-body">
+      <div class="fl-form-group">
+        <label>Project</label>
+        <input type="text" id="te-project" class="fl-form-control" readonly>
+      </div>
+      <div class="fl-form-group">
+        <label>Task</label>
+        <input type="text" id="te-task" class="fl-form-control" readonly>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="fl-form-group">
+          <label>Logged Hours</label>
+          <input type="text" id="te-duration" class="fl-form-control" readonly>
+        </div>
+        <div class="fl-form-group">
+          <label>Date</label>
+          <input type="text" id="te-date" class="fl-form-control" readonly>
+        </div>
+      </div>
+      <div class="fl-form-group">
+        <label>Work Description / Summary *</label>
+        <textarea id="te-desc" class="fl-form-control" placeholder="Describe the work completed during this session..."></textarea>
+      </div>
+    </div>
+    <div class="fl-modal-footer">
+      <button class="fl-btn fl-btn-secondary" onclick="closeModal('modal-time-entry')">Cancel</button>
+      <button class="fl-btn fl-btn-primary" onclick="confirmSaveTimeEntry()"><i class="bx bx-check"></i> Save Time Entry</button>
+    </div>
+  </div>
+</div>
+
+<!-- Task Detail & Update Modal -->
+<div class="fl-modal-backdrop" id="modal-task-detail" onclick="closeModalOnBackdrop(event, 'modal-task-detail')">
+  <div class="fl-modal fl-modal-lg">
+    <div class="fl-modal-header">
+      <h3><i class="bx bx-task" style="color:var(--fl-primary);"></i> Task Execution Details</h3>
+      <button class="fl-modal-close" onclick="closeModal('modal-task-detail')">&times;</button>
+    </div>
+    <div class="fl-modal-body" id="fl-task-modal-content"></div>
+    <div class="fl-modal-footer">
+      <button class="fl-btn fl-btn-secondary" onclick="closeModal('modal-task-detail')">Close</button>
+      <button class="fl-btn fl-btn-primary" onclick="saveTaskModalChanges()"><i class="bx bx-save"></i> Save Task Updates</button>
+    </div>
+  </div>
+</div>
+
+<!-- Submit Deliverable Modal -->
+<div class="fl-modal-backdrop" id="modal-deliverable" onclick="closeModalOnBackdrop(event, 'modal-deliverable')">
+  <div class="fl-modal">
+    <div class="fl-modal-header">
+      <h3><i class="bx bx-package" style="color:var(--fl-primary);"></i> Submit Project Deliverable</h3>
+      <button class="fl-modal-close" onclick="closeModal('modal-deliverable')">&times;</button>
+    </div>
+    <div class="fl-modal-body">
+      <div class="fl-form-group">
+        <label>Project *</label>
+        <select id="deliv-proj" class="fl-form-control"></select>
+      </div>
+      <div class="fl-form-group">
+        <label>Associated Task</label>
+        <select id="deliv-task" class="fl-form-control"></select>
+      </div>
+      <div class="fl-form-group">
+        <label>Deliverable Title *</label>
+        <input type="text" id="deliv-title" class="fl-form-control" placeholder="e.g. Authentication Module Production Build v1.2">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="fl-form-group">
+          <label>Version *</label>
+          <input type="text" id="deliv-version" class="fl-form-control" placeholder="v1.0" value="v1.0">
+        </div>
+        <div class="fl-form-group">
+          <label>Delivery Type</label>
+          <select id="deliv-type" class="fl-form-control">
+            <option>ZIP Archive / Codebase</option>
+            <option>API Documentation</option>
+            <option>Figma / Design Asset</option>
+            <option>Deployment Artifact</option>
+          </select>
+        </div>
+      </div>
+      <div class="fl-form-group">
+        <label>Repository / Artifact Link (Optional)</label>
+        <input type="url" id="deliv-link" class="fl-form-control" placeholder="https://github.com/roriri/repo-build">
+      </div>
+      <div class="fl-form-group">
+        <label>Submission Notes / Change Summary *</label>
+        <textarea id="deliv-notes" class="fl-form-control" placeholder="Summarize features included, test results, and instructions..."></textarea>
+      </div>
+    </div>
+    <div class="fl-modal-footer">
+      <button class="fl-btn fl-btn-secondary" onclick="closeModal('modal-deliverable')">Cancel</button>
+      <button class="fl-btn fl-btn-success" onclick="submitDeliverableForm()"><i class="bx bx-check-circle"></i> Submit for Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- Report Issue Modal -->
+<div class="fl-modal-backdrop" id="modal-report-issue" onclick="closeModalOnBackdrop(event, 'modal-report-issue')">
+  <div class="fl-modal">
+    <div class="fl-modal-header">
+      <h3><i class="bx bx-bug" style="color:var(--fl-danger);"></i> Report Project Issue / Bug</h3>
+      <button class="fl-modal-close" onclick="closeModal('modal-report-issue')">&times;</button>
+    </div>
+    <div class="fl-modal-body">
+      <div class="fl-form-group">
+        <label>Project *</label>
+        <select id="iss-proj" class="fl-form-control"></select>
+      </div>
+      <div class="fl-form-group">
+        <label>Issue Title *</label>
+        <input type="text" id="iss-title" class="fl-form-control" placeholder="Brief summary of bug or blocker...">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="fl-form-group">
+          <label>Severity *</label>
+          <select id="iss-severity" class="fl-form-control">
+            <option>Low</option>
+            <option selected>Medium</option>
+            <option>High</option>
+            <option>Critical</option>
+          </select>
+        </div>
+        <div class="fl-form-group">
+          <label>Priority *</label>
+          <select id="iss-priority" class="fl-form-control">
+            <option>Normal</option>
+            <option>Urgent</option>
+            <option>Immediate</option>
+          </select>
+        </div>
+      </div>
+      <div class="fl-form-group">
+        <label>Steps to Reproduce & Expected Outcome *</label>
+        <textarea id="iss-desc" class="fl-form-control" placeholder="Describe the error, steps taken, and browser/OS environment..."></textarea>
+      </div>
+    </div>
+    <div class="fl-modal-footer">
+      <button class="fl-btn fl-btn-secondary" onclick="closeModal('modal-report-issue')">Cancel</button>
+      <button class="fl-btn fl-btn-danger" onclick="submitIssueForm()"><i class="bx bx-bug"></i> Log Issue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Create Change Request Modal -->
+<div class="fl-modal-backdrop" id="modal-change-request" onclick="closeModalOnBackdrop(event, 'modal-change-request')">
+  <div class="fl-modal">
+    <div class="fl-modal-header">
+      <h3><i class="bx bx-git-pull-request" style="color:var(--fl-info);"></i> Propose Change Request</h3>
+      <button class="fl-modal-close" onclick="closeModal('modal-change-request')">&times;</button>
+    </div>
+    <div class="fl-modal-body">
+      <div class="fl-form-group">
+        <label>Project *</label>
+        <select id="cr-proj" class="fl-form-control"></select>
+      </div>
+      <div class="fl-form-group">
+        <label>Change Request Title *</label>
+        <input type="text" id="cr-title" class="fl-form-control" placeholder="e.g. Migration from REST to WebSocket for live notifications">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="fl-form-group">
+          <label>Estimated Effort (Hours)</label>
+          <input type="number" id="cr-effort" class="fl-form-control" placeholder="e.g. 16" value="12">
+        </div>
+        <div class="fl-form-group">
+          <label>Priority</label>
+          <select id="cr-priority" class="fl-form-control">
+            <option>Low</option>
+            <option selected>Medium</option>
+            <option>High</option>
+          </select>
+        </div>
+      </div>
+      <div class="fl-form-group">
+        <label>Technical Rationale & Impact *</label>
+        <textarea id="cr-reason" class="fl-form-control" placeholder="Explain why this change is necessary and what modules it affects..."></textarea>
+      </div>
+      <div style="font-size:11.5px;color:#858796;background:#f8f9fc;padding:8px 12px;border-radius:6px;">
+        <i class="bx bx-info-circle"></i> Note: Change requests are submitted to the ERP Project Manager for approval before implementation can commence.
+      </div>
+    </div>
+    <div class="fl-modal-footer">
+      <button class="fl-btn fl-btn-secondary" onclick="closeModal('modal-change-request')">Cancel</button>
+      <button class="fl-btn fl-btn-primary" onclick="submitChangeRequestForm()"><i class="bx bx-send"></i> Submit Change Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- Daily Report Modal -->
+<div class="fl-modal-backdrop" id="modal-daily-report" onclick="closeModalOnBackdrop(event, 'modal-daily-report')">
+  <div class="fl-modal fl-modal-lg">
+    <div class="fl-modal-header">
+      <h3><i class="bx bx-file-blank" style="color:var(--fl-primary);"></i> Submit Formal Daily Audit Report</h3>
+      <button class="fl-modal-close" onclick="closeModal('modal-daily-report')">&times;</button>
+    </div>
+    <div class="fl-modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="fl-form-group">
+          <label>Date *</label>
+          <input type="date" id="dr-date" class="fl-form-control">
+        </div>
+        <div class="fl-form-group">
+          <label>Project *</label>
+          <select id="dr-proj" class="fl-form-control"></select>
+        </div>
+      </div>
+      <div class="fl-form-group">
+        <label>Tasks Completed Today *</label>
+        <textarea id="dr-completed" class="fl-form-control" placeholder="Bullet points of finished work and test verifications..."></textarea>
+      </div>
+      <div class="fl-form-group">
+        <label>Work In Progress</label>
+        <textarea id="dr-wip" class="fl-form-control" placeholder="Ongoing sub-tasks or code under review..."></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="fl-form-group">
+          <label>Blockers / Impediments</label>
+          <input type="text" id="dr-blockers" class="fl-form-control" placeholder="None / Waiting on API keys">
+        </div>
+        <div class="fl-form-group">
+          <label>Total Hours Worked</label>
+          <input type="text" id="dr-hours" class="fl-form-control" placeholder="e.g. 6.5 hrs" value="7.0 hrs">
+        </div>
+      </div>
+      <div class="fl-form-group">
+        <label>Next Day Priorities & Milestones</label>
+        <input type="text" id="dr-plan" class="fl-form-control" placeholder="Next planned deliverables...">
+      </div>
+    </div>
+    <div class="fl-modal-footer">
+      <button class="fl-btn fl-btn-secondary" onclick="closeModal('modal-daily-report')">Cancel</button>
+      <button class="fl-btn fl-btn-primary" onclick="submitFormalDailyReport()"><i class="bx bx-check-double"></i> Submit Daily Report</button>
+    </div>
+  </div>
+</div>
+
+<!-- Generic Confirmation Modal -->
+<div class="fl-modal-backdrop" id="modal-confirm" onclick="closeModalOnBackdrop(event, 'modal-confirm')">
+  <div class="fl-modal" style="max-width:440px;">
+    <div class="fl-modal-header">
+      <h3 id="fl-confirm-title">Confirmation Required</h3>
+      <button class="fl-modal-close" onclick="closeModal('modal-confirm')">&times;</button>
+    </div>
+    <div class="fl-modal-body">
+      <p id="fl-confirm-msg" style="margin:0;font-size:14px;color:var(--fl-text-dark);line-height:1.5;"></p>
+    </div>
+    <div class="fl-modal-footer">
+      <button class="fl-btn fl-btn-secondary" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="fl-btn fl-btn-danger" id="fl-confirm-btn" onclick="executeConfirmAction()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     4. FREELANCER CORE LOGIC & DATA
+     ========================================== -->
+<script>
+(function() {
+  'use strict';
+
+  // State Management
+  window.FL_STATE = {
+    user: null,
+    currentModule: 'dashboard',
+    activeWorkspaceProjectId: null,
+    activeWorkspaceTab: 'overview',
+    timer: {
+      interval: null,
+      seconds: 20538, // 5h 42m 18s initial realistic demo state
+      running: true,
+      projectId: 'PRJ-101',
+      taskId: 'TSK-102'
+    },
+    confirmCallback: null
+  };
+
+  // Dedicated Freelancer Data Store
+  window.FL_DATABASE = {
+    freelancers: [
+      {
+        id: 'FL001',
+        username: 'arun',
+        name: 'Arun Kumar',
+        role: 'Senior Full Stack Developer',
+        email: 'arun.kumar@gmail.com',
+        phone: '+91 98401 23456',
+        skills: ['React', 'Node.js', 'Python', 'PostgreSQL', 'Docker', 'AWS'],
+        availability: 'Available',
+        todayHours: '5h 42m',
+        pendingPayments: '₹32,500',
+        assignedProjectIds: ['PRJ-101', 'PRJ-102', 'PRJ-103']
+      },
+      {
+        id: 'FL002',
+        username: 'priya',
+        name: 'Priya S',
+        role: 'Lead UI/UX Designer',
+        email: 'priya.design@gmail.com',
+        phone: '+91 98402 34567',
+        skills: ['Figma', 'Design Systems', 'Mobile UI', 'Adobe XD'],
+        availability: 'Busy',
+        todayHours: '4h 15m',
+        pendingPayments: '₹28,000',
+        assignedProjectIds: ['PRJ-101', 'PRJ-103']
+      },
+      {
+        id: 'FL003',
+        username: 'hari',
+        name: 'Hari Prasad',
+        role: 'Mobile App Specialist',
+        email: 'hari.prasad.dev@gmail.com',
+        phone: '+91 98403 45678',
+        skills: ['Flutter', 'React Native', 'Firebase', 'iOS', 'Android'],
+        availability: 'Available',
+        todayHours: '6h 10m',
+        pendingPayments: '₹45,000',
+        assignedProjectIds: ['PRJ-102']
+      }
+    ],
+
+    projects: [
+      {
+        id: 'PRJ-101',
+        code: 'ROR-MOD-2026',
+        name: 'ERP Modernization',
+        client: 'Roriri Software Solutions',
+        clientPerson: 'Ragupathi (Super Admin)',
+        pm: 'Suresh Raina',
+        myRole: 'Full Stack Developer',
+        responsibilities: 'Authentication API, database optimization, backend payment hooks and module migrations.',
+        status: 'Active',
+        progress: 68,
+        startDate: '2026-02-01',
+        endDate: '2026-08-30',
+        termsRequired: true,
+        termsStatus: 'Accepted',
+        termsAcceptedDate: '2026-02-02 10:15 AM',
+        termsVersion: 'v2.1',
+        loggedHours: '124.5 hrs',
+        totalBudget: '₹85,000',
+        tasksTotal: 12,
+        tasksCompleted: 8,
+        description: 'Complete architecture upgrade of Roriri Enterprise ERP core subsystems, migrating from legacy monolith scripts to modular API endpoints, role-based multi-tenant workspaces, and secure cloud storage.'
+      },
+      {
+        id: 'PRJ-102',
+        code: 'NX-AI-2026',
+        name: 'AI Interview Platform',
+        client: 'NexGen IT College',
+        clientPerson: 'Dr. Subramanian',
+        pm: 'Anushiya P',
+        myRole: 'Backend Developer',
+        responsibilities: 'Resume parser integration, vector embedding endpoints, evaluation rubric generation API.',
+        status: 'Active',
+        progress: 45,
+        startDate: '2026-03-01',
+        endDate: '2026-09-15',
+        termsRequired: true,
+        termsStatus: 'Pending Acceptance',
+        termsAcceptedDate: null,
+        termsVersion: 'v1.4',
+        loggedHours: '46.0 hrs',
+        totalBudget: '₹65,000',
+        tasksTotal: 9,
+        tasksCompleted: 4,
+        description: 'Automated campus hiring and AI-driven technical screening engine supporting candidate transcript evaluations, coding challenges, and auto-generated candidate assessment summaries.'
+      },
+      {
+        id: 'PRJ-103',
+        code: 'RYA-SCH-2026',
+        name: 'School ERP Suite',
+        client: 'Riya IAS Academy',
+        clientPerson: 'Kalyani Raman',
+        pm: 'Hari Krishnan',
+        myRole: 'API Developer',
+        responsibilities: 'Student attendance sync, parent portal REST hooks, fee receipt ledger exports.',
+        status: 'Active',
+        progress: 82,
+        startDate: '2026-01-15',
+        endDate: '2026-06-30',
+        termsRequired: true,
+        termsStatus: 'Accepted',
+        termsAcceptedDate: '2026-01-16 09:30 AM',
+        termsVersion: 'v1.0',
+        loggedHours: '188.0 hrs',
+        totalBudget: '₹70,000',
+        tasksTotal: 14,
+        tasksCompleted: 11,
+        description: 'Comprehensive academic institution portal delivering dynamic timetables, fee collection reminders, offline-first attendance tracking, and parent communications.'
+      }
+    ],
+
+    tasks: [
+      {
+        id: 'TSK-101',
+        projectId: 'PRJ-101',
+        title: 'Implement Authentication API & Session Tokens',
+        description: 'Create OAuth2/JWT refresh token endpoints with role scopes for Freelancer & Workforce sub-portals.',
+        priority: 'High',
+        status: 'Completed',
+        progress: 100,
+        estimatedHours: 16,
+        loggedHours: 15.5,
+        startDate: '2026-02-05',
+        dueDate: '2026-02-14',
+        notes: 'Merged and passed code security scan.'
+      },
+      {
+        id: 'TSK-102',
+        projectId: 'PRJ-101',
+        title: 'Payment Gateway Webhooks & Reconciliation',
+        description: 'Handle Razorpay webhook retries, transaction logs, and write-through to client invoice records.',
+        priority: 'High',
+        status: 'In Progress',
+        progress: 75,
+        estimatedHours: 20,
+        loggedHours: 14.0,
+        startDate: '2026-02-18',
+        dueDate: '2026-09-12',
+        notes: 'Webhook verification working on sandbox. Handling signature replay prevention.'
+      },
+      {
+        id: 'TSK-103',
+        projectId: 'PRJ-101',
+        title: 'Optimize Database Indexing & Report Queries',
+        description: 'Profile slow joins in project deliverables and attendance log history. Add compound indexes.',
+        priority: 'Medium',
+        status: 'Pending',
+        progress: 20,
+        estimatedHours: 12,
+        loggedHours: 2.5,
+        startDate: '2026-03-01',
+        dueDate: '2026-09-18',
+        notes: 'Analyzing query plans for large monthly datasets.'
+      },
+      {
+        id: 'TSK-104',
+        projectId: 'PRJ-102',
+        title: 'Resume Analysis Parser & Scoring API',
+        description: 'Integrate PDF text extraction and map candidates against job rubric skill matrices.',
+        priority: 'High',
+        status: 'In Progress',
+        progress: 60,
+        estimatedHours: 24,
+        loggedHours: 14.5,
+        startDate: '2026-03-05',
+        dueDate: '2026-09-14',
+        notes: 'Parsing accuracy benchmark at 94% across sample CV sets.'
+      },
+      {
+        id: 'TSK-105',
+        projectId: 'PRJ-102',
+        title: 'Interview Transcript Speech-to-Text Pipeline',
+        description: 'Connect audio streaming chunks to background transcription workers.',
+        priority: 'Medium',
+        status: 'Pending',
+        progress: 0,
+        estimatedHours: 18,
+        loggedHours: 0,
+        startDate: '2026-03-12',
+        dueDate: '2026-09-22',
+        notes: 'Waiting for vendor credentials from PM.'
+      },
+      {
+        id: 'TSK-106',
+        projectId: 'PRJ-103',
+        title: 'Parent Portal High-Fi Mockup Integration',
+        description: 'Embed responsive fee receipt ledger and report card downloadable PDF generation.',
+        priority: 'Normal',
+        status: 'Completed',
+        progress: 100,
+        estimatedHours: 15,
+        loggedHours: 14.0,
+        startDate: '2026-02-10',
+        dueDate: '2026-02-28',
+        notes: 'Approved by client without revision.'
+      },
+      {
+        id: 'TSK-107',
+        projectId: 'PRJ-103',
+        title: 'Attendance Biometric CSV Sync Daemon',
+        description: 'Parse morning check-in hardware logs and push updates to staff dashboard.',
+        priority: 'High',
+        status: 'Blocked',
+        progress: 40,
+        estimatedHours: 12,
+        loggedHours: 5.0,
+        startDate: '2026-03-02',
+        dueDate: '2026-09-10',
+        notes: 'Network firewall at academy branch currently blocking FTP port 21.'
+      }
+    ],
+
+    dailyUpdates: [
+      {
+        id: 'DU-801',
+        date: '2026-09-10',
+        projectId: 'PRJ-101',
+        taskId: 'TSK-102',
+        completedWork: 'Implemented webhook retry queue using Redis backing store.',
+        inProgressWork: 'Writing automated test assertions for idempotency key verification.',
+        pendingWork: 'Staging server deployment and signature validation against test gateway.',
+        blockers: 'None.',
+        hoursWorked: '5.5 hrs',
+        status: 'Submitted',
+        submittedAt: 'Today, 10:45 AM'
+      },
+      {
+        id: 'DU-800',
+        date: '2026-09-09',
+        projectId: 'PRJ-102',
+        taskId: 'TSK-104',
+        completedWork: 'Connected PDF parsing library and structured output schema.',
+        inProgressWork: 'Fine-tuning skill matching algorithms.',
+        pendingWork: 'Vector similarity indexing.',
+        blockers: 'Awaiting cloud sandbox quota approval.',
+        hoursWorked: '6.0 hrs',
+        status: 'Submitted',
+        submittedAt: 'Yesterday, 06:15 PM'
+      }
+    ],
+
+    dailyReports: [
+      {
+        id: 'DR-401',
+        date: '2026-09-09',
+        projectId: 'PRJ-101',
+        completedTasks: 'Completed payment webhook authentication filters, updated database schemas for transaction states.',
+        wip: 'Stress testing signature verifier under concurrent load.',
+        blockers: 'None',
+        hours: '7.5 hrs',
+        status: 'Reviewed',
+        reviewedBy: 'Suresh Raina (PM)',
+        feedback: 'Clean implementation. Proceed to deployment staging branch.'
+      },
+      {
+        id: 'DR-402',
+        date: '2026-09-08',
+        projectId: 'PRJ-103',
+        completedTasks: 'Fixed fee payment receipt PDF formatting issue for mobile viewports.',
+        wip: 'Attendance file upload validation.',
+        blockers: 'Network latency on client test server.',
+        hours: '6.0 hrs',
+        status: 'Submitted',
+        reviewedBy: 'Pending Review',
+        feedback: null
+      }
+    ],
+
+    conversations: [
+      {
+        id: 'CONV-1',
+        projectId: 'PRJ-101',
+        title: 'ERP Modernization Dev Sync',
+        participants: ['Suresh Raina (PM)', 'Arun Kumar (You)', 'Jenifer (Client Lead)'],
+        lastMsg: 'The webhook tests passed on our staging sandbox.',
+        lastTime: '10:30 AM',
+        unreadCount: 1,
+        messages: [
+          { sender: 'Suresh Raina (PM)', text: 'Good morning Arun, how is the payment webhook retry module looking?', time: '09:15 AM', isMe: false },
+          { sender: 'Arun Kumar (You)', text: 'Good morning Suresh! Core retry queue is finished and verified with idempotency keys.', time: '09:42 AM', isMe: true },
+          { sender: 'Jenifer (Client Lead)', text: 'The webhook tests passed on our staging sandbox. Thanks for the quick turnaround!', time: '10:30 AM', isMe: false }
+        ]
+      },
+      {
+        id: 'CONV-2',
+        projectId: 'PRJ-102',
+        title: 'NexGen AI Platform Architecture',
+        participants: ['Anushiya P (PM)', 'Arun Kumar (You)'],
+        lastMsg: 'Please review the updated candidate rubric schema.',
+        lastTime: 'Yesterday',
+        unreadCount: 1,
+        messages: [
+          { sender: 'Anushiya P (PM)', text: 'Hi Arun, Dr. Subramanian approved the 94% accuracy threshold for candidate parsing.', time: 'Yesterday 03:20 PM', isMe: false },
+          { sender: 'Arun Kumar (You)', text: 'Excellent! I will commit the model weights and inference endpoint today.', time: 'Yesterday 04:05 PM', isMe: true },
+          { sender: 'Anushiya P (PM)', text: 'Please review the updated candidate rubric schema.', time: 'Yesterday 05:40 PM', isMe: false }
+        ]
+      },
+      {
+        id: 'CONV-3',
+        projectId: 'PRJ-103',
+        title: 'School ERP - Tech Operations',
+        participants: ['Hari Krishnan (PM)', 'Arun Kumar (You)'],
+        lastMsg: 'Firewall ticket has been logged with IT.',
+        lastTime: 'Sep 08',
+        unreadCount: 0,
+        messages: [
+          { sender: 'Arun Kumar (You)', text: 'Branch server is refusing FTP connections for biometric sync.', time: 'Sep 08 11:10 AM', isMe: true },
+          { sender: 'Hari Krishnan (PM)', text: 'Firewall ticket has been logged with IT. Expect resolution by Wednesday.', time: 'Sep 08 02:15 PM', isMe: false }
+        ]
+      }
+    ],
+
+    meetings: [
+      {
+        id: 'MTG-101',
+        projectId: 'PRJ-101',
+        title: 'Sprint 14 Demo & Staging Sign-Off',
+        date: 'Today, 2026-09-10',
+        time: '03:30 PM - 04:15 PM',
+        duration: '45 mins',
+        platform: 'Google Meet',
+        link: 'https://meet.google.com/ror-mod-sync',
+        participants: ['Suresh Raina (PM)', 'Ragupathi (Super Admin)', 'Arun Kumar', 'Jenifer (Client)'],
+        agenda: 'Review webhook verification flows, inspect database optimization benchmarks, schedule release.',
+        status: 'Confirmed'
+      },
+      {
+        id: 'MTG-102',
+        projectId: 'PRJ-102',
+        title: 'Candidate Evaluation Model Review',
+        date: 'Tomorrow, 2026-09-11',
+        time: '11:00 AM - 11:45 AM',
+        duration: '45 mins',
+        platform: 'Zoom Enterprise',
+        link: 'https://zoom.us/j/9840123456',
+        participants: ['Anushiya P', 'Dr. Subramanian', 'Arun Kumar'],
+        agenda: 'Examine resume parsing precision across engineering and arts stream profiles.',
+        status: 'Pending Acceptance'
+      },
+      {
+        id: 'MTG-103',
+        projectId: 'PRJ-103',
+        title: 'Monthly Project Retrospective',
+        date: '2026-09-15',
+        time: '04:00 PM - 05:00 PM',
+        duration: '60 mins',
+        platform: 'Microsoft Teams',
+        link: 'https://teams.microsoft.com/l/meetup',
+        participants: ['Hari Krishnan', 'Kalyani Raman', 'Arun Kumar'],
+        agenda: 'Review module milestones and budget progress.',
+        status: 'Scheduled'
+      }
+    ],
+
+    documents: [
+      { id: 'DOC-01', projectId: 'PRJ-101', name: 'ERP_Modernization_SRS_v2.4.pdf', category: 'Requirements', size: '3.4 MB', date: '2026-02-01', uploadedBy: 'Suresh Raina (PM)' },
+      { id: 'DOC-02', projectId: 'PRJ-101', name: 'Freelancer_SLA_Terms_v2.1.pdf', category: 'Contracts / Terms', size: '1.2 MB', date: '2026-02-02', uploadedBy: 'RORIRI Legal' },
+      { id: 'DOC-03', projectId: 'PRJ-101', name: 'Payment_Gateway_Webhook_Spec.pdf', category: 'Project Documents', size: '2.1 MB', date: '2026-02-15', uploadedBy: 'Suresh Raina (PM)' },
+      { id: 'DOC-04', projectId: 'PRJ-102', name: 'AI_Interview_Scoring_Rubrics.xlsx', category: 'Requirements', size: '850 KB', date: '2026-03-02', uploadedBy: 'Anushiya P (PM)' },
+      { id: 'DOC-05', projectId: 'PRJ-103', name: 'School_Fee_Ledger_Design_v1.fig', category: 'Designs', size: '14.2 MB', date: '2026-01-20', uploadedBy: 'Priya S (Designer)' }
+    ],
+
+    issues: [
+      {
+        id: 'ISS-201',
+        projectId: 'PRJ-101',
+        taskId: 'TSK-102',
+        title: 'Webhook replay attack vulnerability during test retry loop',
+        priority: 'Immediate',
+        severity: 'High',
+        status: 'In Progress',
+        reporter: 'Arun Kumar (Freelancer)',
+        assignedTo: 'Arun Kumar',
+        date: '2026-09-08',
+        desc: 'Signatures were accepting timestamps up to 10 minutes old. Tightened validation tolerance to 60 seconds with redis nonce check.'
+      },
+      {
+        id: 'ISS-202',
+        projectId: 'PRJ-103',
+        taskId: 'TSK-107',
+        title: 'Biometric server port 21 connection timeout',
+        priority: 'Urgent',
+        severity: 'Critical',
+        status: 'Blocked',
+        reporter: 'Arun Kumar (Freelancer)',
+        assignedTo: 'Hari Krishnan (PM)',
+        date: '2026-09-07',
+        desc: 'External FTP sync daemon unable to handshake with campus network. Escalated to college network admin.'
+      },
+      {
+        id: 'ISS-203',
+        projectId: 'PRJ-101',
+        taskId: 'TSK-101',
+        title: 'Token expiry warning toast appearing prematurely',
+        priority: 'Normal',
+        severity: 'Low',
+        status: 'Resolved',
+        reporter: 'Suresh Raina (PM)',
+        assignedTo: 'Arun Kumar',
+        date: '2026-02-20',
+        desc: 'Clock skew correction applied in portal auth interceptor.'
+      }
+    ],
+
+    changeRequests: [
+      {
+        id: 'CR-301',
+        projectId: 'PRJ-101',
+        title: 'Upgrade Webhook Processing to Async Redis Queue',
+        reason: 'Prevents HTTP socket exhaustion under high transaction volume during university fee dates.',
+        impact: 'Affects webhook listener and transaction ledger daemon.',
+        effort: '14 Hours',
+        priority: 'High',
+        status: 'Approved',
+        submittedAt: '2026-08-25',
+        approvedBy: 'Ragupathi (Super Admin)'
+      },
+      {
+        id: 'CR-302',
+        projectId: 'PRJ-102',
+        title: 'Add Multi-Lingual Resume Parsing for Tamil & Hindi',
+        reason: 'Candidates frequently submit regional language curriculum vitae for academy posts.',
+        impact: 'Requires auxiliary OCR pipeline and localized tokenizers.',
+        effort: '20 Hours',
+        priority: 'Medium',
+        status: 'Under Review',
+        submittedAt: '2026-09-06',
+        approvedBy: 'Under PM Review'
+      }
+    ],
+
+    deliverables: [
+      {
+        id: 'DEL-501',
+        projectId: 'PRJ-101',
+        taskId: 'TSK-101',
+        name: 'Enterprise Authentication Subsystem v1.0',
+        version: 'v1.0.0',
+        submissionDate: '2026-02-15',
+        status: 'Approved',
+        reviewer: 'Suresh Raina (PM)',
+        feedback: 'Fully approved and deployed to production cluster.'
+      },
+      {
+        id: 'DEL-502',
+        projectId: 'PRJ-101',
+        taskId: 'TSK-102',
+        name: 'Razorpay Webhook & Payment Reconciliation Package',
+        version: 'v1.2.0-rc',
+        submissionDate: '2026-09-09',
+        status: 'Under Review',
+        reviewer: 'Suresh Raina (PM)',
+        feedback: 'Currently executing regression tests on staging.'
+      },
+      {
+        id: 'DEL-503',
+        projectId: 'PRJ-103',
+        taskId: 'TSK-106',
+        name: 'Parent Portal Student Fee Ledger Interface',
+        version: 'v2.1',
+        submissionDate: '2026-03-01',
+        status: 'Approved',
+        reviewer: 'Hari Krishnan (PM)',
+        feedback: 'Client signed off on UI layout and receipt PDF generation.'
+      }
+    ],
+
+    deployments: [
+      {
+        id: 'DEP-901',
+        projectId: 'PRJ-101',
+        version: 'v2.4.0',
+        environment: 'Production',
+        date: '2026-02-16',
+        deployedBy: 'DevOps Lead (ERP Admin)',
+        status: 'Successful',
+        notes: 'Auth subsystem live deployment with zero downtime migration.'
+      },
+      {
+        id: 'DEP-902',
+        projectId: 'PRJ-101',
+        version: 'v2.4.2-rc',
+        environment: 'Staging',
+        date: '2026-09-09',
+        deployedBy: 'Continuous Integration',
+        status: 'Successful',
+        notes: 'Payment webhook handler release candidate running on test cluster.'
+      },
+      {
+        id: 'DEP-903',
+        projectId: 'PRJ-102',
+        version: 'v1.1.0-beta',
+        environment: 'Development',
+        date: '2026-09-08',
+        deployedBy: 'Arun Kumar',
+        status: 'Successful',
+        notes: 'Resume parsing sandbox container instance with 94% accuracy model.'
+      }
+    ],
+
+    payments: [
+      {
+        id: 'PAY-701',
+        projectId: 'PRJ-101',
+        projectName: 'ERP Modernization',
+        period: 'Feb 2026 - Milestone 1 (Auth Subsystem)',
+        amount: '₹35,000',
+        date: '2026-03-02',
+        ref: 'TXN-ROR-984012',
+        status: 'Paid',
+        notes: 'Processed via direct bank transfer. Milestone 1 deliverable verified.'
+      },
+      {
+        id: 'PAY-702',
+        projectId: 'PRJ-103',
+        projectName: 'School ERP Suite',
+        period: 'Jan-Feb 2026 - Milestone 1 (Parent Ledger)',
+        amount: '₹35,000',
+        date: '2026-03-05',
+        ref: 'TXN-ROR-984013',
+        status: 'Paid',
+        notes: 'Approved by Hari Krishnan.'
+      },
+      {
+        id: 'PAY-703',
+        projectId: 'PRJ-101',
+        projectName: 'ERP Modernization',
+        period: 'Aug-Sep 2026 - Milestone 2 (Payment Webhooks)',
+        amount: '₹32,500',
+        date: 'Expected 2026-09-18',
+        ref: 'PENDING-INV-04',
+        status: 'Pending',
+        notes: 'Under review upon deliverable sign-off.'
+      }
+    ],
+
+    teammates: [
+      {
+        projectId: 'PRJ-101',
+        name: 'Arun Kumar',
+        type: 'Freelancer Teammate',
+        role: 'Full Stack Architecture',
+        assignedBy: 'ERP Admin',
+        tasks: 'Payment gateway webhooks, DB optimization',
+        status: 'Active'
+      },
+      {
+        projectId: 'PRJ-101',
+        name: 'Priya S',
+        type: 'Freelancer Teammate',
+        role: 'UI/UX Designer',
+        assignedBy: 'ERP Admin',
+        tasks: 'Admin audit logs high-fi mockups',
+        status: 'Active'
+      },
+      {
+        projectId: 'PRJ-101',
+        name: 'Sneha L',
+        type: 'Company Intern',
+        role: 'Frontend Intern',
+        assignedBy: 'Anushiya P (Mentor)',
+        tasks: 'CSS cleanup & modal layout testing',
+        status: 'Under Mentorship'
+      },
+      {
+        projectId: 'PRJ-101',
+        name: 'Vignesh M',
+        type: 'Company Trainee',
+        role: 'Backend Trainee',
+        assignedBy: 'Hari Krishnan (Mentor)',
+        tasks: 'Unit test assertions for REST routes',
+        status: 'In Training'
+      },
+      {
+        projectId: 'PRJ-102',
+        name: 'Karthik Raja',
+        type: 'Company Trainee',
+        role: 'QA Trainee',
+        assignedBy: 'Anushiya P',
+        tasks: 'Cross-browser testing on Chrome/Safari',
+        status: 'In Training'
+      }
+    ],
+
+    notifications: [
+      { id: 'NOTIF-1', icon: 'bx-shield-quarter', title: 'Project Terms Acceptance Required', desc: 'Terms for project "AI Interview Platform" (v1.4) require review before work unlocks.', time: '20 mins ago', unread: true, module: 'projects' },
+      { id: 'NOTIF-2', icon: 'bx-task', title: 'Task Deadline Approaching', desc: 'Task "Payment Gateway Webhooks" is due in 2 days (Sep 12).', time: '1 hour ago', unread: true, module: 'tasks' },
+      { id: 'NOTIF-3', icon: 'bx-message-rounded-dots', title: 'New Message from Client Lead', desc: 'Jenifer sent a message in "ERP Modernization Dev Sync".', time: '2 hours ago', unread: true, module: 'messages' },
+      { id: 'NOTIF-4', icon: 'bx-video', title: 'Sprint Meeting in 4 Hours', desc: 'Sprint 14 Demo & Staging Sign-Off scheduled at 03:30 PM.', time: '3 hours ago', unread: true, module: 'meetings' },
+      { id: 'NOTIF-5', icon: 'bx-package', title: 'Deliverable Approved', desc: 'Enterprise Authentication Subsystem v1.0 was approved by Suresh Raina.', time: 'Yesterday', unread: false, module: 'deliverables' },
+      { id: 'NOTIF-6', icon: 'bx-credit-card', title: 'Payment Disbursed', desc: 'Milestone payment ₹35,000 for School ERP Suite was credited.', time: 'Sep 05', unread: false, module: 'payments' }
+    ]
+  };
+
+  // Helper Utilities
+  window.showToast = function(msg, type) {
+    type = type || 'info';
+    var container = document.getElementById('fl-toast-container');
+    var toast = document.createElement('div');
+    toast.className = 'fl-toast ' + type;
+    var icon = type === 'success' ? 'bx-check-circle' : (type === 'danger' ? 'bx-error-circle' : (type === 'warning' ? 'bx-alarm-exclamation' : 'bx-info-circle'));
+    toast.innerHTML = '<i class="bx ' + icon + '" style="font-size:18px;"></i><span>' + msg + '</span>';
+    container.appendChild(toast);
+    setTimeout(function() {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(-10px)';
+      toast.style.transition = 'all 0.3s ease';
+      setTimeout(function() { toast.remove(); }, 300);
+    }, 3200);
+  };
+
+  window.openModal = function(id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.add('show');
+  };
+
+  window.closeModal = function(id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.remove('show');
+  };
+
+  window.closeModalOnBackdrop = function(e, id) {
+    if (e.target.id === id) {
+      closeModal(id);
+    }
+  };
+
+  window.toggleSidebar = function() {
+    var sb = document.getElementById('fl-sidebar');
+    sb.classList.toggle('open');
+  };
+
+  window.quickFill = function(username) {
+    var u = FL_DATABASE.freelancers.find(function(f) { return f.username === username; });
+    if (u) {
+      document.getElementById('fl-auth-user').value = u.username;
+      document.getElementById('fl-auth-pass').value = 'pass';
+      showToast('Autofilled credentials for ' + u.name, 'info');
+    }
+  };
+
+  window.handlePortalLogin = function(e) {
+    if (e) e.preventDefault();
+    var uname = document.getElementById('fl-auth-user').value.trim().toLowerCase();
+    var fl = FL_DATABASE.freelancers.find(function(f) {
+      return f.username.toLowerCase() === uname || f.name.toLowerCase().indexOf(uname) !== -1;
+    });
+
+    if (!fl) {
+      showToast('Freelancer record not found for "' + uname + '". Please try "arun", "priya" or "hari".', 'danger');
+      return;
+    }
+
+    FL_STATE.user = fl;
+    document.getElementById('fl-login-view').style.display = 'none';
+    document.getElementById('fl-app-view').style.display = 'flex';
+
+    // Populate user profile info in topbar
+    document.getElementById('fl-top-name').textContent = fl.name;
+    document.getElementById('fl-dd-name').textContent = fl.name;
+    document.getElementById('fl-dd-email').textContent = fl.email;
+    document.getElementById('fl-top-avatar').textContent = fl.name.charAt(0);
+    updateAvailBadgeUI(fl.availability);
+
+    // Filter projects & tasks by assigned freelancer
+    updateBadges();
+    showToast('Welcome back, ' + fl.name + '! Connected to RORIRI ERP.', 'success');
+    navTo('dashboard');
+    startTimerInterval();
+  };
+
+  window.confirmLogout = function() {
+    showConfirm('Confirm Sign Out', 'Are you sure you want to log out of your Freelancer Workspace? Active timers will be preserved.', function() {
+      if (FL_STATE.timer.interval) clearInterval(FL_STATE.timer.interval);
+      document.getElementById('fl-app-view').style.display = 'none';
+      document.getElementById('fl-login-view').style.display = 'flex';
+      showToast('You have securely signed out.', 'info');
+    });
+  };
+
+  window.showConfirm = function(title, msg, callback) {
+    document.getElementById('fl-confirm-title').textContent = title;
+    document.getElementById('fl-confirm-msg').textContent = msg;
+    FL_STATE.confirmCallback = callback;
+    openModal('modal-confirm');
+  };
+
+  window.executeConfirmAction = function() {
+    closeModal('modal-confirm');
+    if (typeof FL_STATE.confirmCallback === 'function') {
+      FL_STATE.confirmCallback();
+      FL_STATE.confirmCallback = null;
+    }
+  };
+
+  window.updateBadges = function() {
+    if (!FL_STATE.user) return;
+    var myProjs = getMyProjects();
+    var myTasks = getMyTasks();
+    var unreadNotif = FL_DATABASE.notifications.filter(function(n) { return n.unread; }).length;
+
+    var pBadge = document.getElementById('badge-active-proj');
+    if (pBadge) pBadge.textContent = myProjs.length;
+    var tBadge = document.getElementById('badge-pending-tasks');
+    if (tBadge) tBadge.textContent = myTasks.filter(function(t) { return t.status !== 'Completed'; }).length;
+    var nBadge = document.getElementById('badge-top-notif');
+    if (nBadge) nBadge.textContent = unreadNotif;
+    var dot = document.getElementById('fl-notif-dot');
+    if (dot) dot.style.display = unreadNotif > 0 ? 'block' : 'none';
+  };
+
+  window.getMyProjects = function() {
+    if (!FL_STATE.user) return [];
+    return FL_DATABASE.projects.filter(function(p) {
+      return FL_STATE.user.assignedProjectIds.indexOf(p.id) !== -1;
+    });
+  };
+
+  window.getMyTasks = function() {
+    var myProjIds = getMyProjects().map(function(p) { return p.id; });
+    return FL_DATABASE.tasks.filter(function(t) {
+      return myProjIds.indexOf(t.projectId) !== -1;
+    });
+  };
+
+  // Availability UI
+  window.updateAvailBadgeUI = function(status) {
+    var el = document.getElementById('fl-top-avail');
+    var txt = document.getElementById('fl-top-avail-text');
+    if (!el || !txt) return;
+    txt.textContent = status;
+    el.className = 'fl-avail-pill';
+    if (status === 'Busy') el.classList.add('busy');
+    if (status === 'On Leave' || status === 'Unavailable') el.classList.add('leave');
+  };
+
+  window.toggleAvailModal = function() {
+    var statuses = ['Available', 'Busy', 'On Leave', 'Unavailable'];
+    var currentIdx = statuses.indexOf(FL_STATE.user.availability);
+    var next = statuses[(currentIdx + 1) % statuses.length];
+    FL_STATE.user.availability = next;
+    updateAvailBadgeUI(next);
+    showToast('Your availability status is now set to: ' + next, 'success');
+  };
+
+  // Topbar Dropdowns
+  window.toggleUserDropdown = function(e) {
+    e.stopPropagation();
+    closeAllDropdowns();
+    document.getElementById('fl-user-dropdown').classList.toggle('show');
+  };
+
+  window.toggleNotifDropdown = function(e) {
+    e.stopPropagation();
+    closeAllDropdowns();
+    renderQuickNotifs();
+    document.getElementById('fl-notif-dropdown').classList.toggle('show');
+  };
+
+  function closeAllDropdowns() {
+    document.getElementById('fl-user-dropdown').classList.remove('show');
+    document.getElementById('fl-notif-dropdown').classList.remove('show');
+  }
+
+  document.addEventListener('click', function() {
+    closeAllDropdowns();
+  });
+
+  window.renderQuickNotifs = function() {
+    var list = document.getElementById('fl-quick-notif-list');
+    var items = FL_DATABASE.notifications.slice(0, 5);
+    var html = items.map(function(n) {
+      return '<div style="padding:8px 14px;border-bottom:1px solid #edf2f7;display:flex;gap:10px;align-items:flex-start;cursor:pointer;' + (n.unread ? 'background:#f0f9ff;' : '') + '" onclick="navTo(\'' + n.module + '\')">' +
+        '<i class="bx ' + n.icon + '" style="font-size:20px;color:var(--fl-primary);margin-top:2px;"></i>' +
+        '<div style="flex:1;font-size:12px;">' +
+          '<strong style="color:var(--fl-text-dark);display:block;">' + n.title + '</strong>' +
+          '<span style="color:#64748b;font-size:11.5px;display:block;margin-top:2px;">' + n.desc + '</span>' +
+          '<small style="color:#94a3b8;font-size:10px;margin-top:2px;display:block;">' + n.time + '</small>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+    list.innerHTML = html;
+  };
+
+  window.markAllNotifRead = function() {
+    FL_DATABASE.notifications.forEach(function(n) { n.unread = false; });
+    updateBadges();
+    renderQuickNotifs();
+    showToast('All notifications marked as read', 'info');
+  };
+
+  // Timer Subsystem
+  function formatSeconds(sec) {
+    var hrs = Math.floor(sec / 3600);
+    var mins = Math.floor((sec % 3600) / 60);
+    var s = sec % 60;
+    return (hrs < 10 ? '0' + hrs : hrs) + ':' + (mins < 10 ? '0' + mins : mins) + ':' + (s < 10 ? '0' + s : s);
+  }
+
+  function startTimerInterval() {
+    if (FL_STATE.timer.interval) clearInterval(FL_STATE.timer.interval);
+    FL_STATE.timer.interval = setInterval(function() {
+      if (FL_STATE.timer.running) {
+        FL_STATE.timer.seconds++;
+        var clockEl = document.getElementById('fl-live-clock');
+        if (clockEl) {
+          clockEl.textContent = formatSeconds(FL_STATE.timer.seconds);
+        }
+      }
+    }, 1000);
+  }
+
+  window.startLiveTimer = function() {
+    FL_STATE.timer.running = true;
+    showToast('Timer running for active project.', 'success');
+    var btnP = document.getElementById('btn-timer-pause');
+    var btnR = document.getElementById('btn-timer-resume');
+    if (btnP) btnP.style.display = 'inline-flex';
+    if (btnR) btnR.style.display = 'none';
+  };
+
+  window.pauseLiveTimer = function() {
+    FL_STATE.timer.running = false;
+    showToast('Timer paused.', 'warning');
+    var btnP = document.getElementById('btn-timer-pause');
+    var btnR = document.getElementById('btn-timer-resume');
+    if (btnP) btnP.style.display = 'none';
+    if (btnR) btnR.style.display = 'inline-flex';
+  };
+
+  window.resumeLiveTimer = function() {
+    FL_STATE.timer.running = true;
+    showToast('Timer resumed.', 'success');
+    var btnP = document.getElementById('btn-timer-pause');
+    var btnR = document.getElementById('btn-timer-resume');
+    if (btnP) btnP.style.display = 'inline-flex';
+    if (btnR) btnR.style.display = 'none';
+  };
+
+  window.stopLiveTimer = function() {
+    var p = FL_DATABASE.projects.find(function(x) { return x.id === FL_STATE.timer.projectId; });
+    var t = FL_DATABASE.tasks.find(function(x) { return x.id === FL_STATE.timer.taskId; });
+    document.getElementById('te-project').value = p ? p.name : 'ERP Modernization';
+    document.getElementById('te-task').value = t ? t.title : 'Payment Gateway Webhooks';
+    document.getElementById('te-duration').value = formatSeconds(FL_STATE.timer.seconds);
+    document.getElementById('te-date').value = new Date().toISOString().split('T')[0];
+    document.getElementById('te-desc').value = 'Engineered webhook retry handlers and signature idempotency verification.';
+    openModal('modal-time-entry');
+  };
+
+  window.confirmSaveTimeEntry = function() {
+    var desc = document.getElementById('te-desc').value.trim();
+    if (!desc) {
+      showToast('Please provide a work description for this time entry.', 'danger');
+      return;
+    }
+    closeModal('modal-time-entry');
+    showToast('Time entry saved! Added to project billable logs.', 'success');
+    FL_STATE.timer.seconds = 0;
+    FL_STATE.timer.running = false;
+    var clockEl = document.getElementById('fl-live-clock');
+    if (clockEl) clockEl.textContent = '00:00:00';
+  };
+
+  // Navigation Controller
+  window.navTo = function(moduleId, param) {
+    FL_STATE.currentModule = moduleId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Update active nav item
+    var navLinks = document.querySelectorAll('.fl-sidebar-nav a');
+    navLinks.forEach(function(a) { a.classList.remove('active'); });
+    var activeLink = document.getElementById('nav-' + moduleId);
+    if (activeLink) activeLink.classList.add('active');
+
+    // Close mobile sidebar if open
+    var sb = document.getElementById('fl-sidebar');
+    if (sb) sb.classList.remove('open');
+
+    // Update breadcrumb
+    var crumbName = moduleId.charAt(0).toUpperCase() + moduleId.slice(1).replace('-', ' ');
+    if (moduleId === 'project-workspace') crumbName = 'Project Workspace';
+    document.getElementById('fl-current-crumb').textContent = crumbName;
+
+    // Render Target Module
+    var container = document.getElementById('fl-content-view');
+    switch(moduleId) {
+      case 'dashboard':
+        container.innerHTML = renderDashboardView();
+        break;
+      case 'projects':
+        container.innerHTML = renderProjectsView();
+        break;
+      case 'project-workspace':
+        container.innerHTML = renderProjectWorkspaceView(param);
+        break;
+      case 'tasks':
+        container.innerHTML = renderTasksView();
+        break;
+      case 'time':
+        container.innerHTML = renderTimeTrackerView();
+        break;
+      case 'daily-updates':
+        container.innerHTML = renderDailyUpdatesView();
+        break;
+      case 'messages':
+        container.innerHTML = renderMessagesView();
+        break;
+      case 'meetings':
+        container.innerHTML = renderMeetingsView();
+        break;
+      case 'documents':
+        container.innerHTML = renderDocumentsView();
+        break;
+      case 'issues':
+        container.innerHTML = renderIssuesView();
+        break;
+      case 'change-requests':
+        container.innerHTML = renderChangeRequestsView();
+        break;
+      case 'deliverables':
+        container.innerHTML = renderDeliverablesView();
+        break;
+      case 'deployments':
+        container.innerHTML = renderDeploymentsView();
+        break;
+      case 'daily-reports':
+        container.innerHTML = renderDailyReportsView();
+        break;
+      case 'payments':
+        container.innerHTML = renderPaymentsView();
+        break;
+      case 'notifications':
+        container.innerHTML = renderNotificationsView();
+        break;
+      case 'profile':
+        container.innerHTML = renderProfileView();
+        break;
+      case 'settings':
+        container.innerHTML = renderSettingsView();
+        break;
+      default:
+        container.innerHTML = renderDashboardView();
+    }
+  };
+
+  // Keyboard shortcut Ctrl+K
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      openSearchModal();
+    }
+  });
+
+  window.openSearchModal = function() {
+    openModal('modal-search');
+    setTimeout(function() {
+      var inp = document.getElementById('fl-global-search-inp');
+      if (inp) { inp.focus(); inp.select(); }
+    }, 100);
+  };
+
+  window.runGlobalSearch = function(q) {
+    q = (q || '').trim().toLowerCase();
+    var list = document.getElementById('fl-search-results-list');
+    if (!q) {
+      list.innerHTML = '<p style="text-align:center;color:#94a3b8;font-size:13px;padding:1.5rem 0;">Type to search authorized resources...</p>';
+      return;
+    }
+
+    var myProjs = getMyProjects().filter(function(p) { return p.name.toLowerCase().indexOf(q) !== -1 || p.client.toLowerCase().indexOf(q) !== -1; });
+    var myTasks = getMyTasks().filter(function(t) { return t.title.toLowerCase().indexOf(q) !== -1 || t.description.toLowerCase().indexOf(q) !== -1; });
+    var myDocs = FL_DATABASE.documents.filter(function(d) { return d.name.toLowerCase().indexOf(q) !== -1; });
+
+    var html = '';
+    if (myProjs.length === 0 && myTasks.length === 0 && myDocs.length === 0) {
+      list.innerHTML = '<div class="fl-empty-state" style="padding:1.5rem 0;"><i class="bx bx-search-alt"></i><h4>No authorized records matched</h4><p>No results found for "' + q + '". Only your assigned ERP resources are queried.</p></div>';
+      return;
+    }
+
+    if (myProjs.length > 0) {
+      html += '<div style="font-size:11px;font-weight:700;color:var(--fl-primary);margin:6px 0 4px;text-transform:uppercase;">Projects (' + myProjs.length + ')</div>';
+      myProjs.forEach(function(p) {
+        html += '<div style="padding:8px 10px;border-radius:6px;cursor:pointer;background:#f8f9fc;margin-bottom:4px;" onclick="closeModal(\'modal-search\'); openProjectWorkspace(\'' + p.id + '\')">' +
+          '<strong>' + p.name + '</strong> <small style="color:#64748b;">(' + p.client + ')</small>' +
+        '</div>';
+      });
+    }
+
+    if (myTasks.length > 0) {
+      html += '<div style="font-size:11px;font-weight:700;color:#d97706;margin:10px 0 4px;text-transform:uppercase;">Tasks (' + myTasks.length + ')</div>';
+      myTasks.forEach(function(t) {
+        html += '<div style="padding:8px 10px;border-radius:6px;cursor:pointer;background:#f8f9fc;margin-bottom:4px;" onclick="closeModal(\'modal-search\'); openTaskDetailModal(\'' + t.id + '\')">' +
+          '<strong>' + t.title + '</strong> <span class="fl-badge fl-badge-info" style="font-size:10px;margin-left:6px;">' + t.status + '</span>' +
+        '</div>';
+      });
+    }
+
+    if (myDocs.length > 0) {
+      html += '<div style="font-size:11px;font-weight:700;color:#059669;margin:10px 0 4px;text-transform:uppercase;">Documents (' + myDocs.length + ')</div>';
+      myDocs.forEach(function(d) {
+        html += '<div style="padding:8px 10px;border-radius:6px;cursor:pointer;background:#f8f9fc;margin-bottom:4px;" onclick="closeModal(\'modal-search\'); navTo(\'documents\')">' +
+          '<i class="bx bx-file"></i> <strong>' + d.name + '</strong> <small style="color:#64748b;">' + d.category + '</small>' +
+        '</div>';
+      });
+    }
+
+    list.innerHTML = html;
+  };
+
+  // ==========================================
+  // VIEW RENDERERS
+  // ==========================================
+
+  // 1. DASHBOARD
+  function renderDashboardView() {
+    var fl = FL_STATE.user;
+    var myProjs = getMyProjects();
+    var myTasks = getMyTasks();
+    var todayStr = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    // Check if any project requires terms acceptance
+    var pendingTermsProj = myProjs.find(function(p) { return p.termsRequired && p.termsStatus !== 'Accepted'; });
+
+    var html = '';
+
+    // Page Header & Greeting
+    html += '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Good morning, ' + fl.name.split(' ')[0] + ' 👋</h2>' +
+        '<p>Here\'s your project work overview for today &bull; <strong>' + todayStr + '</strong></p>' +
+      '</div>' +
+      '<div class="fl-header-actions">' +
+        '<button class="fl-btn fl-btn-primary" onclick="navTo(\'time\')"><i class="bx bx-play-circle"></i> Start Timer</button>' +
+        '<button class="fl-btn fl-btn-secondary" onclick="navTo(\'daily-updates\')"><i class="bx bx-edit"></i> Update Work</button>' +
+        '<button class="fl-btn fl-btn-secondary" onclick="openDailyReportModal()"><i class="bx bx-file-blank"></i> Submit Daily Report</button>' +
+        '<button class="fl-btn fl-btn-secondary" onclick="navTo(\'tasks\')"><i class="bx bx-task"></i> View Tasks</button>' +
+      '</div>' +
+    '</div>';
+
+    // Terms Acceptance Alert Banner (if applicable)
+    if (pendingTermsProj) {
+      html += '<div class="fl-alert-banner">' +
+        '<div class="fl-alert-info">' +
+          '<div class="fl-alert-icon"><i class="bx bx-error-circle"></i></div>' +
+          '<div class="fl-alert-text">' +
+            '<h4>Project terms require your acceptance</h4>' +
+            '<p>Project <strong>' + pendingTermsProj.name + '</strong> (' + pendingTermsProj.termsVersion + ') requires your formal review and acceptance before workspace tasks and code repositories unlock.</p>' +
+          '</div>' +
+        '</div>' +
+        '<button class="fl-btn fl-btn-warning" onclick="openTermsModal(\'' + pendingTermsProj.id + '\')"><i class="bx bx-shield-quarter"></i> Review Terms (' + pendingTermsProj.termsVersion + ')</button>' +
+      '</div>';
+    }
+
+    // 8 Dashboard Summary Cards
+    html += '<div class="fl-stats-grid">' +
+      '<div class="fl-stat-card" onclick="navTo(\'projects\')">' +
+        '<div class="fl-stat-body">' +
+          '<div class="label">Active Projects</div>' +
+          '<div class="val">' + myProjs.length + '</div>' +
+          '<div class="sub">2 tasks due this week</div>' +
+        '</div>' +
+        '<div class="fl-stat-icon-wrap"><i class="bx bx-briefcase"></i></div>' +
+      '</div>' +
+
+      '<div class="fl-stat-card c-warning" onclick="navTo(\'tasks\')">' +
+        '<div class="fl-stat-body">' +
+          '<div class="label">Pending Tasks</div>' +
+          '<div class="val">' + myTasks.filter(function(t) { return t.status !== 'Completed'; }).length + '</div>' +
+          '<div class="sub">1 task blocker active</div>' +
+        '</div>' +
+        '<div class="fl-stat-icon-wrap"><i class="bx bx-task"></i></div>' +
+      '</div>' +
+
+      '<div class="fl-stat-card c-success" onclick="navTo(\'time\')">' +
+        '<div class="fl-stat-body">' +
+          '<div class="label">Today\'s Hours</div>' +
+          '<div class="val">' + fl.todayHours + '</div>' +
+          '<div class="sub">Target: 8.0 hrs/day</div>' +
+        '</div>' +
+        '<div class="fl-stat-icon-wrap"><i class="bx bx-time"></i></div>' +
+      '</div>' +
+
+      '<div class="fl-stat-card c-info" onclick="navTo(\'daily-reports\')">' +
+        '<div class="fl-stat-body">' +
+          '<div class="label">Pending Reports</div>' +
+          '<div class="val">1</div>' +
+          '<div class="sub">Due by 06:00 PM today</div>' +
+        '</div>' +
+        '<div class="fl-stat-icon-wrap"><i class="bx bx-file-blank"></i></div>' +
+      '</div>' +
+
+      '<div class="fl-stat-card c-danger" onclick="navTo(\'messages\')">' +
+        '<div class="fl-stat-body">' +
+          '<div class="label">Unread Messages</div>' +
+          '<div class="val">2</div>' +
+          '<div class="sub">From Client Lead & PM</div>' +
+        '</div>' +
+        '<div class="fl-stat-icon-wrap"><i class="bx bx-chat"></i></div>' +
+      '</div>' +
+
+      '<div class="fl-stat-card c-danger" onclick="navTo(\'issues\')">' +
+        '<div class="fl-stat-body">' +
+          '<div class="label">Open Issues</div>' +
+          '<div class="val">2</div>' +
+          '<div class="sub">1 critical blocker</div>' +
+        '</div>' +
+        '<div class="fl-stat-icon-wrap"><i class="bx bx-bug"></i></div>' +
+      '</div>' +
+
+      '<div class="fl-stat-card c-purple" onclick="navTo(\'change-requests\')">' +
+        '<div class="fl-stat-body">' +
+          '<div class="label">Change Requests</div>' +
+          '<div class="val">1</div>' +
+          '<div class="sub">Under ERP review</div>' +
+        '</div>' +
+        '<div class="fl-stat-icon-wrap"><i class="bx bx-git-pull-request"></i></div>' +
+      '</div>' +
+
+      '<div class="fl-stat-card c-success" onclick="navTo(\'payments\')">' +
+        '<div class="fl-stat-body">' +
+          '<div class="label">Pending Payments</div>' +
+          '<div class="val">' + fl.pendingPayments + '</div>' +
+          '<div class="sub">1 milestone invoice</div>' +
+        '</div>' +
+        '<div class="fl-stat-icon-wrap"><i class="bx bx-credit-card"></i></div>' +
+      '</div>' +
+    '</div>';
+
+    // Two Column Section: Left = Active Projects, Right = Today's Work Widget & Upcoming
+    html += '<div class="fl-grid-2col">' +
+      '<div>' +
+        '<div class="fl-card">' +
+          '<div class="fl-card-header">' +
+            '<h3><i class="bx bx-layer"></i> Current Assigned Projects</h3>' +
+            '<button class="fl-btn fl-btn-secondary fl-btn-sm" onclick="navTo(\'projects\')">View All</button>' +
+          '</div>' +
+          '<div class="fl-card-body">' +
+            '<div class="fl-project-grid">';
+
+    myProjs.forEach(function(p) {
+      var isTermsPending = p.termsRequired && p.termsStatus !== 'Accepted';
+      html += '<div class="fl-project-card">' +
+        '<div>' +
+          '<div class="fl-project-top">' +
+            '<div class="fl-project-title">' +
+              '<h4>' + p.name + '</h4>' +
+              '<div class="fl-project-client"><i class="bx bx-buildings"></i> ' + p.client + '</div>' +
+            '</div>' +
+            '<span class="fl-badge ' + (isTermsPending ? 'fl-badge-warning' : 'fl-badge-success') + '">' +
+              (isTermsPending ? 'Terms Pending' : p.status) +
+            '</span>' +
+          '</div>' +
+
+          '<div class="fl-project-meta-row">' +
+            '<div class="fl-meta-item"><span class="key">My Role</span><span class="val">' + p.myRole + '</span></div>' +
+            '<div class="fl-meta-item"><span class="key">Tasks</span><span class="val">' + p.tasksCompleted + ' / ' + p.tasksTotal + ' Done</span></div>' +
+            '<div class="fl-meta-item"><span class="key">Logged</span><span class="val">' + p.loggedHours + '</span></div>' +
+            '<div class="fl-meta-item"><span class="key">Terms Status</span><span class="val" style="color:' + (isTermsPending ? '#b78103' : '#169b6b') + ';">' + p.termsStatus + '</span></div>' +
+          '</div>' +
+
+          '<div class="fl-progress-wrap">' +
+            '<div class="fl-progress-label"><span>Overall Progress</span><span>' + p.progress + '%</span></div>' +
+            '<div class="fl-progress-bar"><div class="fl-progress-fill ' + (p.progress > 70 ? 'success' : '') + '" style="width:' + p.progress + '%;"></div></div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex;gap:8px;margin-top:10px;">' +
+          (isTermsPending ?
+            '<button class="fl-btn fl-btn-warning fl-btn-sm" style="flex:1;justify-content:center;" onclick="openTermsModal(\'' + p.id + '\')"><i class="bx bx-shield-quarter"></i> Review Terms</button>' :
+            '<button class="fl-btn fl-btn-primary fl-btn-sm" style="flex:1;justify-content:center;" onclick="openProjectWorkspace(\'' + p.id + '\')"><i class="bx bx-folder-open"></i> Open Workspace</button>') +
+        '</div>' +
+      '</div>';
+    });
+
+    html += '</div></div></div>' +
+
+      // Recent Activity Timeline Card
+      '<div class="fl-card">' +
+        '<div class="fl-card-header">' +
+          '<h3><i class="bx bx-history"></i> Recent Project Activity</h3>' +
+        '</div>' +
+        '<div class="fl-card-body" style="padding-top:0.75rem;">' +
+          '<div style="display:flex;flex-direction:column;gap:14px;">' +
+            renderActivityItem('bx-check-circle', '#169b6b', 'Task Completed', 'Authentication API & Session Tokens marked complete', 'ERP Modernization', 'Today, 09:40 AM') +
+            renderActivityItem('bx-edit-alt', '#2563eb', 'Daily Update Submitted', 'Recorded 5.5 hrs on payment webhook retries', 'ERP Modernization', 'Today, 10:45 AM') +
+            renderActivityItem('bx-message-square-dots', '#8549ba', 'New Message Received', 'Jenifer: "The webhook tests passed on our staging sandbox"', 'ERP Modernization', 'Today, 10:30 AM') +
+            renderActivityItem('bx-file', '#0284c7', 'Document Uploaded', 'Payment_Gateway_Webhook_Spec.pdf was refreshed by PM', 'ERP Modernization', 'Yesterday') +
+            renderActivityItem('bx-credit-card', '#169b6b', 'Milestone Payment Processed', 'Payment ₹35,000 disbursed for School ERP Parent Ledger', 'School ERP', 'Sep 05') +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+    // Right Column: Today's Work Widget & Upcoming Events
+    html += '<div>' +
+      // Live Timer Widget
+      '<div class="fl-card">' +
+        '<div class="fl-card-header">' +
+          '<h3><i class="bx bx-stopwatch"></i> Today\'s Work & Live Timer</h3>' +
+          '<span class="fl-badge fl-badge-success" id="timer-status-badge">' + (FL_STATE.timer.running ? 'Timer Active' : 'Timer Paused') + '</span>' +
+        '</div>' +
+        '<div class="fl-card-body">' +
+          '<div class="fl-timer-box">' +
+            '<div class="fl-timer-top">' +
+              '<span style="font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;">Current Work Session</span>' +
+              '<span class="fl-badge fl-badge-info" style="font-size:11px;">ERP Modernization</span>' +
+            '</div>' +
+            '<div class="fl-timer-clock" id="fl-live-clock">' + formatSeconds(FL_STATE.timer.seconds) + '</div>' +
+            '<div style="font-size:13px;color:#cbd5e1;display:flex;align-items:center;gap:6px;">' +
+              '<i class="bx bx-task" style="color:#38bdf8;"></i> <span>Payment Gateway Webhooks & Reconciliation</span>' +
+            '</div>' +
+            '<div class="fl-timer-controls">' +
+              '<button class="fl-btn fl-btn-warning fl-btn-sm" id="btn-timer-pause" onclick="pauseLiveTimer()" style="' + (FL_STATE.timer.running ? '' : 'display:none;') + '"><i class="bx bx-pause"></i> Pause</button>' +
+              '<button class="fl-btn fl-btn-success fl-btn-sm" id="btn-timer-resume" onclick="resumeLiveTimer()" style="' + (FL_STATE.timer.running ? 'display:none;' : '') + '"><i class="bx bx-play"></i> Resume</button>' +
+              '<button class="fl-btn fl-btn-danger fl-btn-sm" onclick="stopLiveTimer()"><i class="bx bx-stop"></i> Stop & Log</button>' +
+              '<button class="fl-btn fl-btn-secondary fl-btn-sm" onclick="navTo(\'daily-updates\')"><i class="bx bx-edit"></i> Update Work</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      // Upcoming Schedule Widget
+      '<div class="fl-card">' +
+        '<div class="fl-card-header">' +
+          '<h3><i class="bx bx-calendar-event"></i> Upcoming Milestones & Meetings</h3>' +
+        '</div>' +
+        '<div class="fl-card-body" style="padding-top:0.75rem;">' +
+          '<div style="display:flex;flex-direction:column;gap:12px;">' +
+            '<div style="padding:10px 12px;background:#f8f9fc;border-radius:8px;border-left:4px solid var(--fl-primary);">' +
+              '<div style="display:flex;justify-content:space-between;font-size:11.5px;color:#64748b;">' +
+                '<span>TODAY &bull; 03:30 PM</span>' +
+                '<span class="fl-badge fl-badge-info">Google Meet</span>' +
+              '</div>' +
+              '<strong style="font-size:13.5px;color:var(--fl-text-dark);display:block;margin:4px 0 2px;">Sprint 14 Demo & Staging Sign-Off</strong>' +
+              '<small style="color:#64748b;">ERP Modernization &bull; with PM & Client Lead</small>' +
+            '</div>' +
+
+            '<div style="padding:10px 12px;background:#f8f9fc;border-radius:8px;border-left:4px solid var(--fl-warning);">' +
+              '<div style="display:flex;justify-content:space-between;font-size:11.5px;color:#64748b;">' +
+                '<span>SEP 12 &bull; TASK DEADLINE</span>' +
+                '<span class="fl-badge fl-badge-warning">High Priority</span>' +
+              '</div>' +
+              '<strong style="font-size:13.5px;color:var(--fl-text-dark);display:block;margin:4px 0 2px;">Payment Gateway Webhooks</strong>' +
+              '<small style="color:#64748b;">Finalize retry logic & unit test coverage</small>' +
+            '</div>' +
+
+            '<div style="padding:10px 12px;background:#f8f9fc;border-radius:8px;border-left:4px solid #10b981;">' +
+              '<div style="display:flex;justify-content:space-between;font-size:11.5px;color:#64748b;">' +
+                '<span>TODAY &bull; 06:00 PM</span>' +
+                '<span class="fl-badge fl-badge-success">Audit Requirement</span>' +
+              '</div>' +
+              '<strong style="font-size:13.5px;color:var(--fl-text-dark);display:block;margin:4px 0 2px;">Daily Formal Report Submission</strong>' +
+              '<small style="color:#64748b;">Submit daily audit report before sign-off</small>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      // Pending Actions Checklist
+      '<div class="fl-card">' +
+        '<div class="fl-card-header">' +
+          '<h3><i class="bx bx-check-shield"></i> Pending Actions</h3>' +
+        '</div>' +
+        '<div class="fl-card-body" style="font-size:13px;">' +
+          '<div style="display:flex;flex-direction:column;gap:10px;">' +
+            '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+              '<span><i class="bx bx-shield-quarter" style="color:#d97706;margin-right:6px;"></i> Review AI Platform Terms</span>' +
+              '<button class="fl-btn fl-btn-warning fl-btn-sm" onclick="openTermsModal(\'PRJ-102\')">Review</button>' +
+            '</div>' +
+            '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+              '<span><i class="bx bx-file-blank" style="color:#2563eb;margin-right:6px;"></i> Formal Daily Report</span>' +
+              '<button class="fl-btn fl-btn-primary fl-btn-sm" onclick="openDailyReportModal()">Submit</button>' +
+            '</div>' +
+            '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+              '<span><i class="bx bx-package" style="color:#059669;margin-right:6px;"></i> Deliverable Build v1.2</span>' +
+              '<button class="fl-btn fl-btn-secondary fl-btn-sm" onclick="openDeliverableModal()">Upload</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+    '</div></div>';
+
+    return html;
+  }
+
+  function renderActivityItem(icon, color, title, desc, proj, time) {
+    return '<div style="display:flex;align-items:flex-start;gap:12px;">' +
+      '<div style="width:32px;height:32px;border-radius:50%;background:' + color + '15;color:' + color + ';display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">' +
+        '<i class="bx ' + icon + '"></i>' +
+      '</div>' +
+      '<div style="flex:1;font-size:13px;">' +
+        '<div style="display:flex;justify-content:space-between;">' +
+          '<strong style="color:var(--fl-text-dark);">' + title + '</strong>' +
+          '<span style="color:#94a3b8;font-size:11px;">' + time + '</span>' +
+        '</div>' +
+        '<div style="color:#64748b;font-size:12px;margin:2px 0;">' + desc + '</div>' +
+        '<span class="fl-badge fl-badge-secondary" style="font-size:10px;">' + proj + '</span>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // 2. MY PROJECTS VIEW
+  function renderProjectsView() {
+    var myProjs = getMyProjects();
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>My Assigned Projects</h2>' +
+        '<p>Enterprise projects explicitly authorized for your execution. The ERP is the source of truth.</p>' +
+      '</div>' +
+      '<div class="fl-header-actions">' +
+        '<input type="text" class="fl-form-control" placeholder="Filter projects..." style="width:220px;" oninput="filterProjectsTable(this.value)">' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table" id="fl-projects-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>Project Name</th>' +
+              '<th>Client</th>' +
+              '<th>My Role</th>' +
+              '<th>Timeline</th>' +
+              '<th>Progress</th>' +
+              '<th>Tasks</th>' +
+              '<th>Terms Status</th>' +
+              '<th>Project Status</th>' +
+              '<th style="text-align:right;">Action</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+
+    myProjs.forEach(function(p) {
+      var isTermsPending = p.termsRequired && p.termsStatus !== 'Accepted';
+      html += '<tr>' +
+        '<td>' +
+          '<strong>' + p.name + '</strong>' +
+          '<div style="font-size:11px;color:#858796;">' + p.code + '</div>' +
+        '</td>' +
+        '<td>' + p.client + '</td>' +
+        '<td><span class="fl-badge fl-badge-primary">' + p.myRole + '</span></td>' +
+        '<td><small>' + p.startDate + ' to ' + p.endDate + '</small></td>' +
+        '<td style="width:140px;">' +
+          '<div style="font-size:11.5px;margin-bottom:3px;font-weight:600;">' + p.progress + '%</div>' +
+          '<div class="fl-progress-bar"><div class="fl-progress-fill" style="width:' + p.progress + '%;"></div></div>' +
+        '</td>' +
+        '<td>' + p.tasksCompleted + ' / ' + p.tasksTotal + '</td>' +
+        '<td><span class="fl-badge ' + (isTermsPending ? 'fl-badge-warning' : 'fl-badge-success') + '">' + p.termsStatus + '</span></td>' +
+        '<td><span class="fl-badge fl-badge-success">' + p.status + '</span></td>' +
+        '<td style="text-align:right;">' +
+          (isTermsPending ?
+            '<button class="fl-btn fl-btn-warning fl-btn-sm" onclick="openTermsModal(\'' + p.id + '\')"><i class="bx bx-shield-quarter"></i> Review Terms</button>' :
+            '<button class="fl-btn fl-btn-primary fl-btn-sm" onclick="openProjectWorkspace(\'' + p.id + '\')"><i class="bx bx-folder-open"></i> Workspace</button>') +
+        '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  // 3. PROJECT WORKSPACE (The Core Central Hub)
+  window.openProjectWorkspace = function(projId) {
+    var p = FL_DATABASE.projects.find(function(x) { return x.id === projId; });
+    if (!p) {
+      showToast('Unauthorized project access.', 'danger');
+      return;
+    }
+
+    // Check terms acceptance
+    if (p.termsRequired && p.termsStatus !== 'Accepted') {
+      openTermsModal(projId);
+      return;
+    }
+
+    FL_STATE.activeWorkspaceProjectId = projId;
+    FL_STATE.activeWorkspaceTab = 'overview';
+    navTo('project-workspace', projId);
+  };
+
+  function renderProjectWorkspaceView(projId) {
+    projId = projId || FL_STATE.activeWorkspaceProjectId || 'PRJ-101';
+    var p = FL_DATABASE.projects.find(function(x) { return x.id === projId; });
+    if (!p) {
+      return '<div class="fl-locked-view">' +
+        '<div class="lock-icon"><i class="bx bx-lock-alt"></i></div>' +
+        '<h3>Access Restricted</h3>' +
+        '<p>You are not authorized to view this project context.</p>' +
+        '<button class="fl-btn fl-btn-primary" onclick="navTo(\'dashboard\')" style="margin-top:1rem;">Back to Dashboard</button>' +
+      '</div>';
+    }
+
+    var isTermsAccepted = p.termsStatus === 'Accepted';
+
+    var html = '<div class="fl-page-header">' +
+      '<div>' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">' +
+          '<h2 style="margin:0;">' + p.name + '</h2>' +
+          '<span class="fl-badge fl-badge-primary">' + p.code + '</span>' +
+          '<span class="fl-badge fl-badge-success">' + p.status + '</span>' +
+        '</div>' +
+        '<p style="margin:0;font-size:13px;color:#64748b;">' +
+          'Client: <strong>' + p.client + '</strong> &bull; PM: <strong>' + p.pm + '</strong> &bull; Role: <strong>' + p.myRole + '</strong>' +
+        '</p>' +
+      '</div>' +
+      '<div class="fl-header-actions">' +
+        '<button class="fl-btn fl-btn-secondary" onclick="navTo(\'projects\')"><i class="bx bx-arrow-back"></i> All Projects</button>' +
+        '<button class="fl-btn fl-btn-primary" onclick="openDailyReportModal(\'' + p.id + '\')"><i class="bx bx-file-blank"></i> Daily Report</button>' +
+      '</div>' +
+    '</div>';
+
+    // Visual Enterprise Workflow Stepper
+    html += '<div class="fl-card" style="margin-bottom:1.5rem;">' +
+      '<div class="fl-card-body" style="padding:1rem 1.25rem;">' +
+        '<div style="font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:8px;letter-spacing:0.5px;">Project Execution Workflow Status</div>' +
+        '<div class="fl-stepper">' +
+          '<div class="fl-step done"><span class="num">✓</span> Project Assigned</div>' +
+          '<div class="fl-step done"><span class="num">✓</span> Terms Published</div>' +
+          '<div class="fl-step done"><span class="num">✓</span> Terms Accepted (' + p.termsVersion + ')</div>' +
+          '<div class="fl-step current"><span class="num">4</span> Execution & Time Tracking</div>' +
+          '<div class="fl-step"><span class="num">5</span> Daily Work Updates</div>' +
+          '<div class="fl-step"><span class="num">6</span> Deliverables & QA</div>' +
+          '<div class="fl-step"><span class="num">7</span> Deployment Sign-Off</div>' +
+          '<div class="fl-step"><span class="num">8</span> Milestone Payment</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+    // Project Navigation Tabs
+    var activeTab = FL_STATE.activeWorkspaceTab || 'overview';
+    var tabs = [
+      { id: 'overview', name: 'Overview', icon: 'bx-info-circle' },
+      { id: 'terms', name: 'Terms Agreement', icon: 'bx-shield-quarter' },
+      { id: 'tasks', name: 'Tasks (' + p.tasksCompleted + '/' + p.tasksTotal + ')', icon: 'bx-task' },
+      { id: 'time', name: 'Time Logs (' + p.loggedHours + ')', icon: 'bx-time' },
+      { id: 'team', name: 'My Team & Interns', icon: 'bx-group' },
+      { id: 'messages', name: 'Messages', icon: 'bx-chat' },
+      { id: 'meetings', name: 'Meetings', icon: 'bx-video' },
+      { id: 'files', name: 'Documents', icon: 'bx-file' },
+      { id: 'issues', name: 'Issues / Bugs', icon: 'bx-bug' },
+      { id: 'change-requests', name: 'Change Requests', icon: 'bx-git-pull-request' },
+      { id: 'deliverables', name: 'Deliverables', icon: 'bx-package' },
+      { id: 'deployments', name: 'Deployments', icon: 'bx-cloud-upload' },
+      { id: 'daily-reports', name: 'Daily Reports', icon: 'bx-file-blank' },
+      { id: 'finance', name: 'Finance (Read-Only)', icon: 'bx-credit-card' }
+    ];
+
+    html += '<div class="fl-tabs">';
+    tabs.forEach(function(t) {
+      html += '<button class="fl-tab-btn ' + (activeTab === t.id ? 'active' : '') + '" onclick="switchWorkspaceTab(\'' + t.id + '\')">' +
+        '<i class="bx ' + t.icon + '"></i> ' + t.name +
+      '</button>';
+    });
+    html += '</div>';
+
+    // Tab Content Renderer
+    html += '<div id="fl-workspace-tab-body">';
+    html += renderWorkspaceTabContent(p, activeTab);
+    html += '</div>';
+
+    return html;
+  }
+
+  window.switchWorkspaceTab = function(tabId) {
+    FL_STATE.activeWorkspaceTab = tabId;
+    var p = FL_DATABASE.projects.find(function(x) { return x.id === FL_STATE.activeWorkspaceProjectId; });
+    var body = document.getElementById('fl-workspace-tab-body');
+    if (body && p) {
+      body.innerHTML = renderWorkspaceTabContent(p, tabId);
+      // Update tab buttons
+      var btns = document.querySelectorAll('.fl-tab-btn');
+      btns.forEach(function(b) { b.classList.remove('active'); });
+      event.currentTarget.classList.add('active');
+    }
+  };
+
+  function renderWorkspaceTabContent(p, tabId) {
+    var html = '';
+
+    if (tabId === 'overview') {
+      html += '<div class="fl-grid-2col">' +
+        '<div>' +
+          '<div class="fl-card">' +
+            '<div class="fl-card-header"><h3><i class="bx bx-detail"></i> Project Description & Responsibilities</h3></div>' +
+            '<div class="fl-card-body">' +
+              '<p style="font-size:14px;line-height:1.6;color:var(--fl-text-dark);margin-top:0;">' + p.description + '</p>' +
+              '<div style="background:#f8f9fc;padding:12px 16px;border-radius:8px;margin-top:1rem;">' +
+                '<strong style="font-size:13px;color:var(--fl-text-dark);display:block;margin-bottom:4px;">My Assigned Scope:</strong>' +
+                '<p style="margin:0;font-size:13px;color:#64748b;">' + p.responsibilities + '</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="fl-card">' +
+            '<div class="fl-card-header"><h3><i class="bx bx-task"></i> Assigned Project Tasks</h3></div>' +
+            '<div class="fl-card-body" style="padding:0;">' +
+              renderTasksTableForProject(p.id) +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div>' +
+          '<div class="fl-card">' +
+            '<div class="fl-card-header"><h3><i class="bx bx-info-circle"></i> Project Snapshot</h3></div>' +
+            '<div class="fl-card-body">' +
+              '<div style="display:flex;flex-direction:column;gap:12px;font-size:13px;">' +
+                '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #edf2f7;padding-bottom:8px;">' +
+                  '<span style="color:#64748b;">Client Organization</span><strong>' + p.client + '</strong>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #edf2f7;padding-bottom:8px;">' +
+                  '<span style="color:#64748b;">Client Contact</span><span>' + p.clientPerson + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #edf2f7;padding-bottom:8px;">' +
+                  '<span style="color:#64748b;">Project Manager</span><strong>' + p.pm + '</strong>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #edf2f7;padding-bottom:8px;">' +
+                  '<span style="color:#64748b;">Timeline</span><span>' + p.startDate + ' &bull; ' + p.endDate + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #edf2f7;padding-bottom:8px;">' +
+                  '<span style="color:#64748b;">Logged Hours</span><strong style="color:var(--fl-primary);">' + p.loggedHours + '</strong>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;padding-bottom:4px;">' +
+                  '<span style="color:#64748b;">Terms Version</span><span>' + p.termsVersion + ' (' + p.termsStatus + ')</span>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="fl-card">' +
+            '<div class="fl-card-header"><h3><i class="bx bx-check-circle"></i> Milestone Completion</h3></div>' +
+            '<div class="fl-card-body">' +
+              '<div class="fl-progress-label"><span>Overall Delivery</span><span>' + p.progress + '%</span></div>' +
+              '<div class="fl-progress-bar" style="height:9px;"><div class="fl-progress-fill" style="width:' + p.progress + '%;"></div></div>' +
+              '<div style="margin-top:1.25rem;font-size:12.5px;color:#64748b;line-height:1.5;">' +
+                'Tasks completed: <strong>' + p.tasksCompleted + ' of ' + p.tasksTotal + '</strong>. Once remaining deliverables are signed off, milestone invoice is submitted for ERP disbursement.' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    else if (tabId === 'terms') {
+      html += '<div class="fl-card">' +
+        '<div class="fl-card-header">' +
+          '<h3><i class="bx bx-shield-quarter"></i> Terms & Conditions Agreement Status</h3>' +
+          '<span class="fl-badge fl-badge-success">Version ' + p.termsVersion + '</span>' +
+        '</div>' +
+        '<div class="fl-card-body">' +
+          '<div style="padding:1rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;">' +
+            '<i class="bx bx-check-shield" style="font-size:32px;color:#16a34a;"></i>' +
+            '<div>' +
+              '<strong style="color:#166534;font-size:14px;display:block;">Terms Accepted & Legally Authorized</strong>' +
+              '<span style="font-size:12.5px;color:#15803d;">Accepted by ' + FL_STATE.user.name + ' on ' + (p.termsAcceptedDate || 'Project Assignment') + '. Permanent record archived in ERP legal ledger.</span>' +
+            '</div>' +
+          '</div>' +
+          '<h4>Agreement Summary:</h4>' +
+          '<ul style="font-size:13.5px;line-height:1.7;color:var(--fl-text-dark);">' +
+            '<li><strong>Non-Disclosure (NDA):</strong> All source code, customer transaction data, and architecture specifications remain proprietary property of RORIRI Software Solutions and respective client.</li>' +
+            '<li><strong>Milestone Sign-Off:</strong> Deliverables must be reviewed by the ERP Project Manager prior to payment disbursement.</li>' +
+            '<li><strong>Audit Trails:</strong> Daily reports and time entries are subject to internal engineering audits.</li>' +
+            '<li><strong>Code Standards:</strong> Clean commits, automated unit tests, and security scans must be maintained.</li>' +
+          '</ul>' +
+        '</div>' +
+      '</div>';
+    }
+
+    else if (tabId === 'tasks') {
+      html += '<div class="fl-card">' +
+        '<div class="fl-card-header">' +
+          '<h3><i class="bx bx-task"></i> Assigned Project Tasks</h3>' +
+          '<span class="fl-badge fl-badge-info">' + p.name + '</span>' +
+        '</div>' +
+        '<div class="fl-card-body" style="padding:0;">' +
+          renderTasksTableForProject(p.id) +
+        '</div>' +
+      '</div>';
+    }
+
+    else if (tabId === 'team') {
+      // My Team & Interns
+      var team = FL_DATABASE.teammates.filter(function(m) { return m.projectId === p.id; });
+      html += '<div class="fl-card">' +
+        '<div class="fl-card-header">' +
+          '<h3><i class="bx bx-group"></i> Project Collaboration Team (' + team.length + ' Members)</h3>' +
+        '</div>' +
+        '<div class="fl-card-body">' +
+          '<p style="font-size:13px;color:#64748b;margin-top:0;">' +
+            'Scoped access: You have visibility into teammates and company-assigned interns/trainees assigned to this project context.' +
+          '</p>' +
+          '<div class="fl-table-responsive">' +
+            '<table class="fl-table">' +
+              '<thead>' +
+                '<tr>' +
+                  '<th>Team Member</th>' +
+                  '<th>Member Type</th>' +
+                  '<th>Role</th>' +
+                  '<th>Assigned By</th>' +
+                  '<th>Task Responsibilities</th>' +
+                  '<th>Status</th>' +
+                '</tr>' +
+              '</thead>' +
+              '<tbody>';
+
+      team.forEach(function(m) {
+        var isMe = m.name === FL_STATE.user.name;
+        html += '<tr>' +
+          '<td><strong>' + m.name + '</strong>' + (isMe ? ' <span class="fl-badge fl-badge-primary" style="font-size:10px;">You</span>' : '') + '</td>' +
+          '<td><span class="fl-badge ' + (m.type === 'Freelancer Teammate' ? 'fl-badge-primary' : (m.type === 'Company Intern' ? 'fl-badge-info' : 'fl-badge-warning')) + '">' + m.type + '</span></td>' +
+          '<td>' + m.role + '</td>' +
+          '<td>' + m.assignedBy + '</td>' +
+          '<td>' + m.tasks + '</td>' +
+          '<td><span class="fl-badge fl-badge-success">' + m.status + '</span></td>' +
+        '</tr>';
+      });
+
+      html += '</tbody></table></div></div></div>';
+    }
+
+    else if (tabId === 'finance') {
+      var pay = FL_DATABASE.payments.filter(function(x) { return x.projectId === p.id; });
+      html += '<div class="fl-card">' +
+        '<div class="fl-card-header">' +
+          '<h3><i class="bx bx-credit-card"></i> Project Earnings & Payment Schedule (Read-Only)</h3>' +
+          '<span class="fl-badge fl-badge-secondary"><i class="bx bx-lock"></i> Financial Records Managed by Admin</span>' +
+        '</div>' +
+        '<div class="fl-card-body">' +
+          '<div style="background:#f8f9fc;border-left:4px solid var(--fl-primary);padding:10px 14px;border-radius:6px;font-size:12.5px;margin-bottom:1.25rem;">' +
+            '<i class="bx bx-info-circle"></i> Total project contract allocation: <strong>' + p.totalBudget + '</strong>. Payments are triggered automatically by ERP Admin upon deliverable sign-off.' +
+          '</div>' +
+          '<div class="fl-table-responsive">' +
+            '<table class="fl-table">' +
+              '<thead>' +
+                '<tr>' +
+                  '<th>Milestone / Period</th>' +
+                  '<th>Amount</th>' +
+                  '<th>Disbursement Date</th>' +
+                  '<th>ERP Reference</th>' +
+                  '<th>Status</th>' +
+                '</tr>' +
+              '</thead>' +
+              '<tbody>';
+
+      pay.forEach(function(py) {
+        html += '<tr>' +
+          '<td><strong>' + py.period + '</strong></td>' +
+          '<td style="font-weight:700;color:var(--fl-text-dark);">' + py.amount + '</td>' +
+          '<td>' + py.date + '</td>' +
+          '<td><code>' + py.ref + '</code></td>' +
+          '<td><span class="fl-badge ' + (py.status === 'Paid' ? 'fl-badge-success' : 'fl-badge-warning') + '">' + py.status + '</span></td>' +
+        '</tr>';
+      });
+
+      html += '</tbody></table></div></div></div>';
+    }
+
+    else {
+      // Fallback for sub-tabs to avoid giant single output
+      html += '<div class="fl-card"><div class="fl-card-body">' +
+        '<p style="color:#64748b;font-size:13.5px;">Displaying <strong>' + tabId.toUpperCase() + '</strong> for project: <strong>' + p.name + '</strong></p>' +
+        '<button class="fl-btn fl-btn-primary fl-btn-sm" onclick="navTo(\'' + tabId + '\')">Open Dedicated ' + tabId + ' Module</button>' +
+      '</div></div>';
+    }
+
+    return html;
+  }
+
+  function renderTasksTableForProject(projId) {
+    var tasks = FL_DATABASE.tasks.filter(function(t) { return t.projectId === projId; });
+    var html = '<div class="fl-table-responsive"><table class="fl-table">' +
+      '<thead>' +
+        '<tr>' +
+          '<th>Task ID</th>' +
+          '<th>Title</th>' +
+          '<th>Priority</th>' +
+          '<th>Due Date</th>' +
+          '<th>Progress</th>' +
+          '<th>Logged</th>' +
+          '<th>Status</th>' +
+          '<th style="text-align:right;">Action</th>' +
+        '</tr>' +
+      '</thead><tbody>';
+
+    tasks.forEach(function(t) {
+      html += '<tr>' +
+        '<td><code>' + t.id + '</code></td>' +
+        '<td><strong>' + t.title + '</strong></td>' +
+        '<td><span class="fl-badge ' + (t.priority === 'High' ? 'fl-badge-danger' : (t.priority === 'Medium' ? 'fl-badge-warning' : 'fl-badge-info')) + '">' + t.priority + '</span></td>' +
+        '<td>' + t.dueDate + '</td>' +
+        '<td style="width:110px;">' +
+          '<div style="font-size:11px;font-weight:600;margin-bottom:2px;">' + t.progress + '%</div>' +
+          '<div class="fl-progress-bar"><div class="fl-progress-fill ' + (t.progress === 100 ? 'success' : '') + '" style="width:' + t.progress + '%;"></div></div>' +
+        '</td>' +
+        '<td>' + t.loggedHours + ' hrs</td>' +
+        '<td><span class="fl-badge ' + (t.status === 'Completed' ? 'fl-badge-success' : (t.status === 'In Progress' ? 'fl-badge-primary' : (t.status === 'Blocked' ? 'fl-badge-danger' : 'fl-badge-secondary'))) + '">' + t.status + '</span></td>' +
+        '<td style="text-align:right;">' +
+          '<button class="fl-btn fl-btn-secondary fl-btn-sm" onclick="openTaskDetailModal(\'' + t.id + '\')"><i class="bx bx-edit"></i> Update</button>' +
+        '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div>';
+    return html;
+  }
+
+  // 4. MY TASKS VIEW
+  function renderTasksView() {
+    var myTasks = getMyTasks();
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>My Assigned Tasks</h2>' +
+        '<p>Update your task execution progress, report blockers, and record completion notes.</p>' +
+      '</div>' +
+      '<div class="fl-header-actions">' +
+        '<select class="fl-form-control" style="width:160px;" onchange="filterTasksByStatus(this.value)">' +
+          '<option value="All">All Statuses</option>' +
+          '<option value="In Progress">In Progress</option>' +
+          '<option value="Pending">Pending</option>' +
+          '<option value="Blocked">Blocked</option>' +
+          '<option value="Completed">Completed</option>' +
+        '</select>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table" id="fl-all-tasks-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>Task ID</th>' +
+              '<th>Title & Description</th>' +
+              '<th>Project</th>' +
+              '<th>Priority</th>' +
+              '<th>Due Date</th>' +
+              '<th>Progress</th>' +
+              '<th>Hours</th>' +
+              '<th>Status</th>' +
+              '<th style="text-align:right;">Action</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+
+    myTasks.forEach(function(t) {
+      var p = FL_DATABASE.projects.find(function(x) { return x.id === t.projectId; });
+      html += '<tr>' +
+        '<td><code>' + t.id + '</code></td>' +
+        '<td>' +
+          '<strong>' + t.title + '</strong>' +
+          '<div style="font-size:11.5px;color:#64748b;max-width:320px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + t.description + '</div>' +
+        '</td>' +
+        '<td><span class="fl-badge fl-badge-secondary">' + (p ? p.name : t.projectId) + '</span></td>' +
+        '<td><span class="fl-badge ' + (t.priority === 'High' ? 'fl-badge-danger' : (t.priority === 'Medium' ? 'fl-badge-warning' : 'fl-badge-info')) + '">' + t.priority + '</span></td>' +
+        '<td>' + t.dueDate + '</td>' +
+        '<td style="width:120px;">' +
+          '<div style="font-size:11.5px;font-weight:600;margin-bottom:3px;">' + t.progress + '%</div>' +
+          '<div class="fl-progress-bar"><div class="fl-progress-fill ' + (t.progress === 100 ? 'success' : '') + '" style="width:' + t.progress + '%;"></div></div>' +
+        '</td>' +
+        '<td>' + t.loggedHours + ' / ' + t.estimatedHours + 'h</td>' +
+        '<td><span class="fl-badge ' + (t.status === 'Completed' ? 'fl-badge-success' : (t.status === 'In Progress' ? 'fl-badge-primary' : (t.status === 'Blocked' ? 'fl-badge-danger' : 'fl-badge-secondary'))) + '">' + t.status + '</span></td>' +
+        '<td style="text-align:right;">' +
+          '<button class="fl-btn fl-btn-secondary fl-btn-sm" onclick="openTaskDetailModal(\'' + t.id + '\')"><i class="bx bx-edit"></i> Update</button>' +
+        '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  // Task Modal Handler
+  window.openTaskDetailModal = function(taskId) {
+    var t = FL_DATABASE.tasks.find(function(x) { return x.id === taskId; });
+    if (!t) return;
+    var p = FL_DATABASE.projects.find(function(x) { return x.id === t.projectId; });
+
+    var html = '<input type="hidden" id="tm-id" value="' + t.id + '">' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem;">' +
+        '<div>' +
+          '<label style="font-size:11.5px;color:#64748b;font-weight:600;display:block;">Task Title</label>' +
+          '<strong style="font-size:15px;color:var(--fl-text-dark);">' + t.title + '</strong>' +
+        '</div>' +
+        '<div>' +
+          '<label style="font-size:11.5px;color:#64748b;font-weight:600;display:block;">Project</label>' +
+          '<span class="fl-badge fl-badge-primary">' + (p ? p.name : t.projectId) + '</span>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="fl-form-group">' +
+        '<label>Task Description (Read-Only Specification)</label>' +
+        '<div style="background:#f8f9fc;padding:10px 12px;border-radius:8px;font-size:13px;color:#475569;">' + t.description + '</div>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+        '<div class="fl-form-group">' +
+          '<label>Status *</label>' +
+          '<select id="tm-status" class="fl-form-control">' +
+            '<option ' + (t.status === 'Pending' ? 'selected' : '') + '>Pending</option>' +
+            '<option ' + (t.status === 'In Progress' ? 'selected' : '') + '>In Progress</option>' +
+            '<option ' + (t.status === 'Blocked' ? 'selected' : '') + '>Blocked</option>' +
+            '<option ' + (t.status === 'Completed' ? 'selected' : '') + '>Completed</option>' +
+          '</select>' +
+        '</div>' +
+        '<div class="fl-form-group">' +
+          '<label>Execution Progress: <span id="tm-prog-val">' + t.progress + '</span>%</label>' +
+          '<input type="range" id="tm-progress" min="0" max="100" value="' + t.progress + '" class="fl-form-control" oninput="document.getElementById(\'tm-prog-val\').textContent=this.value" style="padding:4px 0;">' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="fl-form-group">' +
+        '<label>Work Notes / Developer Progress Comments *</label>' +
+        '<textarea id="tm-notes" class="fl-form-control" placeholder="Add comments regarding today\'s implementation...">' + (t.notes || '') + '</textarea>' +
+      '</div>';
+
+    document.getElementById('fl-task-modal-content').innerHTML = html;
+    openModal('modal-task-detail');
+  };
+
+  window.saveTaskModalChanges = function() {
+    var id = document.getElementById('tm-id').value;
+    var t = FL_DATABASE.tasks.find(function(x) { return x.id === id; });
+    if (!t) return;
+
+    t.status = document.getElementById('tm-status').value;
+    t.progress = parseInt(document.getElementById('tm-progress').value, 10);
+    t.notes = document.getElementById('tm-notes').value.trim();
+
+    closeModal('modal-task-detail');
+    updateBadges();
+    showToast('Task "' + t.title + '" updated successfully!', 'success');
+    if (FL_STATE.currentModule === 'tasks') navTo('tasks');
+    else if (FL_STATE.currentModule === 'project-workspace') navTo('project-workspace', t.projectId);
+  };
+
+  // 5. TIME TRACKER VIEW
+  function renderTimeTrackerView() {
+    var fl = FL_STATE.user;
+    var myProjs = getMyProjects();
+    var myTasks = getMyTasks();
+
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Time Tracker & Work Logs</h2>' +
+        '<p>Track live billable hours and review daily, weekly, and project-scoped audit logs.</p>' +
+      '</div>' +
+      '<div class="fl-header-actions">' +
+        '<button class="fl-btn fl-btn-primary" onclick="stopLiveTimer()"><i class="bx bx-plus-circle"></i> Log Time Entry</button>' +
+      '</div>' +
+    '</div>';
+
+    // Summary Cards
+    html += '<div class="fl-stats-grid">' +
+      '<div class="fl-stat-card c-success"><div class="fl-stat-body"><div class="label">Today\'s Logged</div><div class="val">' + fl.todayHours + '</div><div class="sub">Target: 8.0 hrs</div></div><div class="fl-stat-icon-wrap"><i class="bx bx-time"></i></div></div>' +
+      '<div class="fl-stat-card c-info"><div class="fl-stat-body"><div class="label">This Week</div><div class="val">32.5 hrs</div><div class="sub">Mon - Fri</div></div><div class="fl-stat-icon-wrap"><i class="bx bx-calendar-week"></i></div></div>' +
+      '<div class="fl-stat-card c-purple"><div class="fl-stat-body"><div class="label">This Month</div><div class="val">148.0 hrs</div><div class="sub">3 active projects</div></div><div class="fl-stat-icon-wrap"><i class="bx bx-calendar-alt"></i></div></div>' +
+      '<div class="fl-stat-card c-warning"><div class="fl-stat-body"><div class="label">Billable Amount</div><div class="val">₹85,000</div><div class="sub">Approved hours</div></div><div class="fl-stat-icon-wrap"><i class="bx bx-wallet"></i></div></div>' +
+    '</div>';
+
+    // Active Live Session Box
+    html += '<div class="fl-card">' +
+      '<div class="fl-card-header">' +
+        '<h3><i class="bx bx-stopwatch"></i> Active Time Tracking Session</h3>' +
+        '<span class="fl-badge fl-badge-success">' + (FL_STATE.timer.running ? 'Tracking Live' : 'Paused') + '</span>' +
+      '</div>' +
+      '<div class="fl-card-body">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">' +
+          '<div>' +
+            '<div style="font-size:12px;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Elapsed Session Duration</div>' +
+            '<div style="font-size:42px;font-family:monospace;font-weight:700;color:var(--fl-primary);" id="fl-live-clock-page">' + formatSeconds(FL_STATE.timer.seconds) + '</div>' +
+            '<div style="font-size:13px;color:#475569;margin-top:4px;">' +
+              'Project: <strong>ERP Modernization</strong> &bull; Task: <strong>Payment Gateway Webhooks</strong>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:10px;">' +
+            '<button class="fl-btn fl-btn-warning" onclick="pauseLiveTimer()"><i class="bx bx-pause"></i> Pause</button>' +
+            '<button class="fl-btn fl-btn-success" onclick="resumeLiveTimer()"><i class="bx bx-play"></i> Resume</button>' +
+            '<button class="fl-btn fl-btn-danger" onclick="stopLiveTimer()"><i class="bx bx-stop"></i> Stop & Save Log</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+    // Time Log History Table
+    html += '<div class="fl-card">' +
+      '<div class="fl-card-header"><h3><i class="bx bx-history"></i> Recent Time Log History</h3></div>' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>Date</th>' +
+              '<th>Project</th>' +
+              '<th>Task</th>' +
+              '<th>Duration</th>' +
+              '<th>Work Summary</th>' +
+              '<th>Status</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>' +
+            '<tr><td>Today</td><td>ERP Modernization</td><td>Payment Gateway Webhooks</td><td><strong>5h 42m</strong></td><td>Implemented webhook retry queue & signature checks</td><td><span class="fl-badge fl-badge-success">Logged</span></td></tr>' +
+            '<tr><td>Yesterday</td><td>AI Interview Platform</td><td>Resume Analysis Module</td><td><strong>6h 15m</strong></td><td>Connected PDF parsing library & schema validators</td><td><span class="fl-badge fl-badge-success">Logged</span></td></tr>' +
+            '<tr><td>Sep 08</td><td>School ERP Suite</td><td>Parent Fee Receipt Interface</td><td><strong>7h 00m</strong></td><td>Fixed mobile viewport layout issue for receipt downloads</td><td><span class="fl-badge fl-badge-success">Logged</span></td></tr>' +
+            '<tr><td>Sep 07</td><td>ERP Modernization</td><td>Authentication API</td><td><strong>8h 00m</strong></td><td>Completed JWT refresh token rotation filter</td><td><span class="fl-badge fl-badge-success">Logged</span></td></tr>' +
+          '</tbody>' +
+        '</table>' +
+      '</div>' +
+    '</div>';
+
+    return html;
+  }
+
+  // 6. DAILY WORK UPDATES (Operational quick progress)
+  function renderDailyUpdatesView() {
+    var myProjs = getMyProjects();
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Daily Work Update</h2>' +
+        '<p>Quick operational progress update for project leads. Separate from formal audit reports.</p>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-grid-2col">' +
+      '<div>' +
+        '<div class="fl-card">' +
+          '<div class="fl-card-header"><h3><i class="bx bx-edit"></i> Submit Today\'s Operational Update</h3></div>' +
+          '<div class="fl-card-body">' +
+            '<form onsubmit="handleDailyWorkUpdateSubmit(event)">' +
+              '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+                '<div class="fl-form-group">' +
+                  '<label>Date</label>' +
+                  '<input type="date" id="dw-date" class="fl-form-control" value="' + new Date().toISOString().split('T')[0] + '" required>' +
+                '</div>' +
+                '<div class="fl-form-group">' +
+                  '<label>Project *</label>' +
+                  '<select id="dw-proj" class="fl-form-control" required>' +
+                    myProjs.map(function(p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('') +
+                  '</select>' +
+                '</div>' +
+              '</div>' +
+
+              '<div class="fl-form-group">' +
+                '<label>Completed Work (Today) *</label>' +
+                '<textarea id="dw-completed" class="fl-form-control" placeholder="What parts of your tasks did you finish today?..." required></textarea>' +
+              '</div>' +
+
+              '<div class="fl-form-group">' +
+                '<label>In-Progress Work *</label>' +
+                '<textarea id="dw-wip" class="fl-form-control" placeholder="What are you currently coding / designing?..." required></textarea>' +
+              '</div>' +
+
+              '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+                '<div class="fl-form-group">' +
+                  '<label>Blockers / Dependencies</label>' +
+                  '<input type="text" id="dw-blockers" class="fl-form-control" placeholder="None / Waiting on API specs">' +
+                '</div>' +
+                '<div class="fl-form-group">' +
+                  '<label>Hours Worked</label>' +
+                  '<input type="text" id="dw-hours" class="fl-form-control" value="6.5 hrs">' +
+                '</div>' +
+              '</div>' +
+
+              '<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:1rem;">' +
+                '<button type="button" class="fl-btn fl-btn-secondary" onclick="showToast(\'Draft saved locally.\', \'info\')"><i class="bx bx-save"></i> Save Draft</button>' +
+                '<button type="submit" class="fl-btn fl-btn-primary"><i class="bx bx-send"></i> Submit Work Update</button>' +
+              '</div>' +
+            '</form>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div>' +
+        '<div class="fl-card">' +
+          '<div class="fl-card-header"><h3><i class="bx bx-history"></i> Submitted Operational Updates</h3></div>' +
+          '<div class="fl-card-body">' +
+            '<div style="display:flex;flex-direction:column;gap:14px;">';
+
+    FL_DATABASE.dailyUpdates.forEach(function(du) {
+      var p = FL_DATABASE.projects.find(function(x) { return x.id === du.projectId; });
+      html += '<div style="padding:12px 14px;background:#f8f9fc;border-radius:10px;border-left:4px solid var(--fl-success);">' +
+        '<div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;margin-bottom:4px;">' +
+          '<span>' + du.date + ' &bull; ' + du.hoursWorked + '</span>' +
+          '<span class="fl-badge fl-badge-success">' + du.status + '</span>' +
+        '</div>' +
+        '<strong style="font-size:13.5px;color:var(--fl-text-dark);">' + (p ? p.name : du.projectId) + '</strong>' +
+        '<div style="font-size:12.5px;color:#475569;margin-top:4px;"><strong>Done:</strong> ' + du.completedWork + '</div>' +
+        '<div style="font-size:12px;color:#64748b;margin-top:2px;"><strong>WIP:</strong> ' + du.inProgressWork + '</div>' +
+        '<small style="font-size:10.5px;color:#94a3b8;display:block;margin-top:6px;"><i class="bx bx-lock"></i> Locked & submitted at ' + du.submittedAt + '</small>' +
+      '</div>';
+    });
+
+    html += '</div></div></div></div>';
+    return html;
+  }
+
+  window.handleDailyWorkUpdateSubmit = function(e) {
+    if (e) e.preventDefault();
+    var pId = document.getElementById('dw-proj').value;
+    var comp = document.getElementById('dw-completed').value.trim();
+    var wip = document.getElementById('dw-wip').value.trim();
+    var block = document.getElementById('dw-blockers').value.trim() || 'None';
+    var hrs = document.getElementById('dw-hours').value.trim() || '6.0 hrs';
+
+    FL_DATABASE.dailyUpdates.unshift({
+      id: 'DU-' + Math.floor(Math.random() * 900 + 100),
+      date: document.getElementById('dw-date').value,
+      projectId: pId,
+      completedWork: comp,
+      inProgressWork: wip,
+      blockers: block,
+      hoursWorked: hrs,
+      status: 'Submitted',
+      submittedAt: 'Just now'
+    });
+
+    showToast('Daily work update submitted successfully!', 'success');
+    navTo('daily-updates');
+  };
+
+  // 7. MESSAGES VIEW
+  function renderMessagesView() {
+    var activeConv = FL_DATABASE.conversations[0];
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Authorized Project Messages</h2>' +
+        '<p>Direct collaboration channels with authorized project leads and clients.</p>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-chat-layout">' +
+      '<div class="fl-chat-list">';
+
+    FL_DATABASE.conversations.forEach(function(c, i) {
+      html += '<div class="fl-chat-item ' + (i === 0 ? 'active' : '') + '" onclick="selectConversation(\'' + c.id + '\')">' +
+        '<strong style="font-size:13.5px;color:var(--fl-text-dark);display:block;">' + c.title + '</strong>' +
+        '<div style="font-size:11.5px;color:#64748b;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + c.lastMsg + '</div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:10px;color:#94a3b8;">' +
+          '<span>' + c.lastTime + '</span>' +
+          (c.unreadCount ? '<span class="fl-badge fl-badge-danger" style="font-size:10px;">' + c.unreadCount + ' new</span>' : '') +
+        '</div>' +
+      '</div>';
+    });
+
+    html += '</div>' +
+      '<div class="fl-chat-main">' +
+        '<div style="padding:12px 16px;border-bottom:1px solid var(--fl-border);background:#fff;display:flex;justify-content:space-between;align-items:center;">' +
+          '<div>' +
+            '<strong id="chat-active-title" style="font-size:14px;color:var(--fl-text-dark);">' + activeConv.title + '</strong>' +
+            '<div style="font-size:11.5px;color:#64748b;">Participants: ' + activeConv.participants.join(', ') + '</div>' +
+          '</div>' +
+          '<span class="fl-badge fl-badge-success">Encrypted Channel</span>' +
+        '</div>' +
+
+        '<div class="fl-chat-msgs" id="chat-thread-box">';
+
+    activeConv.messages.forEach(function(m) {
+      html += '<div class="fl-msg ' + (m.isMe ? 'from-me' : 'from-other') + '">' +
+        '<div>' + m.text + '</div>' +
+        '<div class="fl-msg-meta"><span>' + m.time + '</span> &bull; <span>' + m.sender + '</span></div>' +
+      '</div>';
+    });
+
+    html += '</div>' +
+        '<div class="fl-chat-input-bar">' +
+          '<input type="text" id="fl-chat-inp" class="fl-form-control" placeholder="Type an authorized reply..." onkeydown="if(event.key===\'Enter\') sendChatMessage()">' +
+          '<button class="fl-btn fl-btn-primary" onclick="sendChatMessage()"><i class="bx bx-send"></i> Send</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+    return html;
+  }
+
+  window.sendChatMessage = function() {
+    var inp = document.getElementById('fl-chat-inp');
+    var text = inp.value.trim();
+    if (!text) return;
+
+    var conv = FL_DATABASE.conversations[0];
+    var timeStr = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    conv.messages.push({
+      sender: FL_STATE.user.name + ' (You)',
+      text: text,
+      time: timeStr,
+      isMe: true
+    });
+    conv.lastMsg = text;
+    conv.lastTime = timeStr;
+
+    inp.value = '';
+    var box = document.getElementById('chat-thread-box');
+    var msgDiv = document.createElement('div');
+    msgDiv.className = 'fl-msg from-me';
+    msgDiv.innerHTML = '<div>' + text + '</div><div class="fl-msg-meta"><span>' + timeStr + '</span> &bull; <span>' + FL_STATE.user.name + ' (You)</span></div>';
+    box.appendChild(msgDiv);
+    box.scrollTop = box.scrollHeight;
+    showToast('Message sent to project thread.', 'success');
+  };
+
+  // 8. MEETINGS VIEW
+  function renderMeetingsView() {
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Meetings & Standups</h2>' +
+        '<p>Review scheduled video conferences, review agendas, and join client sessions.</p>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>Meeting Title</th>' +
+              '<th>Project</th>' +
+              '<th>Date & Time</th>' +
+              '<th>Platform</th>' +
+              '<th>Agenda</th>' +
+              '<th>Status</th>' +
+              '<th style="text-align:right;">Action</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+
+    FL_DATABASE.meetings.forEach(function(m) {
+      html += '<tr>' +
+        '<td><strong>' + m.title + '</strong></td>' +
+        '<td><span class="fl-badge fl-badge-secondary">' + m.projectId + '</span></td>' +
+        '<td>' + m.date + '<br><small style="color:#64748b;">' + m.time + '</small></td>' +
+        '<td><i class="bx bx-video"></i> ' + m.platform + '</td>' +
+        '<td style="max-width:240px;font-size:12px;color:#64748b;">' + m.agenda + '</td>' +
+        '<td><span class="fl-badge ' + (m.status === 'Confirmed' ? 'fl-badge-success' : 'fl-badge-warning') + '">' + m.status + '</span></td>' +
+        '<td style="text-align:right;">' +
+          '<a href="' + m.link + '" target="_blank" class="fl-btn fl-btn-primary fl-btn-sm"><i class="bx bx-link-external"></i> Join</a>' +
+        '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  // 9. FILES & DOCUMENTS VIEW
+  function renderDocumentsView() {
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Files & Documents</h2>' +
+        '<p>Authorized project specifications, terms contracts, and design assets.</p>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>Document Name</th>' +
+              '<th>Category</th>' +
+              '<th>Project</th>' +
+              '<th>Size</th>' +
+              '<th>Uploaded Date</th>' +
+              '<th>Uploaded By</th>' +
+              '<th style="text-align:right;">Action</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+
+    FL_DATABASE.documents.forEach(function(d) {
+      html += '<tr>' +
+        '<td><i class="bx bxs-file-pdf" style="color:#dc2626;font-size:18px;margin-right:6px;vertical-align:middle;"></i> <strong>' + d.name + '</strong></td>' +
+        '<td><span class="fl-badge fl-badge-info">' + d.category + '</span></td>' +
+        '<td><span class="fl-badge fl-badge-secondary">' + d.projectId + '</span></td>' +
+        '<td>' + d.size + '</td>' +
+        '<td>' + d.date + '</td>' +
+        '<td>' + d.uploadedBy + '</td>' +
+        '<td style="text-align:right;">' +
+          '<button class="fl-btn fl-btn-secondary fl-btn-sm" onclick="showToast(\'Downloading ' + d.name + '...\', \'info\')"><i class="bx bx-download"></i> Download</button>' +
+        '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  // 10. ISSUES / BUGS VIEW
+  function renderIssuesView() {
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Issues & Bug Tracking</h2>' +
+        '<p>Report and track technical blockers and vulnerabilities in authorized modules.</p>' +
+      '</div>' +
+      '<div class="fl-header-actions">' +
+        '<button class="fl-btn fl-btn-danger" onclick="openIssueModal()"><i class="bx bx-bug"></i> Report Issue</button>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>Issue ID</th>' +
+              '<th>Title & Description</th>' +
+              '<th>Project</th>' +
+              '<th>Severity</th>' +
+              '<th>Priority</th>' +
+              '<th>Status</th>' +
+              '<th>Reporter</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+
+    FL_DATABASE.issues.forEach(function(iss) {
+      html += '<tr>' +
+        '<td><code>' + iss.id + '</code></td>' +
+        '<td><strong>' + iss.title + '</strong><div style="font-size:11.5px;color:#64748b;">' + iss.desc + '</div></td>' +
+        '<td><span class="fl-badge fl-badge-secondary">' + iss.projectId + '</span></td>' +
+        '<td><span class="fl-badge ' + (iss.severity === 'High' || iss.severity === 'Critical' ? 'fl-badge-danger' : 'fl-badge-warning') + '">' + iss.severity + '</span></td>' +
+        '<td>' + iss.priority + '</td>' +
+        '<td><span class="fl-badge ' + (iss.status === 'Resolved' ? 'fl-badge-success' : (iss.status === 'Blocked' ? 'fl-badge-danger' : 'fl-badge-primary')) + '">' + iss.status + '</span></td>' +
+        '<td>' + iss.reporter + '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  window.openIssueModal = function() {
+    var myProjs = getMyProjects();
+    var sel = document.getElementById('iss-proj');
+    sel.innerHTML = myProjs.map(function(p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('');
+    openModal('modal-report-issue');
+  };
+
+  window.submitIssueForm = function() {
+    var title = document.getElementById('iss-title').value.trim();
+    var desc = document.getElementById('iss-desc').value.trim();
+    if (!title || !desc) {
+      showToast('Please fill out the issue title and description.', 'danger');
+      return;
+    }
+    FL_DATABASE.issues.unshift({
+      id: 'ISS-' + Math.floor(Math.random() * 900 + 100),
+      projectId: document.getElementById('iss-proj').value,
+      title: title,
+      severity: document.getElementById('iss-severity').value,
+      priority: document.getElementById('iss-priority').value,
+      status: 'Open',
+      reporter: FL_STATE.user.name + ' (Freelancer)',
+      desc: desc
+    });
+    closeModal('modal-report-issue');
+    showToast('Bug issue logged successfully!', 'success');
+    navTo('issues');
+  };
+
+  // 11. CHANGE REQUESTS VIEW
+  function renderChangeRequestsView() {
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Change Requests</h2>' +
+        '<p>Propose architectural adjustments. Subject to ERP Admin review and sign-off.</p>' +
+      '</div>' +
+      '<div class="fl-header-actions">' +
+        '<button class="fl-btn fl-btn-primary" onclick="openChangeRequestModal()"><i class="bx bx-git-pull-request"></i> Propose Change Request</button>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>CR ID</th>' +
+              '<th>Title & Justification</th>' +
+              '<th>Project</th>' +
+              '<th>Effort</th>' +
+              '<th>Priority</th>' +
+              '<th>Submitted</th>' +
+              '<th>Review Status</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+
+    FL_DATABASE.changeRequests.forEach(function(cr) {
+      html += '<tr>' +
+        '<td><code>' + cr.id + '</code></td>' +
+        '<td><strong>' + cr.title + '</strong><div style="font-size:11.5px;color:#64748b;">' + cr.reason + '</div></td>' +
+        '<td><span class="fl-badge fl-badge-secondary">' + cr.projectId + '</span></td>' +
+        '<td>' + cr.effort + '</td>' +
+        '<td>' + cr.priority + '</td>' +
+        '<td>' + cr.submittedAt + '</td>' +
+        '<td><span class="fl-badge ' + (cr.status === 'Approved' ? 'fl-badge-success' : 'fl-badge-warning') + '">' + cr.status + ' (' + cr.approvedBy + ')</span></td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  window.openChangeRequestModal = function() {
+    var myProjs = getMyProjects();
+    var sel = document.getElementById('cr-proj');
+    sel.innerHTML = myProjs.map(function(p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('');
+    openModal('modal-change-request');
+  };
+
+  window.submitChangeRequestForm = function() {
+    var title = document.getElementById('cr-title').value.trim();
+    var reason = document.getElementById('cr-reason').value.trim();
+    if (!title || !reason) {
+      showToast('Please fill out the change request title and rationale.', 'danger');
+      return;
+    }
+    FL_DATABASE.changeRequests.unshift({
+      id: 'CR-' + Math.floor(Math.random() * 900 + 100),
+      projectId: document.getElementById('cr-proj').value,
+      title: title,
+      reason: reason,
+      effort: document.getElementById('cr-effort').value + ' Hours',
+      priority: document.getElementById('cr-priority').value,
+      status: 'Submitted',
+      submittedAt: new Date().toISOString().split('T')[0],
+      approvedBy: 'Pending PM Review'
+    });
+    closeModal('modal-change-request');
+    showToast('Change request submitted for PM review.', 'success');
+    navTo('change-requests');
+  };
+
+  // 12. DELIVERABLES VIEW
+  function renderDeliverablesView() {
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Deliverables & Artifacts</h2>' +
+        '<p>Submit audited code packages and milestone releases for client sign-off.</p>' +
+      '</div>' +
+      '<div class="fl-header-actions">' +
+        '<button class="fl-btn fl-btn-success" onclick="openDeliverableModal()"><i class="bx bx-package"></i> Submit Deliverable</button>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>Deliverable ID</th>' +
+              '<th>Artifact Name</th>' +
+              '<th>Version</th>' +
+              '<th>Project</th>' +
+              '<th>Submission Date</th>' +
+              '<th>Review Status</th>' +
+              '<th>Reviewer Notes</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+
+    FL_DATABASE.deliverables.forEach(function(d) {
+      html += '<tr>' +
+        '<td><code>' + d.id + '</code></td>' +
+        '<td><strong>' + d.name + '</strong></td>' +
+        '<td><span class="fl-badge fl-badge-primary">' + d.version + '</span></td>' +
+        '<td><span class="fl-badge fl-badge-secondary">' + d.projectId + '</span></td>' +
+        '<td>' + d.submissionDate + '</td>' +
+        '<td><span class="fl-badge ' + (d.status === 'Approved' ? 'fl-badge-success' : 'fl-badge-warning') + '">' + d.status + '</span></td>' +
+        '<td style="font-size:12px;color:#64748b;">' + d.feedback + '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  window.openDeliverableModal = function() {
+    var myProjs = getMyProjects();
+    var sel = document.getElementById('deliv-proj');
+    sel.innerHTML = myProjs.map(function(p) { return '<option value="' + p.id + '">' + p.name + '</option>'; }).join('');
+    var taskSel = document.getElementById('deliv-task');
+    taskSel.innerHTML = getMyTasks().map(function(t) { return '<option value="' + t.id + '">' + t.title + '</option>'; }).join('');
+    openModal('modal-deliverable');
+  };
+
+  window.submitDeliverableForm = function() {
+    var title = document.getElementById('deliv-title').value.trim();
+    var notes = document.getElementById('deliv-notes').value.trim();
+    if (!title || !notes) {
+      showToast('Please enter deliverable title and submission notes.', 'danger');
+      return;
+    }
+    FL_DATABASE.deliverables.unshift({
+      id: 'DEL-' + Math.floor(Math.random() * 900 + 100),
+      projectId: document.getElementById('deliv-proj').value,
+      taskId: document.getElementById('deliv-task').value,
+      name: title,
+      version: document.getElementById('deliv-version').value,
+      submissionDate: new Date().toISOString().split('T')[0],
+      status: 'Under Review',
+      reviewer: 'Project Lead',
+      feedback: notes
+    });
+    closeModal('modal-deliverable');
+    showToast('Deliverable artifact submitted for review!', 'success');
+    navTo('deliverables');
+  };
+
+  // 13. DEPLOYMENTS VIEW
+  function renderDeploymentsView() {
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Deployment Visibility</h2>' +
+        '<p>Read-only deployment pipeline tracking across development, staging and production.</p>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>Deployment ID</th>' +
+              '<th>Project</th>' +
+              '<th>Version</th>' +
+              '<th>Environment</th>' +
+              '<th>Deployed Date</th>' +
+              '<th>Deployed By</th>' +
+              '<th>Status</th>' +
+              '<th>Release Notes</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+
+    FL_DATABASE.deployments.forEach(function(dep) {
+      html += '<tr>' +
+        '<td><code>' + dep.id + '</code></td>' +
+        '<td><span class="fl-badge fl-badge-secondary">' + dep.projectId + '</span></td>' +
+        '<td><strong>' + dep.version + '</strong></td>' +
+        '<td><span class="fl-badge ' + (dep.environment === 'Production' ? 'fl-badge-primary' : (dep.environment === 'Staging' ? 'fl-badge-warning' : 'fl-badge-info')) + '">' + dep.environment + '</span></td>' +
+        '<td>' + dep.date + '</td>' +
+        '<td>' + dep.deployedBy + '</td>' +
+        '<td><span class="fl-badge fl-badge-success">' + dep.status + '</span></td>' +
+        '<td style="font-size:12px;color:#64748b;">' + dep.notes + '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  // 14. DAILY REPORTS VIEW (Formal audit documents)
+  function renderDailyReportsView() {
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Formal Daily Audit Reports</h2>' +
+        '<p>Formal review artifacts archived for client invoicing, compliance and PM reviews.</p>' +
+      '</div>' +
+      '<div class="fl-header-actions">' +
+        '<button class="fl-btn fl-btn-primary" onclick="openDailyReportModal()"><i class="bx bx-file-blank"></i> Create Daily Report</button>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>Report ID</th>' +
+              '<th>Date</th>' +
+              '<th>Project</th>' +
+              '<th>Hours</th>' +
+              '<th>Tasks Completed</th>' +
+              '<th>Status</th>' +
+              '<th>Reviewer Feedback</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+
+    FL_DATABASE.dailyReports.forEach(function(dr) {
+      html += '<tr>' +
+        '<td><code>' + dr.id + '</code></td>' +
+        '<td><strong>' + dr.date + '</strong></td>' +
+        '<td><span class="fl-badge fl-badge-secondary">' + dr.projectId + '</span></td>' +
+        '<td>' + dr.hours + '</td>' +
+        '<td style="max-width:320px;font-size:12px;color:var(--fl-text-dark);">' + dr.completedTasks + '</td>' +
+        '<td><span class="fl-badge ' + (dr.status === 'Reviewed' ? 'fl-badge-success' : 'fl-badge-warning') + '">' + dr.status + '</span></td>' +
+        '<td style="font-size:12px;color:#64748b;">' + (dr.feedback || 'Pending audit review') + '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  window.openDailyReportModal = function(projId) {
+    var myProjs = getMyProjects();
+    var sel = document.getElementById('dr-proj');
+    sel.innerHTML = myProjs.map(function(p) {
+      return '<option value="' + p.id + '" ' + (p.id === projId ? 'selected' : '') + '>' + p.name + '</option>';
+    }).join('');
+    document.getElementById('dr-date').value = new Date().toISOString().split('T')[0];
+    openModal('modal-daily-report');
+  };
+
+  window.submitFormalDailyReport = function() {
+    var comp = document.getElementById('dr-completed').value.trim();
+    if (!comp) {
+      showToast('Please summarize completed tasks.', 'danger');
+      return;
+    }
+    FL_DATABASE.dailyReports.unshift({
+      id: 'DR-' + Math.floor(Math.random() * 900 + 100),
+      date: document.getElementById('dr-date').value,
+      projectId: document.getElementById('dr-proj').value,
+      completedTasks: comp,
+      wip: document.getElementById('dr-wip').value.trim() || 'Ongoing milestone work',
+      blockers: document.getElementById('dr-blockers').value.trim() || 'None',
+      hours: document.getElementById('dr-hours').value.trim() || '7.0 hrs',
+      status: 'Submitted',
+      reviewedBy: 'Pending Review',
+      feedback: null
+    });
+    closeModal('modal-daily-report');
+    showToast('Formal daily report submitted to ERP audit trail.', 'success');
+    navTo('daily-reports');
+  };
+
+  // 15. EARNINGS & PAYMENTS VIEW
+  function renderPaymentsView() {
+    var fl = FL_STATE.user;
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Earnings & Payments</h2>' +
+        '<p>Read-only transparent financial statement. All amounts authorized and disbursed by ERP Admin.</p>' +
+      '</div>' +
+    '</div>';
+
+    // Top Financial Summary
+    html += '<div class="fl-stats-grid">' +
+      '<div class="fl-stat-card c-success"><div class="fl-stat-body"><div class="label">Total Paid</div><div class="val">₹70,000</div><div class="sub">2 disbursed milestones</div></div><div class="fl-stat-icon-wrap"><i class="bx bx-check-double"></i></div></div>' +
+      '<div class="fl-stat-card c-warning"><div class="fl-stat-body"><div class="label">Pending Review</div><div class="val">₹32,500</div><div class="sub">1 milestone invoice</div></div><div class="fl-stat-icon-wrap"><i class="bx bx-time"></i></div></div>' +
+      '<div class="fl-stat-card c-info"><div class="fl-stat-body"><div class="label">Total Earned</div><div class="val">₹1,02,500</div><div class="sub">Fiscal Year 2026</div></div><div class="fl-stat-icon-wrap"><i class="bx bx-wallet"></i></div></div>' +
+      '<div class="fl-stat-card c-purple"><div class="fl-stat-body"><div class="label">Hourly Rate</div><div class="val">₹1,200/hr</div><div class="sub">Standard rate card</div></div><div class="fl-stat-icon-wrap"><i class="bx bx-coin-stack"></i></div></div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-card-header">' +
+        '<h3><i class="bx bx-credit-card"></i> Disbursement History & Active Invoices</h3>' +
+        '<span class="fl-badge fl-badge-secondary"><i class="bx bx-lock-alt"></i> Read-Only Financial Ledger</span>' +
+      '</div>' +
+      '<div class="fl-table-responsive">' +
+        '<table class="fl-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th>Project Name</th>' +
+              '<th>Milestone Period</th>' +
+              '<th>Amount</th>' +
+              '<th>Date</th>' +
+              '<th>Bank Reference</th>' +
+              '<th>Status</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+
+    FL_DATABASE.payments.forEach(function(py) {
+      html += '<tr>' +
+        '<td><strong>' + py.projectName + '</strong></td>' +
+        '<td>' + py.period + '</td>' +
+        '<td style="font-weight:700;color:var(--fl-text-dark);">' + py.amount + '</td>' +
+        '<td>' + py.date + '</td>' +
+        '<td><code>' + py.ref + '</code></td>' +
+        '<td><span class="fl-badge ' + (py.status === 'Paid' ? 'fl-badge-success' : 'fl-badge-warning') + '">' + py.status + '</span></td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  // 16. NOTIFICATIONS VIEW
+  function renderNotificationsView() {
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Notifications Center</h2>' +
+        '<p>System alerts, task deadlines, and project announcements.</p>' +
+      '</div>' +
+      '<div class="fl-header-actions">' +
+        '<button class="fl-btn fl-btn-secondary" onclick="markAllNotifRead()"><i class="bx bx-check-double"></i> Mark All as Read</button>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card">' +
+      '<div class="fl-card-body" style="padding:0;">';
+
+    FL_DATABASE.notifications.forEach(function(n) {
+      html += '<div style="padding:14px 18px;border-bottom:1px solid #edf2f7;display:flex;align-items:center;justify-content:space-between;gap:14px;' + (n.unread ? 'background:#f0f9ff;' : '') + '">' +
+        '<div style="display:flex;align-items:flex-start;gap:14px;">' +
+          '<div style="width:38px;height:38px;border-radius:50%;background:rgba(78,115,223,0.12);color:var(--fl-primary);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">' +
+            '<i class="bx ' + n.icon + '"></i>' +
+          '</div>' +
+          '<div>' +
+            '<strong style="font-size:14px;color:var(--fl-text-dark);">' + n.title + '</strong>' +
+            '<div style="font-size:12.5px;color:#64748b;margin-top:2px;">' + n.desc + '</div>' +
+            '<small style="font-size:11px;color:#94a3b8;margin-top:4px;display:block;">' + n.time + '</small>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:8px;">' +
+          '<button class="fl-btn fl-btn-primary fl-btn-sm" onclick="navTo(\'' + n.module + '\')">View</button>' +
+        '</div>' +
+      '</div>';
+    });
+
+    html += '</div></div>';
+    return html;
+  }
+
+  // 17. MY PROFILE VIEW
+  function renderProfileView() {
+    var fl = FL_STATE.user;
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>My Freelancer Profile</h2>' +
+        '<p>Manage your authorized professional details and technical specialization.</p>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-grid-2col">' +
+      '<div>' +
+        '<div class="fl-card">' +
+          '<div class="fl-card-header"><h3><i class="bx bx-user"></i> Personal & Contact Information</h3></div>' +
+          '<div class="fl-card-body">' +
+            '<form onsubmit="handleProfileSave(event)">' +
+              '<div class="fl-form-group">' +
+                '<label>Full Name</label>' +
+                '<input type="text" id="prof-name" class="fl-form-control" value="' + fl.name + '" required>' +
+              '</div>' +
+              '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+                '<div class="fl-form-group">' +
+                  '<label>Email Address</label>' +
+                  '<input type="email" id="prof-email" class="fl-form-control" value="' + fl.email + '" required>' +
+                '</div>' +
+                '<div class="fl-form-group">' +
+                  '<label>Phone Number</label>' +
+                  '<input type="tel" id="prof-phone" class="fl-form-control" value="' + fl.phone + '" required>' +
+                '</div>' +
+              '</div>' +
+              '<div class="fl-form-group">' +
+                '<label>Professional Designation</label>' +
+                '<input type="text" id="prof-role" class="fl-form-control" value="' + fl.role + '">' +
+              '</div>' +
+              '<div class="fl-form-group">' +
+                '<label>Technical Skills (Comma separated)</label>' +
+                '<input type="text" id="prof-skills" class="fl-form-control" value="' + fl.skills.join(', ') + '">' +
+              '</div>' +
+              '<div style="text-align:right;margin-top:1rem;">' +
+                '<button type="submit" class="fl-btn fl-btn-primary"><i class="bx bx-save"></i> Update Profile</button>' +
+              '</div>' +
+            '</form>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div>' +
+        '<div class="fl-card">' +
+          '<div class="fl-card-header"><h3><i class="bx bx-lock-alt"></i> ERP Governance Fields (Read-Only)</h3></div>' +
+          '<div class="fl-card-body">' +
+            '<div style="display:flex;flex-direction:column;gap:12px;font-size:13px;">' +
+              '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #edf2f7;padding-bottom:8px;">' +
+                '<span style="color:#64748b;">ERP Account ID</span><code>' + fl.id + '</code>' +
+              '</div>' +
+              '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #edf2f7;padding-bottom:8px;">' +
+                '<span style="color:#64748b;">System Role</span><span class="fl-badge fl-badge-primary">Freelancer User</span>' +
+              '</div>' +
+              '<div style="display:flex;justify-content:space-between;border-bottom:1px solid #edf2f7;padding-bottom:8px;">' +
+                '<span style="color:#64748b;">Authorization Status</span><span class="fl-badge fl-badge-success">Active & Verified</span>' +
+              '</div>' +
+              '<div style="display:flex;justify-content:space-between;padding-bottom:4px;">' +
+                '<span style="color:#64748b;">Standard Working Hours</span><strong>8 hrs/day (Mon - Fri)</strong>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+    return html;
+  }
+
+  window.handleProfileSave = function(e) {
+    if (e) e.preventDefault();
+    FL_STATE.user.name = document.getElementById('prof-name').value.trim();
+    FL_STATE.user.email = document.getElementById('prof-email').value.trim();
+    FL_STATE.user.phone = document.getElementById('prof-phone').value.trim();
+    FL_STATE.user.role = document.getElementById('prof-role').value.trim();
+    FL_STATE.user.skills = document.getElementById('prof-skills').value.split(',').map(function(s) { return s.trim(); });
+
+    document.getElementById('fl-top-name').textContent = FL_STATE.user.name;
+    document.getElementById('fl-dd-name').textContent = FL_STATE.user.name;
+    document.getElementById('fl-dd-email').textContent = FL_STATE.user.email;
+
+    showToast('Profile details updated successfully.', 'success');
+  };
+
+  // 18. SETTINGS VIEW
+  function renderSettingsView() {
+    var html = '<div class="fl-page-header">' +
+      '<div class="fl-page-title">' +
+        '<h2>Portal Settings & Security</h2>' +
+        '<p>Configure notification thresholds, security preferences, and dashboard options.</p>' +
+      '</div>' +
+    '</div>';
+
+    html += '<div class="fl-card" style="max-width:700px;">' +
+      '<div class="fl-card-header"><h3><i class="bx bx-bell"></i> Notification Preferences</h3></div>' +
+      '<div class="fl-card-body">' +
+        '<div style="display:flex;flex-direction:column;gap:14px;font-size:13.5px;">' +
+          '<label style="display:flex;align-items:center;gap:10px;cursor:pointer;">' +
+            '<input type="checkbox" checked style="width:16px;height:16px;"> Email notification on task assignment' +
+          '</label>' +
+          '<label style="display:flex;align-items:center;gap:10px;cursor:pointer;">' +
+            '<input type="checkbox" checked style="width:16px;height:16px;"> Email notification on sprint meeting invites' +
+          '</label>' +
+          '<label style="display:flex;align-items:center;gap:10px;cursor:pointer;">' +
+            '<input type="checkbox" checked style="width:16px;height:16px;"> Milestone payment disbursement alerts' +
+          '</label>' +
+          '<label style="display:flex;align-items:center;gap:10px;cursor:pointer;">' +
+            '<input type="checkbox" checked style="width:16px;height:16px;"> Daily report reminder at 05:30 PM' +
+          '</label>' +
+        '</div>' +
+        '<button class="fl-btn fl-btn-primary" style="margin-top:1.5rem;" onclick="showToast(\'Preferences saved!\', \'success\')"><i class="bx bx-save"></i> Save Preferences</button>' +
+      '</div>' +
+    '</div>';
+
+    return html;
+  }
+
+  // Terms Acceptance Modal Handler
+  var activeTermsProjectId = null;
+  window.openTermsModal = function(projId) {
+    activeTermsProjectId = projId;
+    var p = FL_DATABASE.projects.find(function(x) { return x.id === projId; });
+    if (!p) return;
+
+    var body = document.getElementById('fl-terms-modal-body');
+    body.innerHTML = '<div style="margin-bottom:1rem;">' +
+      '<strong style="font-size:16px;color:var(--fl-text-dark);">' + p.name + ' (' + p.code + ')</strong>' +
+      '<div style="font-size:12px;color:#64748b;margin-top:2px;">Client: ' + p.client + ' &bull; Terms Version: ' + p.termsVersion + '</div>' +
+    '</div>' +
+    '<div style="background:#f8f9fc;padding:1.25rem;border-radius:10px;border:1px solid #e2e8f0;font-size:13px;line-height:1.6;color:#334155;max-height:280px;overflow-y:auto;">' +
+      '<h4>1. Purpose & Scope</h4>' +
+      '<p>This Agreement governs your access to authorized development repositories, design assets, and task tracking systems for ' + p.name + ' governed by RORIRI Software Solutions.</p>' +
+      '<h4>2. Intellectual Property & Confidentiality</h4>' +
+      '<p>All software source code, architectural schemas, documentation, and client data created or accessed during this project are the sole and exclusive intellectual property of RORIRI Software Solutions.</p>' +
+      '<h4>3. Reporting & Time Tracking</h4>' +
+      '<p>You agree to log accurate working sessions through the ERP Time Tracker and submit formal daily reports prior to milestone acceptance.</p>' +
+      '<h4>4. Remuneration</h4>' +
+      '<p>Payment milestones are read-only and will be processed automatically upon review and sign-off by the designated ERP Project Manager (' + p.pm + ').</p>' +
+    '</div>';
+
+    openModal('modal-terms');
+  };
+
+  window.acceptTermsModal = function() {
+    if (!activeTermsProjectId) return;
+    var p = FL_DATABASE.projects.find(function(x) { return x.id === activeTermsProjectId; });
+    if (p) {
+      p.termsStatus = 'Accepted';
+      p.termsAcceptedDate = new Date().toLocaleString('en-IN');
+      closeModal('modal-terms');
+      showToast('Project Terms Accepted! Workspace unlocked for ' + p.name, 'success');
+      navTo('dashboard');
+    }
+  };
+
+  window.declineTermsModal = function() {
+    showConfirm('Decline Project Terms', 'Declining terms will keep project work access locked until terms are agreed upon. Are you sure?', function() {
+      closeModal('modal-terms');
+      showToast('Terms declined. Workspace remains locked.', 'warning');
+    });
+  };
+
+  // Filter Table Functions
+  window.filterProjectsTable = function(q) {
+    q = q.toLowerCase();
+    var rows = document.querySelectorAll('#fl-projects-table tbody tr');
+    rows.forEach(function(r) {
+      r.style.display = r.textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+    });
+  };
+
+  window.filterTasksByStatus = function(st) {
+    var rows = document.querySelectorAll('#fl-all-tasks-table tbody tr');
+    rows.forEach(function(r) {
+      if (st === 'All') r.style.display = '';
+      else r.style.display = r.textContent.indexOf(st) !== -1 ? '' : 'none';
+    });
+  };
+
+  // Initialize Page
+  document.addEventListener('DOMContentLoaded', function() {
+    // Ready for login
+  });
+
+})();
+</script>
+</body>
+</html>
