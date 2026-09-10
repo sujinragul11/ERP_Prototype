@@ -403,6 +403,36 @@ textarea.form-control { min-height:80px; resize:vertical; }
   vertical-align: middle !important;
 }
 
+/* Table Actions & Button Alignment */
+.table-actions {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  vertical-align: middle;
+}
+.table th.text-end,
+.table td.text-end,
+.table th:last-child,
+.table td:last-child {
+  white-space: nowrap;
+}
+.btn-action-icon {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  font-size: 15px !important;
+  flex-shrink: 0 !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+}
+
 /* NAVIGATION TABS */
 .nav {
   display: flex;

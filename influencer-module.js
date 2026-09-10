@@ -1333,7 +1333,7 @@
       '<div class="table-responsive">' +
         '<table class="table table-hover align-middle mb-0 font-13" id="fl-inf-table">' +
           '<thead class="table-light">' +
-            '<tr><th>Creator Profile</th><th>Niche & Focus</th><th>Platform</th><th>Followers</th><th>Eng. Rate</th><th>Leads</th><th>Earnings</th><th>Verification</th><th>Status</th><th style="text-align:right;">Actions</th></tr>' +
+            '<tr><th>Creator Profile</th><th>Niche & Focus</th><th>Platform</th><th>Followers</th><th>Eng. Rate</th><th>Leads</th><th>Earnings</th><th>Verification</th><th>Status</th><th class="text-end" style="width:95px;min-width:95px;white-space:nowrap;">Actions</th></tr>' +
           '</thead>' +
           '<tbody>';
 
@@ -1356,11 +1356,13 @@
         '<td><strong class="text-success">' + inf.totalEarnings + '</strong></td>' +
         '<td><span class="badge ' + (inf.verificationStatus === 'Verified' ? 'badge-success' : (inf.verificationStatus === 'Under Review' ? 'badge-warning' : 'badge-danger')) + '">' + inf.verificationStatus + '</span></td>' +
         '<td><span class="badge ' + (inf.status === 'Active' ? 'badge-success' : 'badge-danger') + '">' + inf.status + '</span></td>' +
-        '<td style="text-align:right;">' +
-          '<button class="btn btn-sm btn-outline-primary me-1" onclick="openInfluencerDetails(\'' + inf.id + '\')" title="View Full Profile"><i class="bx bx-show"></i></button>' +
-          (inf.status === 'Active' ?
-            '<button class="btn btn-sm btn-outline-danger" onclick="toggleInfluencerStatus(\'' + inf.id + '\', \'Suspended\')" title="Suspend"><i class="bx bx-block"></i></button>' :
-            '<button class="btn btn-sm btn-outline-success" onclick="toggleInfluencerStatus(\'' + inf.id + '\', \'Active\')" title="Activate"><i class="bx bx-check"></i></button>') +
+        '<td class="text-end" style="white-space:nowrap;">' +
+          '<div class="table-actions">' +
+            '<button class="btn btn-sm btn-outline-primary btn-action-icon" onclick="openInfluencerDetails(\'' + inf.id + '\')" title="View Full Profile"><i class="bx bx-show"></i></button>' +
+            (inf.status === 'Active' ?
+              '<button class="btn btn-sm btn-outline-danger btn-action-icon" onclick="toggleInfluencerStatus(\'' + inf.id + '\', \'Suspended\')" title="Suspend"><i class="bx bx-block"></i></button>' :
+              '<button class="btn btn-sm btn-outline-success btn-action-icon" onclick="toggleInfluencerStatus(\'' + inf.id + '\', \'Active\')" title="Activate"><i class="bx bx-check"></i></button>') +
+          '</div>' +
         '</td>' +
       '</tr>';
     });
@@ -1528,7 +1530,7 @@
       '<div class="table-responsive">' +
         '<table class="table table-hover align-middle mb-0 font-13">' +
           '<thead class="table-light">' +
-            '<tr><th>Creator</th><th>Platform & Handle</th><th>Followers</th><th>Niche</th><th>Verification State</th><th>Submission Date</th><th style="text-align:right;">Actions</th></tr>' +
+            '<tr><th>Creator</th><th>Platform & Handle</th><th>Followers</th><th>Niche</th><th>Verification State</th><th>Submission Date</th><th class="text-end" style="width:190px;min-width:190px;white-space:nowrap;">Actions</th></tr>' +
           '</thead>' +
           '<tbody>';
 
@@ -1540,9 +1542,11 @@
         '<td><span class="badge badge-secondary">' + inf.niche + '</span></td>' +
         '<td><span class="badge ' + (inf.verificationStatus === 'Verified' ? 'badge-success' : (inf.verificationStatus === 'Under Review' ? 'badge-warning' : 'badge-danger')) + '">' + inf.verificationStatus + '</span></td>' +
         '<td>' + inf.joinDate + '</td>' +
-        '<td style="text-align:right;">' +
-          '<button class="btn btn-sm btn-success me-1" onclick="verifyInfluencerAction(\'' + inf.id + '\', \'Verified\')"><i class="bx bx-check"></i> Approve</button>' +
-          '<button class="btn btn-sm btn-outline-danger" onclick="verifyInfluencerAction(\'' + inf.id + '\', \'Rejected\')"><i class="bx bx-x"></i> Reject</button>' +
+        '<td class="text-end" style="white-space:nowrap;">' +
+          '<div class="table-actions">' +
+            '<button class="btn btn-sm btn-success" onclick="verifyInfluencerAction(\'' + inf.id + '\', \'Verified\')"><i class="bx bx-check"></i> Approve</button>' +
+            '<button class="btn btn-sm btn-outline-danger" onclick="verifyInfluencerAction(\'' + inf.id + '\', \'Rejected\')"><i class="bx bx-x"></i> Reject</button>' +
+          '</div>' +
         '</td>' +
       '</tr>';
     });
@@ -1581,7 +1585,7 @@
       '<div class="table-responsive">' +
         '<table class="table table-hover align-middle mb-0 font-13">' +
           '<thead class="table-light">' +
-            '<tr><th>Campaign Code & Name</th><th>Client / Entity</th><th>Type</th><th>Timeline</th><th>Applicants</th><th>Creators</th><th>Budget</th><th>Status</th><th style="text-align:right;">Actions</th></tr>' +
+            '<tr><th>Campaign Code & Name</th><th>Client / Entity</th><th>Type</th><th>Timeline</th><th>Applicants</th><th>Creators</th><th>Budget</th><th>Status</th><th class="text-end" style="width:95px;min-width:95px;white-space:nowrap;">Actions</th></tr>' +
           '</thead>' +
           '<tbody>';
 
@@ -1595,9 +1599,11 @@
         '<td><strong>' + c.influencersCount + ' assigned</strong></td>' +
         '<td>₹' + c.budget.toLocaleString('en-IN') + '</td>' +
         '<td><span class="badge ' + (c.status === 'Active' ? 'badge-success' : (c.status === 'Draft' ? 'badge-secondary' : (c.status === 'Upcoming' ? 'badge-warning' : 'badge-primary'))) + '">' + c.status + '</span></td>' +
-        '<td style="text-align:right;">' +
-          '<button class="btn btn-sm btn-outline-primary me-1" onclick="openCampaignDetails(\'' + c.id + '\')" title="Open Campaign"><i class="bx bx-show"></i></button>' +
-          '<button class="btn btn-sm btn-outline-secondary" onclick="duplicateCampaign(\'' + c.id + '\')" title="Duplicate"><i class="bx bx-copy"></i></button>' +
+        '<td class="text-end" style="white-space:nowrap;">' +
+          '<div class="table-actions">' +
+            '<button class="btn btn-sm btn-outline-primary btn-action-icon" onclick="openCampaignDetails(\'' + c.id + '\')" title="Open Campaign"><i class="bx bx-show"></i></button>' +
+            '<button class="btn btn-sm btn-outline-secondary btn-action-icon" onclick="duplicateCampaign(\'' + c.id + '\')" title="Duplicate"><i class="bx bx-copy"></i></button>' +
+          '</div>' +
         '</td>' +
       '</tr>';
     });
@@ -1827,7 +1833,7 @@
       '<div class="table-responsive">' +
         '<table class="table table-hover align-middle mb-0 font-13">' +
           '<thead class="table-light">' +
-            '<tr><th>Applicant</th><th>Campaign</th><th>Niche</th><th>Followers</th><th>Engagement</th><th>Fee</th><th>Status</th><th style="text-align:right;">Actions</th></tr>' +
+            '<tr><th>Applicant</th><th>Campaign</th><th>Niche</th><th>Followers</th><th>Engagement</th><th>Fee</th><th>Status</th><th class="text-end" style="width:240px;min-width:240px;white-space:nowrap;">Actions</th></tr>' +
           '</thead>' +
           '<tbody>';
 
@@ -1840,12 +1846,14 @@
         '<td>' + app.engagement + '</td>' +
         '<td><strong>₹' + app.proposedFee.toLocaleString('en-IN') + '</strong></td>' +
         '<td><span class="badge ' + (app.status === 'Approved' ? 'badge-success' : (app.status === 'Shortlisted' ? 'badge-info' : (app.status === 'Rejected' ? 'badge-danger' : 'badge-warning'))) + '">' + app.status + '</span></td>' +
-        '<td style="text-align:right;">' +
-          (app.status !== 'Approved' ?
-            '<button class="btn btn-sm btn-outline-info me-1" onclick="updateAppStatus(\'' + app.id + '\', \'Shortlisted\')">Shortlist</button>' +
-            '<button class="btn btn-sm btn-success me-1" onclick="updateAppStatus(\'' + app.id + '\', \'Approved\')">Approve</button>' +
-            '<button class="btn btn-sm btn-outline-danger" onclick="updateAppStatus(\'' + app.id + '\', \'Rejected\')">Reject</button>' :
-            '<span class="text-success font-12 font-weight-600"><i class="bx bx-check-double"></i> Assigned</span>') +
+        '<td class="text-end" style="white-space:nowrap;">' +
+          '<div class="table-actions">' +
+            (app.status !== 'Approved' ?
+              '<button class="btn btn-sm btn-outline-info" onclick="updateAppStatus(\'' + app.id + '\', \'Shortlisted\')">Shortlist</button>' +
+              '<button class="btn btn-sm btn-success" onclick="updateAppStatus(\'' + app.id + '\', \'Approved\')">Approve</button>' +
+              '<button class="btn btn-sm btn-outline-danger" onclick="updateAppStatus(\'' + app.id + '\', \'Rejected\')">Reject</button>' :
+              '<span class="text-success font-12 font-weight-600"><i class="bx bx-check-double"></i> Assigned</span>') +
+          '</div>' +
         '</td>' +
       '</tr>';
     });
@@ -1892,7 +1900,7 @@
       '<div class="table-responsive">' +
         '<table class="table table-hover align-middle mb-0 font-13">' +
           '<thead class="table-light">' +
-            '<tr><th>Influencer</th><th>Deliverable & Format</th><th>Campaign</th><th>Submission Date</th><th>Version History</th><th>Review Status</th><th style="text-align:right;">Actions</th></tr>' +
+            '<tr><th>Influencer</th><th>Deliverable & Format</th><th>Campaign</th><th>Submission Date</th><th>Version History</th><th>Review Status</th><th class="text-end" style="width:160px;min-width:160px;white-space:nowrap;">Actions</th></tr>' +
           '</thead>' +
           '<tbody>';
 
@@ -1908,8 +1916,10 @@
           '<small class="text-muted">(' + cs.versions.length + ' cycle' + (cs.versions.length > 1 ? 's' : '') + ')</small>' +
         '</td>' +
         '<td><span class="badge ' + (cs.status === 'Approved' ? 'badge-success' : (cs.status === 'Revision Required' ? 'badge-danger' : (cs.status === 'Published' ? 'badge-primary' : 'badge-warning'))) + '">' + cs.status + '</span></td>' +
-        '<td style="text-align:right;">' +
-          '<button class="btn btn-sm btn-outline-primary me-1" onclick="openContentReviewModal(\'' + cs.id + '\')"><i class="bx bx-show"></i> Review & History</button>' +
+        '<td class="text-end" style="white-space:nowrap;">' +
+          '<div class="table-actions">' +
+            '<button class="btn btn-sm btn-outline-primary" onclick="openContentReviewModal(\'' + cs.id + '\')"><i class="bx bx-show"></i> Review & History</button>' +
+          '</div>' +
         '</td>' +
       '</tr>';
     });
@@ -2047,7 +2057,7 @@
       '<div class="table-responsive">' +
         '<table class="table table-hover align-middle mb-0 font-13">' +
           '<thead class="table-light">' +
-            '<tr><th>Lead ID & Source</th><th>Creator Attribution</th><th>Referral Code</th><th>Prospect</th><th>Target Product</th><th>Est. Value</th><th>Pipeline Status</th><th style="text-align:right;">Action</th></tr>' +
+            '<tr><th>Lead ID & Source</th><th>Creator Attribution</th><th>Referral Code</th><th>Prospect</th><th>Target Product</th><th>Est. Value</th><th>Pipeline Status</th><th class="text-end" style="width:115px;min-width:115px;white-space:nowrap;">Action</th></tr>' +
           '</thead>' +
           '<tbody>';
 
@@ -2060,10 +2070,12 @@
         '<td>' + ld.product + '</td>' +
         '<td><strong>₹' + ld.value.toLocaleString('en-IN') + '</strong></td>' +
         '<td><span class="badge ' + (ld.status === 'Converted' ? 'badge-success' : (ld.status === 'Qualified' ? 'badge-primary' : (ld.status === 'Lost' ? 'badge-danger' : 'badge-warning'))) + '">' + ld.status + '</span></td>' +
-        '<td style="text-align:right;">' +
-          (ld.status !== 'Converted' ?
-            '<button class="btn btn-sm btn-success" onclick="convertLeadAction(\'' + ld.id + '\')"><i class="bx bx-check"></i> Convert</button>' :
-            '<span class="text-success font-12"><i class="bx bx-check-double"></i> Verified</span>') +
+        '<td class="text-end" style="white-space:nowrap;">' +
+          '<div class="table-actions">' +
+            (ld.status !== 'Converted' ?
+              '<button class="btn btn-sm btn-success" onclick="convertLeadAction(\'' + ld.id + '\')"><i class="bx bx-check"></i> Convert</button>' :
+              '<span class="text-success font-12"><i class="bx bx-check-double"></i> Verified</span>') +
+          '</div>' +
         '</td>' +
       '</tr>';
     });
@@ -2156,7 +2168,7 @@
       '<div class="table-responsive">' +
         '<table class="table table-hover align-middle mb-0 font-13">' +
           '<thead class="table-light">' +
-            '<tr><th>Payout ID</th><th>Creator</th><th>Campaign</th><th>Amount</th><th>Method</th><th>Disbursement Date</th><th>Reference Code</th><th>Status</th><th style="text-align:right;">Action</th></tr>' +
+            '<tr><th>Payout ID</th><th>Creator</th><th>Campaign</th><th>Amount</th><th>Method</th><th>Disbursement Date</th><th>Reference Code</th><th>Status</th><th class="text-end" style="width:115px;min-width:115px;white-space:nowrap;">Action</th></tr>' +
           '</thead>' +
           '<tbody>';
 
@@ -2170,10 +2182,12 @@
         '<td>' + py.date + '</td>' +
         '<td><code>' + py.ref + '</code></td>' +
         '<td><span class="badge ' + (py.status === 'Paid' ? 'badge-success' : (py.status === 'Processing' ? 'badge-warning' : 'badge-danger')) + '">' + py.status + '</span></td>' +
-        '<td style="text-align:right;">' +
-          (py.status !== 'Paid' ?
-            '<button class="btn btn-sm btn-success" onclick="processPayoutAction(\'' + py.id + '\')"><i class="bx bx-check"></i> Disburse</button>' :
-            '<span class="text-success font-12"><i class="bx bx-check-double"></i> Settled</span>') +
+        '<td class="text-end" style="white-space:nowrap;">' +
+          '<div class="table-actions">' +
+            (py.status !== 'Paid' ?
+              '<button class="btn btn-sm btn-success" onclick="processPayoutAction(\'' + py.id + '\')"><i class="bx bx-check"></i> Disburse</button>' :
+              '<span class="text-success font-12"><i class="bx bx-check-double"></i> Settled</span>') +
+          '</div>' +
         '</td>' +
       '</tr>';
     });
