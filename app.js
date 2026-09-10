@@ -22,7 +22,8 @@ const MOCK = {
     { id:7, name:'RIYA NEET ACADEMY', icon:'lni-target', color:'#1cc88a', income:'0' },
     { id:8, name:'RIYA CONSULTANCY', icon:'lni-star-half', color:'#f6c23e', income:'0' },
     { id:9, name:'RITHISH FARMS', icon:'lni-store', color:'#f6c23e', income:'0' },
-    { id:10, name:'NEXEMY', icon:'lni-globe', color:'#1cc88a', income:'32,500' }
+    { id:10, name:'NEXEMY', icon:'lni-globe', color:'#1cc88a', income:'32,500' },
+    { id:11, name:'WORKSPACE', icon:'lni-layout', color:'#6f42c1', income:'0' }
   ],
 
   employees: [
@@ -328,12 +329,39 @@ const MOCK = {
   departments: ['Development','Design','Marketing','Training','HR','Management'],
   services: ['ERP','Website(Static)','Website(Dynamic)','Logo Design','Mobile Application','Multimedia','Marketing'],
   technologies: ['PHP','React JS','React Native','Flutter','Python','Node.js','Angular'],
-  expenseMethods: ['Cash','Gpay','Phonepe','Cheque','Paytm','Net Banking','Online Payment']
+  expenseMethods: ['Cash','Gpay','Phonepe','Cheque','Paytm','Net Banking','Online Payment'],
+
+  workspaces: [
+    { id:'WS001', name:'Employee Cabin', code:'EMP-CBN', lead:'Anushiya P', membersCount:8, projectsCount:5, status:'Active', createdAt:'2024-01-15' },
+    { id:'WS002', name:'III Cabin', code:'MD-CBN', lead:'Ragupathi', membersCount:2, projectsCount:4, status:'Active', createdAt:'2024-01-15' },
+    { id:'WS003', name:'HR Cabin', code:'HR-CBN', lead:'Priya', membersCount:3, projectsCount:2, status:'Active', createdAt:'2024-02-01' },
+    { id:'WS004', name:'Conference Cabin', code:'CONF-CBN', lead:'Sherlin JR', membersCount:12, projectsCount:6, status:'Active', createdAt:'2024-02-10' }
+  ]
 };
 
 // ============ SIDEBAR STRUCTURE ============
+const DEPARTMENTS = [
+  { id:'management', name:'Management', icon:'bx bxs-crown', roles:['Director','Managing Director','CEO','COO','CFO','CTO','Business Head','General Manager'] },
+  { id:'project', name:'Project Management', icon:'bx bx-timeline', roles:['Project Manager','Program Manager','Delivery Manager','Scrum Master','Project Coordinator'] },
+  { id:'development', name:'Development', icon:'bx bx-code-alt', roles:['Team Lead','Technical Lead','Full Stack Developer','Frontend Developer','Backend Developer','Mobile App Developer','Software Engineer','Junior Developer','WordPress Developer','Database Developer'] },
+  { id:'design', name:'Design', icon:'bx bxs-palette', roles:['Creative Director','UI/UX Designer','Graphic Designer','Motion Designer','Brand Designer','Web Designer'] },
+  { id:'qa', name:'Quality Assurance', icon:'bx bx-check-shield', roles:['QA Lead','Automation Tester','Manual Tester','Software Tester','QA Engineer'] },
+  { id:'hr', name:'Human Resources', icon:'bx bx-user-pin', roles:['HR Manager','HR Executive','Recruiter','HR Generalist','HR Coordinator','Training & Development'] },
+  { id:'accounts', name:'Accounts & Finance', icon:'bx bx-money', roles:['Finance Manager','Accountant','Accounts Executive','Payroll Specialist','Tax Executive','Auditor'] },
+  { id:'marketing', name:'Marketing', icon:'bx bx-megaphone', roles:['Marketing Manager','Digital Marketing','SEO Specialist','Content Writer','Social Media Executive','Brand Executive'] },
+  { id:'sales', name:'Sales', icon:'bx bx-cart-alt', roles:['Sales Manager','Business Development Executive','Sales Executive','Inside Sales','Account Manager'] },
+  { id:'operations', name:'Operations', icon:'bx bx-cog', roles:['Operations Manager','Operations Executive','Administrator','Office Manager'] },
+  { id:'admin', name:'Administration', icon:'bx bx-home-circle', roles:['Admin Manager','Office Administrator','Receptionist','Front Office Executive','Facilities Executive'] },
+  { id:'support', name:'IT / Client Support', icon:'bx bx-support', roles:['IT Support Engineer','System Administrator','Network Engineer','Help Desk Executive','Customer Support Executive'] },
+  { id:'training', name:'Training & Academy', icon:'bx bxs-graduation', roles:['Academy Head','Trainer','Mentor','Course Coordinator','Placement Officer'] },
+  { id:'content', name:'Content & Communication', icon:'bx bx-edit-alt', roles:['Content Lead','Copywriter','Technical Writer','Social Media Executive','Video Editor'] }
+];
+
 const SIDEBAR = [
   { type:'item', id:'dashboard', icon:'bx bx-home-alt', label:'Dashboard' },
+  { type:'section', label:'Organization' },
+  { type:'item', id:'org-directory', icon:'bx bx-network-chart', label:'Department Directory' },
+  { type:'sub', icon:'bx bx-buildings', label:'Roles & Departments', children: DEPARTMENTS.map(d => ({ id:'dept-root', page:'org-directory', dept:d.id, icon:d.icon, label:d.name })) },
   { type:'section', label:'Entity' },
   { type:'sub', icon:'lni lni-laptop-phone', label:'Roriri Software Solution', children:[
     { id:'employees', icon:'bx bx-group', label:'Employee' },
@@ -348,9 +376,25 @@ const SIDEBAR = [
     { id:'id-cards', icon:'bx bx-card', label:'ID Card' },
     { id:'mou', icon:'bx bx-file-blank', label:'MOU' },
     { id:'documents', icon:'bx bx-folder', label:'Documents' },
-    { id:'enquiries', icon:'bx bx-message-square-detail', label:'Enquiry' },
-    { id:'it-companies', icon:'bx bx-buildings', label:'IT Companies' },
-    { id:'consultancies', icon:'bx bxs-institution', label:'Consultancies' }
+    { id:'enquiries', icon:'bx bx-message-square-detail', label:'Enquiry' }
+  ]},
+  { type:'sub', icon:'bx bx-user-pin', label:'Freelancer', children:[
+    { id:'freelancer-dashboard', icon:'bx bx-grid-alt', label:'Dashboard' },
+    { id:'freelancer-list', icon:'bx bx-user-check', label:'Freelancers' },
+    { id:'freelancer-projects', icon:'bx bx-briefcase', label:'Projects' },
+    { id:'freelancer-tasks', icon:'bx bx-task', label:'Tasks' },
+    { id:'freelancer-time', icon:'bx bx-time-five', label:'Time Tracker' },
+    { id:'freelancer-daily-updates', icon:'bx bx-edit', label:'Daily Work Update' },
+    { id:'freelancer-messages', icon:'bx bx-message-square-dots', label:'Messages' },
+    { id:'freelancer-meetings', icon:'bx bx-video', label:'Meetings' },
+    { id:'freelancer-documents', icon:'bx bx-folder-open', label:'Files & Documents' },
+    { id:'freelancer-issues', icon:'bx bx-bug', label:'Issues / Bugs' },
+    { id:'freelancer-change-requests', icon:'bx bx-git-pull-request', label:'Change Requests' },
+    { id:'freelancer-deliverables', icon:'bx bx-package', label:'Deliverables' },
+    { id:'freelancer-deployments', icon:'bx bx-cloud-upload', label:'Deployments' },
+    { id:'freelancer-daily-reports', icon:'bx bx-file', label:'Daily Reports' },
+    { id:'freelancer-payments', icon:'bx bx-wallet', label:'Earnings & Payments' },
+    { id:'freelancer-notifications', icon:'bx bx-bell', label:'Notifications' }
   ]},
   { type:'sub', icon:'lni lni-code-alt', label:'NexGen IT Academy', children:[
     { id:'academy-trainees', icon:'bx bx-graduation', label:'Trainee' },
@@ -369,21 +413,12 @@ const SIDEBAR = [
     { id:'college-enquiries', icon:'bx bx-message', label:'Enquiry' },
     { id:'college-payments', icon:'bx bx-money', label:'Payment' }
   ]},
-  { type:'sub', icon:'lni lni-star-half', label:'Riya Consultancy', children:[
-    { id:'rc-dashboard', icon:'bx bx-home-alt', label:'Dashboard' },
-    { id:'rc-candidates', icon:'bx bx-user', label:'Candidates' },
-    { id:'rc-assessments', icon:'bx bx-check-shield', label:'Assessments' },
-    { id:'rc-attendance', icon:'bx bx-calendar-check', label:'Attendance' },
-    { id:'rc-placement', icon:'bx bx-target-lock', label:'Placement Readiness' },
-    { id:'rc-messages', icon:'bx bx-chat', label:'Communication' },
-    { id:'rc-announcements', icon:'bx bx-broadcast', label:'Announcements' },
-    { id:'rc-documents', icon:'bx bx-folder', label:'Documents' },
-    { id:'rc-reports', icon:'bx bx-file', label:'Reports' }
-  ]},
   { type:'sub', icon:'lni lni-world', label:'Other Entities', children:[
     { id:'nexemy', icon:'lni lni-world', label:'Nexemy' },
+    { id:'workspace', label:'Workspace' },
     { id:'riya-ias', icon:'lni lni-surf-board', label:'Riya IAS Academy' },
     { id:'riya-neet', icon:'lni lni-target', label:'Riya NEET Academy' },
+    { id:'riya-consultancy', icon:'lni lni-star-half', label:'Riya Consultancy' },
     { id:'roriri-foundation', icon:'lni lni-heart', label:'Roriri Foundation' },
     { id:'rithish-farms', icon:'lni lni-home', label:'Rithish Farms' }
   ]},
@@ -428,7 +463,9 @@ function buildSidebar() {
     } else if (item.type === 'sub') {
       html += `<li id="nav-${item.label.replace(/\s+/g,'-').toLowerCase()}"><a href="javascript:void(0)" onclick="toggleSubmenu(this.parentElement)"><i class="${item.icon}"></i><span class="menu-text">${item.label}</span><i class="bx bx-chevron-right arrow"></i></a><ul class="sub-menu">`;
       item.children.forEach(child => {
-        html += `<li><a href="javascript:void(0)" data-page="${child.id}" onclick="navigate('${child.id}')"><i class="${child.icon}"></i> ${child.label}</a></li>`;
+        const cpage = child.page || child.id;
+        const cextra = child.dept ? `,{dept:'${child.dept}'}` : '';
+        html += `<li><a href="javascript:void(0)" data-page="${cpage}" onclick="navigate('${cpage}'${cextra})"><i class="${child.icon}"></i> ${child.label}</a></li>`;
       });
       html += `</ul></li>`;
     }
@@ -436,20 +473,11 @@ function buildSidebar() {
   nav.innerHTML = html;
 }
 
+function handleFreelancerParentClick(li) {
+  toggleSubmenu(li);
+}
+
 function navigate(page, params) {
-  if (page === 'it-companies') {
-    sessionStorage.setItem('roriri_logged_in', 'true');
-    window.location.href = 'it-companies.html';
-    return;
-  }
-  if (page === 'consultancies') {
-    sessionStorage.setItem('roriri_logged_in', 'true');
-    window.location.href = 'consultancies.html';
-    return;
-  }
-  if (page === 'riya-consultancy') {
-    page = 'rc-dashboard';
-  }
   currentPage = page;
   window._params = params || {};
   document.querySelectorAll('.page-view,.page-content-render').forEach(v => v.remove());
@@ -458,6 +486,9 @@ function navigate(page, params) {
   if (link) {
     link.classList.add('active');
     const parentLi = link.closest('.sub-menu')?.closest('li');
+    if (parentLi) parentLi.classList.add('open');
+  } else if (page.startsWith('freelancer-')) {
+    const parentLi = document.getElementById('nav-freelancer');
     if (parentLi) parentLi.classList.add('open');
   }
   document.querySelector('.sidebar')?.classList.remove('mobile-open');
@@ -471,11 +502,137 @@ function navigate(page, params) {
   } else {
     container.innerHTML = buildPlaceholderPage(page);
   }
+  saveAdminDB();
+  syncPortalsToStorage();
+}
+
+// ---------- PORTAL DATA SYNC ----------
+// Pushes a portal-ready snapshot of MOCK to localStorage so the standalone
+// portal pages (employee/client/trainee/intern) pick up newly added records.
+const PORTALS_KEY = 'roriri_portal_data_v1';
+const ADMIN_KEY = 'roriri_admin_db_v1';
+function portalStore() {
+  const empIdByName = {};
+  MOCK.employees.forEach(e => {
+    empIdByName[String(e.name).toLowerCase()] = e.id;
+    if (e.username) empIdByName[String(e.username).toLowerCase()] = e.id;
+  });
+  const clientByName = {};
+  MOCK.clients.forEach(c => {
+    clientByName[String(c.name).toLowerCase()] = c.id;
+    if (c.company) clientByName[String(c.company).toLowerCase()] = c.id;
+  });
+  const traineeByName = {};
+  MOCK.trainees.forEach(t => { traineeByName[String(t.name).toLowerCase()] = t.id; });
+
+  const employees = MOCK.employees.map(e => ({
+    id: e.id, name: e.name, role: e.role || '', dept: e.department || e.role || '',
+    email: e.companyEmail || e.email || '', phone: e.phone || '', joinDate: e.joinDate || '',
+    username: e.username || ''
+  }));
+
+  const clients = MOCK.clients.map(c => ({
+    id: c.id, company: c.company || c.name, person: c.name || '',
+    location: c.location || '', email: c.email || '', phone: c.phone || '', status: c.status || ''
+  }));
+
+  const projects = MOCK.projects.map(p => ({
+    id: p.id, name: p.name, clientId: clientByName[String(p.client || '').toLowerCase()] || p.client || '',
+    tech: p.tech || p.services || '', status: p.status || '', payStatus: p.payStatus || '',
+    amount: p.amount || 0, balance: p.balance || 0, duration: p.duration || '',
+    developers: (p.developers || []).map(d => empIdByName[String(d).toLowerCase()] || '').filter(Boolean)
+  }));
+
+  const tasks = MOCK.taskAssignments.map(t => ({
+    id: t.id, task: t.task, project: t.project, empId: empIdByName[String(t.employee).toLowerCase()] || t.employee || '',
+    priority: t.priority || '', due: t.dueDate || '', status: t.status || ''
+  }));
+
+  const attendance = MOCK.attendance.map(a => ({ date: a.date, status: a.status }));
+
+  const trainees = MOCK.trainees.map(t => ({
+    id: t.id, name: t.name, course: t.course || '', email: t.email || '', phone: t.phone || '',
+    feeStatus: (MOCK.academyPayments || []).some(p => p.trainee === t.name && p.status === 'Paid') ? 'Paid' : 'Due'
+  }));
+
+  const courses = MOCK.courses.map(c => ({
+    id: c.id, name: c.name, duration: c.duration || '', fee: c.fee || 0,
+    subjects: MOCK.subjects.filter(s => s.course === c.name).map(s => s.name)
+  }));
+  courses.forEach(c => { if (!c.subjects.length) c.subjects = [c.name]; });
+
+  const traineePayments = (MOCK.academyPayments || []).map(p => {
+    const t = MOCK.trainees.find(x => String(x.name).toLowerCase() === String(p.trainee).toLowerCase());
+    return { traineeId: t ? t.id : p.trainee, amount: p.amount || 0, date: p.date || '', status: p.status || 'Paid' };
+  });
+
+  const miniProjects = MOCK.miniProjects.map(mp => {
+    const t = MOCK.trainees.find(x => String(x.name).toLowerCase() === String(mp.trainee).toLowerCase());
+    return { id: mp.id, traineeId: t ? t.id : mp.trainee, name: mp.name, course: mp.course || '', status: mp.status || 'Pending' };
+  });
+
+  const clientEmps = {};
+  (MOCK.clientAssignments || []).forEach(a => {
+    if (!clientEmps[a.clientId]) clientEmps[a.clientId] = [];
+    if (clientEmps[a.clientId].indexOf(a.employeeId) === -1) clientEmps[a.clientId].push(a.employeeId);
+  });
+
+  const convos = {};
+  (MOCK.clientMessages || []).forEach(cm => {
+    if (!convos[cm.clientId]) convos[cm.clientId] = [];
+    (cm.messages || []).forEach(m => convos[cm.clientId].push({
+      employeeId: cm.employeeId,
+      from: m.from === 'client' ? 'client' : 'employee', text: m.text || '', time: m.time || ''
+    }));
+  });
+
+  return {
+    employees, clients, projects, tasks, attendance,
+    trainees, courses, traineePayments, miniProjects,
+    clientEmps, convos
+  };
+}
+function storeGet(k) {
+  let v = null;
+  try { if (typeof localStorage !== 'undefined') v = localStorage.getItem(k); } catch (e) {}
+  if (v != null) { return v; }
+  return (k in (window.__lsMem || {})) ? window.__lsMem[k] : null;
+}
+function storeSet(k, v) {
+  window.__lsMem = window.__lsMem || {};
+  window.__lsMem[k] = v;
+  try { if (typeof localStorage !== 'undefined') localStorage.setItem(k, v); } catch (e) {}
+}
+function saveAdminDB() {
+  try {
+    if (typeof MOCK === 'undefined') return;
+    const d = { nextId: MOCK.nextId };
+    Object.keys(MOCK).forEach(k => { if (Array.isArray(MOCK[k])) d[k] = MOCK[k]; });
+    storeSet(ADMIN_KEY, JSON.stringify(d));
+  } catch (e) { /* ignore storage errors */ }
+}
+function loadAdminDB() {
+  try {
+    const raw = storeGet(ADMIN_KEY);
+    if (!raw) { return; }
+    const d = JSON.parse(raw);
+    Object.keys(d).forEach(k => {
+      if (k === 'nextId' && typeof d[k] === 'number') { MOCK.nextId = d[k]; }
+      else if (Array.isArray(d[k]) && Array.isArray(MOCK[k])) { MOCK[k] = d[k]; }
+    });
+  } catch (e) { /* ignore corrupt storage */ }
+}
+function syncPortalsToStorage() {
+  try {
+    if (typeof MOCK === 'undefined') return;
+    storeSet(PORTALS_KEY, JSON.stringify(portalStore()));
+  } catch (e) { /* ignore storage errors */ }
 }
 
 // ============ RENDERERS ============
 const RENDERERS = {
   'dashboard': renderDashboard,
+  'org-directory': renderOrgDirectory,
   'employees': renderEmployees,
   'employee-detail': renderEmployeeDetail,
   'clients': renderClients,
@@ -491,24 +648,6 @@ const RENDERERS = {
   'mou': renderMou,
   'documents': renderDocuments,
   'enquiries': renderEnquiries,
-  'it-companies': renderITCompaniesModule,
-  'consultancies': renderConsultanciesModule,
-  'riya-consultancy': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('dashboard') : (typeof renderRiyaConsultancyModule === 'function' ? renderRiyaConsultancyModule() : buildPlaceholderPage('riya-consultancy')); },
-  'rc-dashboard': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('dashboard') : buildPlaceholderPage('rc-dashboard'); },
-  'rc-candidates': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('all-candidates') : buildPlaceholderPage('rc-candidates'); },
-  'rc-add-candidate': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('add-candidate') : buildPlaceholderPage('rc-add-candidate'); },
-  'rc-payments': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('candidate-payments') : buildPlaceholderPage('rc-payments'); },
-  'rc-pending-payments': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('pending-payments') : buildPlaceholderPage('rc-pending-payments'); },
-  'rc-revenue': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('revenue-overview') : buildPlaceholderPage('rc-revenue'); },
-  'rc-skills': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('skills') : buildPlaceholderPage('rc-skills'); },
-  'rc-assessments': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('assessments') : buildPlaceholderPage('rc-assessments'); },
-  'rc-attendance': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('attendance') : buildPlaceholderPage('rc-attendance'); },
-  'rc-placement': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('placement-readiness') : buildPlaceholderPage('rc-placement'); },
-  'rc-messages': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('candidate-messages') : buildPlaceholderPage('rc-messages'); },
-  'rc-announcements': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('announcements') : buildPlaceholderPage('rc-announcements'); },
-  'rc-documents': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('documents') : buildPlaceholderPage('rc-documents'); },
-  'rc-reports': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('reports') : buildPlaceholderPage('rc-reports'); },
-  'rc-candidate-profile': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('candidate-profile', window._params) : buildPlaceholderPage('rc-candidate-profile'); },
   'employee-clients': renderEmployeeClients,
   'academy-trainees': renderAcademyTrainees,
   'trainee-detail': renderTraineeDetail,
@@ -561,9 +700,11 @@ const RENDERERS = {
   'database-report': renderExternal,
   'social-media': renderExternal,
   'web-tracking': renderExternal,
+  'workspace': renderWorkspace,
   'nexemy': renderExternal,
   'riya-ias': renderExternal,
   'riya-neet': renderExternal,
+  'riya-consultancy': renderExternal,
   'roriri-foundation': renderExternal,
   'rithish-farms': renderExternal
 };
@@ -1236,6 +1377,75 @@ function renderCreditDebit() {
 // RUNTIME - HELPERS & APP SHELL
 // ============================================
 
+function renderOrgDirectory() {
+  const p = window._params || {};
+  const sel = p.dept || '';
+  const byDept = {};
+  MOCK.employees.forEach(e => {
+    const key = String(e.department || 'Unassigned').trim();
+    (byDept[key] = byDept[key] || []).push(e);
+  });
+  const totalStaff = MOCK.employees.length;
+
+  const head = sel
+    ? pageHeader(sel.replace(/-/g, ' '), 'People and roles in this department.', `<button class="btn btn-sm btn-outline-primary" onclick="navigate('org-directory')"><i class="bx bx-arrow-back"></i> All Departments</button>`)
+    : pageHeader('Department Directory', 'All departments, roles and the people who belong to them at RORIRI Software Solutions.', `<div class="font-13 text-secondary"><b>${totalStaff}</b> staff &bull; <b>${DEPARTMENTS.length}</b> departments</div>`);;
+
+  let html = head;
+
+  let cards = '';
+  DEPARTMENTS.forEach(d => {
+    if (sel && d.id !== sel) { return; }
+    const emps = (byDept[d.name] || []).filter(e => e.status !== 'Left');
+    const roleMap = {};
+    d.roles.forEach(r => { roleMap[r] = []; });
+    roleMap['Other Roles'] = [];
+    emps.forEach(e => {
+      const match = d.roles.find(r => r.toLowerCase() === String(e.role || '').trim().toLowerCase());
+      const key = match || 'Other Roles';
+      if (e.entity && String(e.entity).toLowerCase().indexOf('academy') !== -1 && key === 'Other Roles') { roleMap['Other Roles'].push(e); }
+      else { roleMap[key].push(e); }
+    });
+
+    const filled = Object.keys(roleMap).filter(k => roleMap[k].length).length;
+    let body = '';
+    d.roles.forEach(r => {
+      body += roleRow(r, roleMap[r]);
+    });
+    if (roleMap['Other Roles'].length) {
+      body += roleRow('Other Roles (custom)', roleMap['Other Roles']);
+    }
+
+    cards += `<div class="card dept-card">`;
+    cards += `<div class="dept-head"><div class="dept-ic"><i class="${d.icon}"></i></div><div><h5>${d.name}</h5><div class="font-13 text-secondary">${emps.length} staff &bull; ${filled}/${d.roles.length} roles filled</div></div><a href="javascript:void(0)" class="dept-open" onclick="navigate('org-directory',{dept:'${d.id}'})"><i class="bx bx-chevron-right"></i></a></div>`;
+    cards += `<div class="dept-body">${body || '<div class="empty-state"><i class="bx bx-user-x"></i><p>No staff in this department yet.</p></div>'}</div>`;
+    cards += `</div>`;
+  });
+
+  if (sel) {
+    html += `<div class="dept-grid single">${cards}</div>`;
+  } else {
+    html += `<div class="dept-grid">${cards}</div>`;
+  }
+
+  const unlisted = MOCK.employees.filter(e => !DEPARTMENTS.some(d => d.name === String(e.department || '').trim()));
+  if (!sel && unlisted.length) {
+    html += `<div class="portal-section" style="margin-top:1rem;"><h4 style="margin:0 0 0.75rem;font-size:1rem;"><i class="bx bx-folder-minus"></i> People with unlisted departments</h4><div class="card"><div class="card-body">${unlisted.map(e => `${empChip(e)}`).join(' ')}</div></div></div>`;
+  }
+
+  return html;
+}
+
+function roleRow(role, emps) {
+  const chips = emps.map(e => empChip(e)).join('') || `<span class="font-13 text-secondary">No staff yet — add them via <a href="javascript:void(0)" onclick="navigate('employees')">Employees</a></span>`;
+  return `<div class="role-row"><div class="role-name"><i class="bx bx-user"></i> <span>${role}</span>${emps.length ? `<b class="role-count">${emps.length}</b>` : ''}</div><div class="role-people">${chips}</div></div>`;
+}
+
+function empChip(e) {
+  const init = (e.name || '?').trim().split(/\s+/).map(w => w.charAt(0)).join('').slice(0, 2).toUpperCase();
+  return `<a href="javascript:void(0)" class="emp-chip" onclick="navigate('employee-detail',{id:'${e.id}'})"><span class="chip-av">${init}</span><span>${e.name}</span></a>`;
+}
+
 function today() {
   const d = new Date();
   return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
@@ -1383,13 +1593,12 @@ function filterEmployeeStatus(status) {
 
 // ---------- LOGIN / LOGOUT ----------
 function doLogin(e) {
-  if (e) e.preventDefault();
+  e.preventDefault();
   const u = document.getElementById('login-username').value.trim();
   const p = document.getElementById('login-password').value;
   let user = MOCK.admin.find(a => a.username === u && a.password === p);
   if (!user && MOCK.admin.length) user = MOCK.admin[0];
   currentUser = user;
-  sessionStorage.setItem('roriri_logged_in', 'true');
   window._params = {};
   document.getElementById('login-page').style.display = 'none';
   document.getElementById('app-page').style.display = 'flex';
@@ -1402,7 +1611,6 @@ function doLogin(e) {
 }
 function doLogout() {
   currentUser = null;
-  sessionStorage.removeItem('roriri_logged_in');
   document.getElementById('app-page').style.display = 'none';
   document.getElementById('login-page').style.display = '';
   showNotification('Logged out successfully', 'info');
@@ -2580,43 +2788,13 @@ function deleteIvBanner(id) {
 
 // ============ INIT ============
 function initApp() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const isBackToDashboard = urlParams.get('view') === 'dashboard' || window.location.hash === '#dashboard' || sessionStorage.getItem('roriri_logged_in') === 'true';
-
-  if (isBackToDashboard) {
-    let user = MOCK.admin[0];
-    currentUser = user;
-    sessionStorage.setItem('roriri_logged_in', 'true');
-    const loginPage = document.getElementById('login-page');
-    const appPage = document.getElementById('app-page');
-    if (loginPage) loginPage.style.display = 'none';
-    if (appPage) appPage.style.display = 'flex';
-    const nameEl = document.getElementById('topbar-user-name');
-    const roleEl = document.getElementById('topbar-user-role');
-    const avatarEl = document.getElementById('topbar-user-avatar');
-    if (nameEl) nameEl.textContent = user.name.split(' ')[0];
-    if (roleEl) roleEl.textContent = user.role;
-    if (avatarEl) avatarEl.textContent = user.name.charAt(0);
-    buildSidebar();
-    navigate('dashboard');
-  } else {
-    document.getElementById('app-page').style.display = 'none';
-    buildSidebar();
-  }
+  loadAdminDB();
+  document.getElementById('app-page').style.display = 'none';
+  buildSidebar();
+  saveAdminDB();
+  syncPortalsToStorage();
 }
 document.addEventListener('DOMContentLoaded', initApp);
-window.addEventListener('pageshow', (event) => {
-  if (sessionStorage.getItem('roriri_logged_in') === 'true') {
-    const loginPage = document.getElementById('login-page');
-    const appPage = document.getElementById('app-page');
-    if (loginPage && appPage && appPage.style.display === 'none') {
-      loginPage.style.display = 'none';
-      appPage.style.display = 'flex';
-      buildSidebar();
-      navigate('dashboard');
-    }
-  }
-});
 // ============================================
 // EMPLOYEE CLIENT ASSIGNMENT & CONVERSATIONS
 // ============================================
@@ -2769,72 +2947,220 @@ function sendClientMessage(clientId) {
   renderConversationThread(clientId);
 }
 
-// ============ IT COMPANIES PORTAL INTEGRATION ============
-function renderITCompaniesModule() {
-  return `
-    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:1rem;">
-      <div>
-        <h4 style="font-size:20px;font-weight:700;color:var(--text-dark);margin:0;display:flex;align-items:center;gap:8px;">
-          <i class="bx bx-buildings" style="color:var(--primary);"></i> IT Companies Portal
-        </h4>
-        <p class="text-secondary" style="font-size:13px;color:#858796;margin:3px 0 0 0;">
-          Roriri Software Solutions &bull; Corporate Partner Registry, Job Opportunities &amp; Student Placements
-        </p>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <a href="it-companies.html" target="_blank" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:13px;font-weight:600;background:var(--primary);color:#fff;border-radius:6px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-          <i class="bx bx-window-open"></i> Launch Standalone Portal
-        </a>
+// ============ WORKSPACE MODULE ============
+function renderWorkspace() {
+  const workspaces = MOCK.workspaces || [];
+  const activeWS = workspaces.filter(w => w.status === 'Active').length;
+  const inactiveWS = workspaces.filter(w => w.status === 'Inactive').length;
+
+  let html = pageHeader('Workspace Dashboard', 'Manage company workspaces, project allocations, and team leads', `<button class="btn btn-primary" onclick="showWorkspaceAddModal()"><i class="bx bx-plus"></i> Add Workspace</button>`);
+  
+  html += `<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mb-3">`;
+  html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">Total Workspaces</p><h4>${workspaces.length}</h4></div><div class="stat-icon bg-light-primary text-primary"><i class="bx bx-layer"></i></div></div></div></div>`;
+  html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">Active Workspaces</p><h4>${activeWS}</h4></div><div class="stat-icon bg-light-success text-success"><i class="bx bx-check-circle"></i></div></div></div></div>`;
+  html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">Inactive Workspaces</p><h4>${inactiveWS}</h4></div><div class="stat-icon bg-light-danger text-danger"><i class="bx bx-x-circle"></i></div></div></div></div>`;
+
+  html += `</div>`;
+
+  html += `<div class="data-card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5>Workspace List</h5>
+      <div class="d-flex gap-2 align-items-center">
+        <select class="form-control" style="width:130px;padding:0.4rem;font-size:12px;" onchange="filterWorkspaceStatus(this.value)">
+          <option value="All">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+        <input type="text" class="form-control" placeholder="Search workspace..." style="width:200px;padding:0.4rem 0.7rem;font-size:12px;" oninput="searchTable(this,'workspace-tbody')">
       </div>
     </div>
-    <div class="card" style="border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);border:1px solid #e3e6f0;background:#fff;margin-bottom:1.5rem;">
-      <div style="background:#0e2238;color:#fff;padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.1);">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:28px;height:28px;border-radius:6px;background:#4e73df;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">R</div>
-          <span style="font-size:13px;font-weight:600;letter-spacing:0.5px;">RORIRI SOFTWARE SOLUTIONS &rarr; IT COMPANIES</span>
+    <div class="card-body">
+      <div class="overflow-x">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:80px">ID</th>
+              <th style="text-align:center">Workspace Name</th>
+              <th style="width:150px;text-align:center">Assigned To</th>
+              <th style="width:120px">Created</th>
+              <th style="width:100px">Status</th>
+              <th style="width:130px;text-align:center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="workspace-tbody">`;
+
+  workspaces.forEach((w) => {
+    html += `<tr data-status="${w.status}">
+      <td><strong>${w.id}</strong></td>
+      <td style="vertical-align:middle;text-align:center;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
+          <div class="stat-icon bg-light-primary text-primary" style="width:30px;height:30px;min-width:30px;font-size:13px;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+            <i class="bx bx-folder"></i>
+          </div>
+          <div style="text-align:left;">
+            <div style="font-weight:600;font-size:13px;white-space:nowrap;">${w.name}</div>
+            <div style="font-size:11px;color:#888;white-space:nowrap;">${w.code}</div>
+          </div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <a href="it-companies.html" class="btn btn-sm" style="background:rgba(255,255,255,0.12);color:#fff;font-size:11.5px;padding:4px 10px;border-radius:4px;text-decoration:none;">
-            Full Screen <i class="bx bx-fullscreen"></i>
-          </a>
+      </td>
+      <td style="text-align:center;vertical-align:middle;">
+        <span style="display:inline-flex;align-items:center;gap:5px;background:#f0f4ff;color:#4e73df;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500;white-space:nowrap;">
+          <i class="bx bx-buildings" style="font-size:13px;"></i>
+          ${w.assignedTo || '—'}
+        </span>
+      </td>
+      <td>${w.createdAt}</td>
+      <td><span class="badge ${w.status === 'Active' ? 'badge-success' : 'badge-danger'}">${w.status}</span></td>
+      <td style="text-align:center">
+        <div class="d-flex align-items-center justify-content-center gap-1">
+          <button class="btn btn-sm btn-outline-info" onclick="showWorkspaceViewModal('${w.id}')" title="View"><i class="bx bx-show"></i></button>
+          <button class="btn btn-sm btn-outline-warning" onclick="showWorkspaceEditModal('${w.id}')" title="Edit"><i class="bx bx-edit"></i></button>
+          <button class="btn btn-sm btn-outline-danger" onclick="deleteWorkspace('${w.id}')" title="Delete"><i class="bx bx-trash"></i></button>
         </div>
-      </div>
-      <iframe src="it-companies.html" style="width:100%;height:920px;border:none;background:#f8f9fc;" title="IT Companies Portal"></iframe>
-    </div>
-  `;
+      </td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div></div></div>`;
+  return html;
 }
 
-// ============ CONSULTANCIES PORTAL INTEGRATION ============
-function renderConsultanciesModule() {
-  return `
-    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:1rem;">
-      <div>
-        <h4 style="font-size:20px;font-weight:700;color:var(--text-dark);margin:0;display:flex;align-items:center;gap:8px;">
-          <i class="bx bxs-institution" style="color:var(--primary);"></i> Consultancies Portal
-        </h4>
-        <p class="text-secondary" style="font-size:13px;color:#858796;margin:3px 0 0 0;">
-          Roriri Software Solutions &bull; Tied-up Consultancies, Student Profiles &amp; Placement Readiness
-        </p>
+function filterWorkspaceStatus(val) {
+  const rows = document.querySelectorAll('#workspace-tbody tr');
+  rows.forEach(r => {
+    if (val === 'All' || r.getAttribute('data-status') === val) {
+      r.style.display = '';
+    } else {
+      r.style.display = 'none';
+    }
+  });
+}
+
+function showWorkspaceViewModal(id) {
+  const ws = MOCK.workspaces.find(w => w.id === id);
+  if (!ws) return;
+  const badgeCls = ws.status === 'Active' ? 'badge-success' : 'badge-danger';
+  const body = `
+    <div style="display:grid;gap:0.75rem;">
+      <div class="detail-row"><label>Workspace ID</label><b>${ws.id}</b></div>
+      <div class="detail-row"><label>Workspace Name</label><b>${ws.name}</b></div>
+      <div class="detail-row"><label>Code</label><code>${ws.code}</code></div>
+      <div class="detail-row"><label>Assigned To</label><span>${ws.assignedTo || ws.lead || '—'}</span></div>
+      <div class="detail-row"><label>Status</label><span class="badge ${badgeCls}">${ws.status}</span></div>
+      <div class="detail-row"><label>Created</label><span>${ws.createdAt}</span></div>
+    </div>`;
+  openModal(modalHeader('Workspace Details – ' + ws.id) + `<div class="modal-body">${body}</div>` + `<div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Close</button></div>`);
+}
+
+function showWorkspaceAddModal() {
+  const body = `
+    <form id="workspace-form">
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Workspace Name</label>
+        <input type="text" id="ws-name" class="form-control" placeholder="e.g. Mobile App Workspace" required>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <a href="consultancies.html" target="_blank" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:13px;font-weight:600;background:var(--primary);color:#fff;border-radius:6px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-          <i class="bx bx-window-open"></i> Launch Standalone Portal
-        </a>
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Workspace Code</label>
+        <input type="text" id="ws-code" class="form-control" placeholder="e.g. MOB-WS" required>
       </div>
-    </div>
-    <div class="card" style="border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);border:1px solid #e3e6f0;background:#fff;margin-bottom:1.5rem;">
-      <div style="background:#0e2238;color:#fff;padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.1);">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:28px;height:28px;border-radius:6px;background:#4e73df;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">R</div>
-          <span style="font-size:13px;font-weight:600;letter-spacing:0.5px;">RORIRI SOFTWARE SOLUTIONS &rarr; CONSULTANCIES</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <a href="consultancies.html" class="btn btn-sm" style="background:rgba(255,255,255,0.12);color:#fff;font-size:11.5px;padding:4px 10px;border-radius:4px;text-decoration:none;">
-            Full Screen <i class="bx bx-fullscreen"></i>
-          </a>
-        </div>
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Assigned To</label>
+        <select id="ws-assigned" class="form-control">
+          <option value="">-- Select Type --</option>
+          <option value="Startup Company">Startup Company</option>
+          <option value="Freelancer">Freelancer</option>
+          <option value="Entrepreneur">Entrepreneur</option>
+        </select>
       </div>
-      <iframe src="consultancies.html" style="width:100%;height:920px;border:none;background:#f8f9fc;" title="Consultancies Portal"></iframe>
-    </div>
-  `;
-}
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Status</label>
+        <select id="ws-status" class="form-control">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+    </form>`;
+  openModal(modalHeader('Add New Workspace') + `<div class="modal-body">${body}</div>` + modalFooter('saveNewWorkspace()', 'Create Workspace'));
+}
+
+function saveNewWorkspace() {
+  const name = document.getElementById('ws-name')?.value.trim();
+  const code = document.getElementById('ws-code')?.value.trim();
+  const assignedTo = document.getElementById('ws-assigned')?.value;
+  const status = document.getElementById('ws-status')?.value || 'Active';
+
+  if (!name || !code) {
+    showNotification('Please fill in all required fields', 'error');
+    return;
+  }
+
+  const newWs = {
+    id: 'WS00' + (MOCK.workspaces.length + 1),
+    name,
+    code,
+    assignedTo: assignedTo || 'Unassigned',
+    lead: '',
+    membersCount: 0,
+    projectsCount: 0,
+    status,
+    createdAt: new Date().toISOString().split('T')[0]
+  };
+
+  MOCK.workspaces.push(newWs);
+  closeModal();
+  showNotification('Workspace created successfully', 'success');
+  navigate('workspace');
+}
+
+function showWorkspaceEditModal(id) {
+  const ws = MOCK.workspaces.find(w => w.id === id);
+  if (!ws) return;
+  let empOptions = MOCK.employees.map(e => `<option value="${e.name}" ${e.name === ws.lead ? 'selected' : ''}>${e.name} (${e.role})</option>`).join('');
+  const body = `
+    <form id="workspace-edit-form">
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Workspace Name</label>
+        <input type="text" id="ws-edit-name" class="form-control" value="${ws.name}" required>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Assigned To</label>
+        <select id="ws-edit-assigned" class="form-control">
+          <option value="">-- Select Type --</option>
+          <option value="Startup Company" ${(ws.assignedTo||'') === 'Startup Company' ? 'selected' : ''}>Startup Company</option>
+          <option value="Freelancer" ${(ws.assignedTo||'') === 'Freelancer' ? 'selected' : ''}>Freelancer</option>
+          <option value="Entrepreneur" ${(ws.assignedTo||'') === 'Entrepreneur' ? 'selected' : ''}>Entrepreneur</option>
+        </select>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label class="form-label">Status</label>
+        <select id="ws-edit-status" class="form-control">
+          <option value="Active" ${ws.status === 'Active' ? 'selected' : ''}>Active</option>
+          <option value="Inactive" ${ws.status === 'Inactive' ? 'selected' : ''}>Inactive</option>
+        </select>
+      </div>
+    </form>`;
+  openModal(modalHeader('Edit Workspace – ' + ws.id) + `<div class="modal-body">${body}</div>` + modalFooter(`updateWorkspace('${ws.id}')`, 'Save Changes'));
+}
+
+function updateWorkspace(id) {
+  const ws = MOCK.workspaces.find(w => w.id === id);
+  if (!ws) return;
+  ws.name = document.getElementById('ws-edit-name')?.value.trim() || ws.name;
+  ws.assignedTo = document.getElementById('ws-edit-assigned')?.value || ws.assignedTo;
+  ws.status = document.getElementById('ws-edit-status')?.value || ws.status;
+
+  closeModal();
+  showNotification('Workspace updated', 'success');
+  navigate('workspace');
+}
+
+function deleteWorkspace(id) {
+  if (confirm('Are you sure you want to delete this workspace?')) {
+    const idx = MOCK.workspaces.findIndex(w => w.id === id);
+    if (idx !== -1) {
+      MOCK.workspaces.splice(idx, 1);
+      showNotification('Workspace deleted', 'info');
+      navigate('workspace');
+    }
+  }
+}

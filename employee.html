@@ -8,6 +8,61 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
 <link rel="stylesheet" href="styles.css">
+<style>
+  .emp-hero { display:flex; align-items:center; gap:1rem; background:linear-gradient(135deg,#4e73df,#224abe); border-radius:14px; padding:1.25rem 1.5rem; color:#fff; margin-bottom:1.25rem; flex-wrap:wrap; box-shadow:0 8px 20px rgba(78,115,223,.18); }
+  .emp-hero-av { width:60px; height:60px; border-radius:50%; background:rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:700; border:2px solid rgba(255,255,255,.45); flex-shrink:0; }
+  .emp-hero-info h3 { margin:0; font-size:1.35rem; font-weight:600; }
+  .emp-hero-info p { margin:.15rem 0 0; font-size:.85rem; opacity:.92; }
+  .emp-hero-info p b { font-weight:600; }
+  .emp-hero-date { margin-left:auto; display:flex; flex-direction:column; align-items:flex-end; gap:.3rem; }
+  .emp-hero-date .chip { background:rgba(255,255,255,.16); padding:.4rem .85rem; border-radius:8px; font-size:.78rem; white-space:nowrap; }
+  .emp-hero-date .chip.today { background:rgba(28,200,138,.85); font-weight:600; }
+
+  .stat-tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:1rem; margin-bottom:1.25rem; }
+  .stat-tile { background:#fff; border:1px solid var(--border-color); border-radius:12px; padding:1rem 1.1rem; display:flex; align-items:center; gap:.9rem; box-shadow:0 2px 8px rgba(15,23,42,.05); }
+  .stat-ic { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+  .stat-ic.c-primary { background:rgba(78,115,223,.12); color:var(--primary); }
+  .stat-ic.c-success { background:rgba(28,200,138,.12); color:var(--success); }
+  .stat-ic.c-warning { background:rgba(246,194,62,.16); color:#d4a017; }
+  .stat-ic.c-purple { background:rgba(138,92,245,.12); color:#8a5cf5; }
+  .stat-val { font-size:1.55rem; font-weight:700; color:var(--text-dark); line-height:1; }
+  .stat-lb { font-size:.74rem; color:var(--text-primary); margin-top:.25rem; text-transform:uppercase; letter-spacing:.03em; }
+
+  .profile-cover { height:108px; background:linear-gradient(135deg,#4e73df,#224abe); }
+  .emp-avatar { width:78px; height:78px; border-radius:50%; background:linear-gradient(135deg,var(--primary),#6c8cff); color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.9rem; font-weight:700; margin:-39px auto 0; border:4px solid #fff; position:relative; }
+  .profile-meta { padding:1rem 1.25rem 0; text-align:center; }
+  .profile-meta h5 { margin:0; font-size:1.1rem; color:var(--text-dark); }
+  .profile-meta .meta-badges { display:flex; align-items:center; justify-content:center; gap:.45rem; margin-top:.35rem; flex-wrap:wrap; }
+  .profile-details { padding:1rem 1.25rem 1.25rem; }
+  .profile-details .detail-row { padding:.5rem 0; }
+  .profile-details .detail-row label { min-width:80px; }
+  .profile-details .detail-row b, .profile-details .detail-row span { font-weight:600; }
+
+  .card-ttl { display:flex; align-items:center; gap:.5rem; margin:0 0 .85rem; font-size:1rem; color:var(--text-dark); }
+  .card-ttl .bx { color:var(--primary); font-size:1.15rem; }
+  .report-row { display:flex; gap:10px; margin-top:12px; }
+  .report-row .form-control { flex:1; }
+  .report-row .btn { min-width:110px; }
+
+  .sec-head { display:flex; align-items:center; justify-content:space-between; margin:0 0 .75rem; }
+  .sec-head h4 { margin:0; display:flex; align-items:center; gap:.5rem; font-size:1rem; }
+  .sec-head h4 .bx { color:var(--primary); }
+  .sec-head .count { background:rgba(78,115,223,.12); color:var(--primary); padding:2px 10px; border-radius:20px; font-size:.72rem; font-weight:600; }
+  .empty-state { padding:1.75rem; text-align:center; color:#8592a3; }
+  .empty-state i { font-size:2.1rem; display:block; margin-bottom:.45rem; opacity:.5; }
+  .empty-state p { margin:0; font-size:.85rem; }
+  .data-table td:last-child, .data-table th:last-child { text-align:center; }
+  .amount-col { text-align:right; font-weight:600; }
+  .msg-thread { max-height:340px; }
+
+  @media (max-width:640px) {
+    .emp-hero { padding:1rem; }
+    .emp-hero-date { margin-left:0; align-items:flex-start; }
+    .emp-hero-date .chip { font-size:.72rem; }
+    .report-row { flex-direction:column; }
+    .report-row .btn { width:100%; }
+  }
+</style>
 </head>
 <body>
 
@@ -28,7 +83,7 @@
       </fieldset>
       <button type="submit" class="btn btn-primary btn-block">Login to My Dashboard</button>
     </form>
-    <p class="login-hint">Demo: any name &amp; password works</p>
+    <p class="login-hint">Demo: enter an employee name, e.g. <strong>hari</strong> (any password)</p>
     <div class="portal-nav" style="text-align:center;margin-top:12px;">
       <a href="index.html">Admin</a> &bull;
       <a href="client.html">Client</a> &bull;
@@ -56,94 +111,152 @@
 <script>
 window.PORTAL_TYPE = 'Employee (Workforce) Portal';
 
-var EMP = PORTAL_DATA.employees[0];
-var empClients = Object.keys(PORTAL_DATA.clientEmps).filter(function (c) {
-  return PORTAL_DATA.clientEmps[c].indexOf(EMP.id) !== -1;
-}).map(function (c) {
-  return PORTAL_DATA.clients.find(function (x) { return x.id === c; });
-});
-var empProjects = PORTAL_DATA.projects.filter(function (p) {
-  return p.developers.indexOf(EMP.id) !== -1;
-});
-var empTasks = PORTAL_DATA.tasks.filter(function (t) { return t.empId === EMP.id; });
+var EMP = null;
+var empClients = [];
+var empProjects = [];
+var empTasks = [];
 
-function portalDashboard() {
+function findEmployee(name) {
+  var q = String(name || '').trim().toLowerCase();
+  if (!q) { return null; }
+  return PORTAL_DATA.employees.find(function (e) {
+    return e.name.toLowerCase() === q || String(e.username || '').toLowerCase() === q || e.id.toLowerCase() === q || e.name.toLowerCase().indexOf(q) !== -1;
+  }) || null;
+}
+
+function buildEmpLists() {
+  empClients = Object.keys(PORTAL_DATA.clientEmps).filter(function (c) {
+    return PORTAL_DATA.clientEmps[c].indexOf(EMP.id) !== -1;
+  }).map(function (c) {
+    return PORTAL_DATA.clients.find(function (x) { return x.id === c; });
+  }).filter(Boolean);
+  empProjects = PORTAL_DATA.projects.filter(function (p) {
+    return p.developers.indexOf(EMP.id) !== -1;
+  });
+  empTasks = PORTAL_DATA.tasks.filter(function (t) { return t.empId === EMP.id; });
+}
+
+function todayText() {
+  return new Date().toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+}
+
+function statTile(icon, cls, value, label) {
+  return '<div class="stat-tile"><div class="stat-ic ' + cls + '"><i class="bx ' + icon + '"></i></div><div><div class="stat-val">' + value + '</div><div class="stat-lb">' + label + '</div></div></div>';
+}
+
+function emptyState(msg) {
+  return '<div class="empty-state"><i class="bx bx-inbox"></i><p>' + msg + '</p></div>';
+}
+
+function portalDashboard(name) {
+  EMP = findEmployee(name === undefined ? CURRENT.name : name);
+  if (!EMP) { return; }
+  buildEmpLists();
   var hour = new Date().getHours();
   var greet = hour < 12 ? 'Good morning' : (hour < 17 ? 'Good afternoon' : 'Good evening');
   var open = empTasks.filter(function (t) { return t.status !== 'Completed'; }).length;
   var present = PORTAL_DATA.attendance.filter(function (a) { return a.status === 'Present'; }).length;
 
   var html = '';
-  html += '<div class="portal-greet"><h3>' + greet + ', ' + EMP.name.split(' ')[0] + '!</h3><p class="color-muted">Here is your work summary for today.</p></div>';
 
-  html += '<div class="portal-grid">';
-  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Active Projects</label><b>' + empProjects.length + '</b></div></div></div>';
-  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Open Tasks</label><b>' + open + '</b></div></div></div>';
-  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Clients Assigned</label><b>' + empClients.length + '</b></div></div></div>';
-  html += '<div class="card"><div class="card-body"><div class="detail-row"><label>Working Days (Month)</label><b>' + present + '</b></div></div></div>';
+  // HERO
+  html += '<div class="emp-hero">';
+  html += '<div class="emp-hero-av">' + avatar(EMP.name) + '</div>';
+  html += '<div class="emp-hero-info"><h3>' + greet + ', ' + es(EMP.name.split(' ')[0]) + '!</h3>';
+  html += '<p><b>' + es(EMP.name) + '</b> &bull; ' + es(EMP.role) + ' &bull; ' + es(EMP.dept) + '</p></div>';
+  html += '<div class="emp-hero-date"><span class="chip"><i class="bx bx-id-card"></i> ' + es(EMP.id) + '</span><span class="chip today"><i class="bx bx-calendar"></i> ' + es(todayText()) + '</span></div>';
   html += '</div>';
 
-  html += '<div class="portal-row" style="margin-top:1rem;">';
+  // STATS
+  html += '<div class="stat-tiles">';
+  html += statTile('bx-briefcase', 'c-primary', empProjects.length, 'Active Projects');
+  html += statTile('bx-check-square', 'c-warning', open, 'Open Tasks');
+  html += statTile('bx-user-detail', 'c-success', empClients.length, 'Clients Assigned');
+  html += statTile('bx-calendar-check', 'c-purple', present, 'Working Days (Month)');
+  html += '</div>';
 
-  html += '<div class="card"><div class="card-body">';
-  html += '<div style="display:flex;align-items:center;gap:14px;">';
-  html += '<div class="av-sq" style="width:64px;height:64px;font-size:1.5rem;">' + avatar(EMP.name) + '</div>';
-  html += '<div>';
-  html += '<h5 style="margin:0;">' + es(EMP.name) + '</h5>';
-  html += '<span class="badge badge-info">' + es(EMP.role) + '</span> <small class="color-muted">' + es(EMP.dept) + '</small>';
-  html += '</div></div>';
-  html += '<hr>';
+  // PROFILE + DAILY REPORT
+  html += '<div class="portal-row" style="margin-bottom:1.25rem;">';
+
+  html += '<div class="card">';
+  html += '<div class="profile-cover"></div>';
+  html += '<div class="emp-avatar">' + avatar(EMP.name) + '</div>';
+  html += '<div class="profile-meta">';
+  html += '<h5>' + es(EMP.name) + '</h5>';
+  html += '<div class="meta-badges"><span class="badge badge-info">' + es(EMP.role) + '</span><span class="badge badge-secondary">' + es(EMP.dept) + '</span></div>';
+  html += '</div>';
+  html += '<div class="profile-details">';
+  html += '<div class="detail-row"><label>Employee ID</label><b>' + es(EMP.id) + '</b></div>';
   html += '<div class="detail-row"><label>Email</label><span>' + es(EMP.email) + '</span></div>';
   html += '<div class="detail-row"><label>Phone</label><span>' + es(EMP.phone) + '</span></div>';
   html += '<div class="detail-row"><label>Joined</label><span>' + es(EMP.joinDate) + '</span></div>';
-  html += '</div></div>';
+  html += '</div>';
+  html += '</div>';
 
   html += '<div class="card"><div class="card-body">';
-  html += '<h5 style="margin-top:0;">Submit Daily Report</h5>';
-  html += '<textarea id="report-note" class="form-control" rows="3" placeholder="What did you work on today?"></textarea>';
-  html += '<div style="margin-top:10px;display:flex;gap:8px;">';
+  html += '<h5 class="card-ttl"><i class="bx bx-notepad"></i>Submit Daily Report</h5>';
+  html += '<textarea id="report-note" class="form-control" rows="4" placeholder="What did you work on today?"></textarea>';
+  html += '<div class="report-row">';
   html += '<input type="date" id="report-date" class="form-control" value="' + new Date().toISOString().slice(0,10) + '">';
   html += '<button class="btn btn-primary" onclick="submitReport()">Submit</button>';
-  html += '</div></div></div>';
+  html += '</div>';
+  html += '</div></div>';
 
   html += '</div>';
 
-  html += '<div class="portal-section"><h4><i class="bx bxs-briefcase"></i> My Projects</h4>';
-  html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
-  html += '<thead><tr><th>Project</th><th>Client</th><th>Tech</th><th>Status</th><th>Pay Status</th><th>Amount</th></tr></thead><tbody>';
-  empProjects.forEach(function (p) {
-    var cl = PORTAL_DATA.clients.find(function (c) { return c.id === p.clientId; });
-    html += '<tr><td>' + es(p.name) + '</td><td>' + es(cl ? cl.company : '') + '</td><td>' + es(p.tech) + '</td><td>' + clStatusBadge(p.status) + '</td><td>' + clStatusBadge(p.payStatus) + '</td><td>' + inr(p.amount) + '</td></tr>';
-  });
-  html += '</tbody></table></div></div></div>';
+  // MY PROJECTS
+  html += '<div class="portal-section">';
+  html += '<div class="sec-head"><h4><i class="bx bxs-briefcase"></i>My Projects <span class="count">' + empProjects.length + '</span></h4></div>';
+  if (empProjects.length) {
+    html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
+    html += '<thead><tr><th>Project</th><th>Client</th><th>Tech</th><th>Status</th><th>Pay Status</th><th class="amount-col">Amount</th></tr></thead><tbody>';
+    empProjects.forEach(function (p) {
+      var cl = PORTAL_DATA.clients.find(function (c) { return c.id === p.clientId; });
+      html += '<tr><td><b>' + es(p.name) + '</b></td><td>' + es(cl ? cl.company : '') + '</td><td>' + es(p.tech) + '</td><td>' + clStatusBadge(p.status) + '</td><td>' + clStatusBadge(p.payStatus) + '</td><td class="amount-col">' + inr(p.amount) + '</td></tr>';
+    });
+    html += '</tbody></table></div></div>';
+  } else { html += '<div class="card"><div class="card-body">' + emptyState('No projects assigned to you yet.') + '</div></div>'; }
+  html += '</div>';
 
-  html += '<div class="portal-section"><h4><i class="bx bxs-check-square"></i> My Tasks</h4>';
-  html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
-  html += '<thead><tr><th>Task</th><th>Project</th><th>Priority</th><th>Due</th><th>Status</th></tr></thead><tbody>';
-  empTasks.forEach(function (t) {
-    html += '<tr><td>' + es(t.task) + '</td><td>' + es(t.project) + '</td><td><span class="badge ' + (t.priority === 'High' ? 'badge-danger' : t.priority === 'Medium' ? 'badge-warning' : 'badge-info') + '">' + es(t.priority) + '</span></td><td>' + es(t.due) + '</td><td>' + clStatusBadge(t.status) + '</td></tr>';
-  });
-  html += '</tbody></table></div></div></div>';
+  // MY TASKS
+  html += '<div class="portal-section">';
+  html += '<div class="sec-head"><h4><i class="bx bxs-check-square"></i>My Tasks <span class="count">' + empTasks.length + '</span></h4></div>';
+  if (empTasks.length) {
+    html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
+    html += '<thead><tr><th>Task</th><th>Project</th><th>Priority</th><th>Due</th><th>Status</th></tr></thead><tbody>';
+    empTasks.forEach(function (t) {
+      html += '<tr><td>' + es(t.task) + '</td><td>' + es(t.project) + '</td><td><span class="badge ' + (t.priority === 'High' ? 'badge-danger' : t.priority === 'Medium' ? 'badge-warning' : 'badge-info') + '">' + es(t.priority) + '</span></td><td>' + es(t.due) + '</td><td>' + clStatusBadge(t.status) + '</td></tr>';
+    });
+    html += '</tbody></table></div></div>';
+  } else { html += '<div class="card"><div class="card-body">' + emptyState('No tasks assigned to you yet.') + '</div></div>'; }
+  html += '</div>';
 
-  html += '<div class="portal-section"><h4><i class="bx bxs-user-detail"></i> My Clients (' + empClients.length + ')</h4>';
-  html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
-  html += '<thead><tr><th>Client</th><th>Contact</th><th>Status</th><th>Last Message</th><th></th></tr></thead><tbody>';
-  empClients.forEach(function (c) {
-    var conv = PORTAL_DATA.convos[c.id] || [];
-    var mine = conv.slice().reverse().find(function (m) { return m.employeeId === EMP.id; });
-    var last = mine ? mine.text : '-';
-    html += '<tr><td><b>' + es(c.company) + '</b></td><td><small>' + es(c.person) + '<br>' + es(c.email) + '</small></td><td>' + clStatusBadge(c.status) + '</td><td><small class="color-muted">' + es(last) + '</small></td><td><button class="btn btn-info btn-sm" onclick="showChat(\'' + c.id + '\')">Watch</button></td></tr>';
-  });
-  html += '</tbody></table></div></div></div>';
+  // MY CLIENTS
+  html += '<div class="portal-section">';
+  html += '<div class="sec-head"><h4><i class="bx bxs-user-detail"></i>My Clients <span class="count">' + empClients.length + '</span></h4></div>';
+  if (empClients.length) {
+    html += '<div class="card"><div class="card-body table-responsive"><table class="data-table">';
+    html += '<thead><tr><th>Client</th><th>Contact</th><th>Status</th><th>Last Message</th><th>Action</th></tr></thead><tbody>';
+    empClients.forEach(function (c) {
+      var conv = PORTAL_DATA.convos[c.id] || [];
+      var mine = conv.slice().reverse().find(function (m) { return m.employeeId === EMP.id; });
+      var last = mine ? mine.text : '-';
+      html += '<tr><td><b>' + es(c.company) + '</b></td><td><small>' + es(c.person) + '<br>' + es(c.email) + '</small></td><td>' + clStatusBadge(c.status) + '</td><td><small class="color-muted">' + es(last) + '</small></td><td><button class="btn btn-info btn-sm" onclick="showChat(\'' + c.id + '\')"><i class="bx bx-chat"></i> Watch</button></td></tr>';
+    });
+    html += '</tbody></table></div></div>';
+  } else { html += '<div class="card"><div class="card-body">' + emptyState('No clients assigned to you yet.') + '</div></div>'; }
+  html += '</div>';
 
+  // CHAT BOX
   html += '<div class="portal-section" id="chat-box" style="display:none;">';
+  html += '<div class="sec-head"><h4><i class="bx bxs-chat"></i><span id="chat-title">Conversation</span></h4></div>';
   html += '<div class="card"><div class="card-body">';
-  html += '<h5 style="margin-top:0;" id="chat-title">Conversation</h5>';
   html += '<div class="msg-thread" id="chat-thread"></div>';
   html += '<div class="msg-input-row">';
   html += '<input type="text" id="chat-input" class="form-control" placeholder="Reply to the client...">';
-  html += '<button class="btn btn-primary" onclick="sendMsg()">Send</button>';
-  html += '</div></div></div></div>';
+  html += '<button class="btn btn-primary" onclick="sendMsg()"><i class="bx bx-send"></i> Send</button>';
+  html += '</div>';
+  html += '</div></div></div>';
 
   document.getElementById('portal-body').innerHTML = html;
 }
@@ -155,9 +268,14 @@ function showChat(clientId) {
   var c = PORTAL_DATA.clients.find(function (x) { return x.id === clientId; });
   var box = document.getElementById('chat-box');
   box.style.display = 'block';
-  document.getElementById('chat-title').innerHTML = 'Conversation with <b>' + es(c.company) + '</b> (as client)';
+  document.getElementById('chat-title').innerHTML = 'Conversation with <b>' + es(c.company) + '</b>';
   renderThread();
   box.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function senderName(m) {
+  var emp = PORTAL_DATA.employees.find(function (e) { return e.id === m.employeeId; });
+  return emp ? emp.name.split(' ')[0] : 'Team';
 }
 
 function renderThread() {
@@ -165,9 +283,9 @@ function renderThread() {
   var conv = PORTAL_DATA.convos[activeChatClient] || [];
   var html = conv.map(function (m) {
     var mine = m.from === 'employee';
-    return '<div class="msg ' + (mine ? 'from' : 'to') + '">' + es(m.text) + '<small>' + es(m.time) + ' &bull; ' + (mine ? 'from ' : 'to ') + es(PORTAL_DATA.employees.find(function (e) { return e.id === m.employeeId; }).name.split(' ')[0]) + '</small></div>';
+    return '<div class="msg ' + (mine ? 'from' : 'to') + '">' + es(m.text) + '<small>' + es(m.time) + ' &bull; ' + (mine ? 'from ' : 'to ') + es(senderName(m)) + '</small></div>';
   }).join('');
-  el.innerHTML = html || '<p class="color-muted">No messages yet.</p>';
+  el.innerHTML = html || '<p class="color-muted" style="text-align:center;">No messages yet. Start the conversation with your client.</p>';
   el.scrollTop = el.scrollHeight;
 }
 
@@ -189,6 +307,8 @@ function submitReport() {
   document.getElementById('report-note').value = '';
   toast('Daily report submitted for ' + date, 'success');
 }
+
+function portalValidate(name) { return !!findEmployee(name); }
 
 startPage();
 </script>

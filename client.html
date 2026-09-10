@@ -28,7 +28,7 @@
       </fieldset>
       <button type="submit" class="btn btn-primary btn-block">Login to My Dashboard</button>
     </form>
-    <p class="login-hint">Demo: any name &amp; password works</p>
+    <p class="login-hint">Demo: enter a company/contact name, e.g. <strong>jenifer</strong> (any password)</p>
     <div class="portal-nav" style="text-align:center;margin-top:12px;">
       <a href="index.html">Admin</a> &bull;
       <a href="employee.html">Employee</a> &bull;
@@ -56,7 +56,7 @@
 <script>
 window.PORTAL_TYPE = 'Client Portal';
 
-var activeClientId = 'C001';
+var activeClientId = null;
 
 function clientOf(id) { return PORTAL_DATA.clients.find(function (c) { return c.id === id; }); }
 function projectsOfClient(id) { return PORTAL_DATA.projects.filter(function (p) { return p.clientId === id; }); }
@@ -66,9 +66,18 @@ function empsOfClient(id) {
   }).filter(Boolean);
 }
 
+function resolveClient(name) {
+  var hit = findRecord(PORTAL_DATA.clients, name, ['company', 'person', 'email', 'id']);
+  return hit ? hit.id : null;
+}
+
 function switchClient(id) { activeClientId = id; portalDashboard(); }
 
-function portalDashboard() {
+function portalDashboard(name) {
+  if (name !== undefined) {
+    activeClientId = resolveClient(name);
+    if (!activeClientId) { return; }
+  }
   var c = clientOf(activeClientId);
   if (!c) { return; }
   var projects = projectsOfClient(c.id);
@@ -193,6 +202,8 @@ function sendMsg() {
   renderThread();
   toast('Message sent to your team', 'success');
 }
+
+function portalValidate(name) { return !!resolveClient(name); }
 
 startPage();
 </script>
