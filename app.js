@@ -336,6 +336,66 @@ const MOCK = {
     { id:'WS002', name:'III Cabin', code:'MD-CBN', lead:'Ragupathi', membersCount:2, projectsCount:4, status:'Active', createdAt:'2024-01-15' },
     { id:'WS003', name:'HR Cabin', code:'HR-CBN', lead:'Priya', membersCount:3, projectsCount:2, status:'Active', createdAt:'2024-02-01' },
     { id:'WS004', name:'Conference Cabin', code:'CONF-CBN', lead:'Sherlin JR', membersCount:12, projectsCount:6, status:'Active', createdAt:'2024-02-10' }
+  ],
+
+  mouDetails: [
+    { id:1, collegeName:'NexGen IT College', category:'Training', date:'2024-07-01', incharge:'Ragupathi', status:'Active' },
+    { id:2, collegeName:'Roriri Software', category:'Development', date:'2024-07-05', incharge:'Priya', status:'Active' },
+    { id:3, collegeName:'NexGen IT Academy', category:'Training', date:'2024-07-10', incharge:'Anushiya', status:'Inactive' }
+  ],
+
+  collegeProfile: {
+    foundingYear:'2019',
+    vision:'To empower students with industry-ready skills and ethical values.',
+    mission:'To provide quality education, hands-on training, and career guidance for holistic development.',
+    principalMessage:'Welcome to NexGen IT College. We are committed to nurturing future-ready professionals through innovation and excellence.',
+    accreditation:'ISO 9001:2015, NAAC A+, AICTE Approved'
+  },
+
+  mouDocuments: [
+    { id:'MD001', title:'Jeno University ERP Agreement', college:'NexGen IT College', uploadDate:'2024-07-16', fileName:'jeno_university_erp.pdf', status:'Active' },
+    { id:'MD002', title:'ABC Corp Test Portal Agreement', college:'NexGen IT Academy', uploadDate:'2024-08-01', fileName:'abc_corp_portal.pdf', status:'Active' }
+  ],
+
+  validityRenewals: [
+    { id:'VR001', college:'NexGen IT College', startDate:'2024-07-01', expiryDate:'2025-07-01', status:'Active' },
+    { id:'VR002', college:'NexGen IT Academy', startDate:'2024-06-15', expiryDate:'2024-12-15', status:'Pending' },
+    { id:'VR003', college:'Roriri Software', startDate:'2023-01-01', expiryDate:'2024-01-01', status:'Expired' }
+  ],
+
+  trainingPrograms: [
+    { id:'TP001', title:'Full Stack Development', skills:'HTML, CSS, JS, React, Node.js', duration:'6 months', target:'Final Year Students', status:'Active' },
+    { id:'TP002', title:'Python Development', skills:'Python, Django, Flask, SQL', duration:'4 months', target:'Second Year Students', status:'Active' },
+    { id:'TP003', title:'Mobile App Development', skills:'Flutter, Dart, Firebase', duration:'6 months', target:'Third Year Students', status:'Active' }
+  ],
+
+  internships: [
+    { id:'IN001', company:'Jeno University', role:'ERP Developer Trainee', duration:'3 months', stipend:'₹ 15,000/month', applyBy:'2024-08-15', instructions:'Send resume to careers@jenouni.edu', status:'Open' },
+    { id:'IN002', company:'ABC Corp', role:'Web Developer Intern', duration:'2 months', stipend:'₹ 10,000/month', applyBy:'2024-08-20', instructions:'Apply through company portal', status:'Open' }
+  ],
+
+  placements: [
+    { id:'PL001', student:'Anushiya P', company:'Jeno University', package:'₹ 6,00,000', role:'Developer', year:'2024', status:'Placed' },
+    { id:'PL002', student:'Hari K', company:'ABC Corp', package:'₹ 5,50,000', role:'Developer', year:'2024', status:'Placed' },
+    { id:'PL003', student:'Sherlin JR', company:'XYZ Ltd', package:'₹ 4,80,000', role:'Frontend Dev', year:'2024', status:'Placed' }
+  ],
+
+  eventsActivities: [
+    { id:'EA001', title:'Guest Lecture on AI & ML', date:'2024-08-10', type:'Seminar', description:'Industry expert talk on AI trends', image:'event1.jpg', status:'Completed' },
+    { id:'EA002', title:'Industrial Visit to Tech Park', date:'2024-08-20', type:'IV', description:'Visit to Roriri IT Park for students', image:'event2.jpg', status:'Upcoming' },
+    { id:'EA003', title:'Annual Cultural Fest', date:'2024-09-05', type:'Cultural', description:'Inter-college cultural competition', image:'event3.jpg', status:'Upcoming' }
+  ],
+
+  announcements: [
+    { id:'AN001', title:'Exam Schedule Released', date:'2024-08-01', priority:'High', category:'Academic', message:'Semester exams start from 20th August 2024', status:'Active' },
+    { id:'AN002', title:'Placement Drive - ABC Corp', date:'2024-08-05', priority:'Medium', category:'Placement', message:'On-campus placement drive on 15th August', status:'Active' },
+    { id:'AN003', title:'Holiday - Independence Day', date:'2024-08-12', priority:'Low', category:'General', message:'College closed on 15th August', status:'Active' }
+  ],
+
+  communications: [
+    { id:'CM001', name:'Ragupathi', role:'Principal', phone:'9876543210', email:'principal@nexgenit.edu', message:'For academic queries', status:'Active' },
+    { id:'CM002', name:'Priya', role:'Admin Head', phone:'8765432109', email:'admin@nexgenit.edu', message:'For administrative support', status:'Active' },
+    { id:'CM003', name:'Anushiya', role:'Training Head', phone:'7654321098', email:'training@nexgenit.edu', message:'For training and placement queries', status:'Active' }
   ]
 };
 
@@ -374,9 +434,52 @@ const SIDEBAR = [
     { id:'task-assignment', icon:'bx bx-task', label:'Task Assignment' },
     { id:'complaints', icon:'bx bx-error', label:'Complaint' },
     { id:'id-cards', icon:'bx bx-card', label:'ID Card' },
-    { id:'mou', icon:'bx bx-file-blank', label:'MOU' },
+    { id:'mou', icon:'bx bx-file-blank', label:'MOU', type:'sub', children:[
+      { id:'college-profile', icon:'bx bx-home-alt', label:'College Profile' },
+      { id:'mou-details', icon:'bx bx-folder', label:'MOU Details' },
+      { id:'mou-documents', icon:'bx bx-folder-open', label:'MOU Documents' },
+      { id:'validity-renewal', icon:'bx bx-calendar-check', label:'Validity & Renewal' },
+      { id:'training-programs', icon:'bx bx-group', label:'Training Programs' },
+      { id:'internships', icon:'bx bx-user-pin', label:'Internships' },
+      { id:'placements', icon:'bx bx-briefcase', label:'Placements' },
+      { id:'events-activities', icon:'bx bx-calendar-event', label:'Events & Activities' },
+      { id:'announcements', icon:'bx bx-megaphone', label:'Announcements' },
+      { id:'communication', icon:'bx bx-message-detail', label:'Communication' }
+    ]},
     { id:'documents', icon:'bx bx-folder', label:'Documents' },
     { id:'enquiries', icon:'bx bx-message-square-detail', label:'Enquiry' },
+    { type:'sub', icon:'lni lni-briefcase', label:'Placement Officers', children:[
+      { id:'placement-dashboard', icon:'bx bx-home-alt', label:'Dashboard' },
+      { type:'sub', icon:'bx bx-user', label:'Students', children:[
+        { id:'placement-students-all', icon:'bx bx-group', label:'All Students' },
+        { id:'placement-students-eligible', icon:'bx bx-check-circle', label:'Eligible Students' },
+        { id:'placement-students-placed', icon:'bx bx-briefcase', label:'Placed Students' }
+      ]},
+      { type:'sub', icon:'bx bx-buildings', label:'Companies', children:[
+        { id:'placement-companies-partner', icon:'bx bx-buildings', label:'Partner Companies' },
+        { id:'placement-companies-new', icon:'bx bx-plus-circle', label:'New Companies' },
+        { id:'placement-companies-requests', icon:'bx bx-message-detail', label:'Company Requests' }
+      ]},
+      { type:'sub', icon:'bx bx-briefcase', label:'Job Opportunities', children:[
+        { id:'placement-jobs', icon:'bx bx-briefcase', label:'Jobs' },
+        { id:'placement-internships', icon:'bx bx-user-pin', label:'Internships' },
+        { id:'placement-saved-jobs', icon:'bx bx-star', label:'Saved Opportunities' }
+      ]},
+      { id:'placement-drives', icon:'bx bx-calendar-event', label:'Placement Drives' },
+      { id:'placement-applications', icon:'bx bx-file', label:'Applications' },
+      { id:'placement-interviews', icon:'bx bx-message-detail', label:'Interviews' },
+      { id:'placement-offers', icon:'bx bx-gift', label:'Offers & Placements' },
+      { id:'placement-resumes', icon:'bx bx-folder-open', label:'Resumes & Documents' },
+      { type:'sub', icon:'bx bx-envelope', label:'Communication', children:[
+        { id:'placement-company-messages', icon:'bx bx-building', label:'Company Messages' },
+        { id:'placement-student-messages', icon:'bx bx-user', label:'Student Messages' }
+      ]},
+      { id:'placement-reports', icon:'bx bx-bar-chart-alt', label:'Placement Reports' },
+      { id:'placement-notifications', icon:'bx bx-bell', label:'Notifications' },
+      { id:'placement-institution', icon:'bx bx-building-house', label:'Institution Profile' },
+      { id:'placement-settings', icon:'bx bx-cog', label:'Settings' },
+      { id:'placement-logout', icon:'bx bx-log-out', label:'Logout' }
+    ]},
     { id:'it-companies', icon:'bx bx-buildings', label:'IT Companies' },
     { id:'consultancies', icon:'bx bxs-institution', label:'Consultancies' }
   ]},
@@ -502,9 +605,22 @@ function buildSidebar() {
     } else if (item.type === 'sub') {
       html += `<li id="nav-${item.label.replace(/\s+/g,'-').toLowerCase()}"><a href="javascript:void(0)" onclick="toggleSubmenu(this.parentElement)"><i class="${item.icon}"></i><span class="menu-text">${item.label}</span><i class="bx bx-chevron-right arrow"></i></a><ul class="sub-menu">`;
       item.children.forEach(child => {
-        const cpage = child.page || child.id;
-        const cextra = child.dept ? `,{dept:'${child.dept}'}` : '';
-        html += `<li><a href="javascript:void(0)" data-page="${cpage}" onclick="navigate('${cpage}'${cextra})"><i class="${child.icon}"></i> ${child.label}</a></li>`;
+        if (child.type === 'sub') {
+          const firstChild = (child.children || [])[0];
+          const firstPage = firstChild ? (firstChild.page || firstChild.id) : null;
+          const clickAttr = firstPage ? `onclick="toggleSubmenu(this.parentElement);navigate('${firstPage}')"` : `onclick="toggleSubmenu(this.parentElement)"`;
+          html += `<li id="nav-${child.label.replace(/\s+/g,'-').toLowerCase()}"><a href="javascript:void(0)" ${clickAttr}><i class="${child.icon}"></i><span class="menu-text">${child.label}</span><i class="bx bx-chevron-right arrow"></i></a><ul class="sub-menu">`;
+          child.children.forEach(grand => {
+            const cpage = grand.page || grand.id;
+            const cextra = grand.dept ? `,{dept:'${grand.dept}'}` : '';
+            html += `<li><a href="javascript:void(0)" data-page="${cpage}" onclick="navigate('${cpage}'${cextra})"><i class="${grand.icon}"></i> ${grand.label}</a></li>`;
+          });
+          html += `</ul></li>`;
+        } else {
+          const cpage = child.page || child.id;
+          const cextra = child.dept ? `,{dept:'${child.dept}'}` : '';
+          html += `<li><a href="javascript:void(0)" data-page="${cpage}" onclick="navigate('${cpage}'${cextra})"><i class="${child.icon}"></i> ${child.label}</a></li>`;
+        }
       });
       html += `</ul></li>`;
     }
@@ -538,8 +654,11 @@ function navigate(page, params) {
   const link = document.querySelector(`.sidebar-nav a[data-page="${page}"]`);
   if (link) {
     link.classList.add('active');
-    const parentLi = link.closest('.sub-menu')?.closest('li');
-    if (parentLi) parentLi.classList.add('open');
+    let parentLi = link.closest('.sub-menu')?.closest('li');
+    while (parentLi) {
+      parentLi.classList.add('open');
+      parentLi = parentLi.parentElement?.closest('li');
+    }
   } else if (page.startsWith('freelancer-')) {
     const parentLi = document.getElementById('nav-freelancer');
     if (parentLi) parentLi.classList.add('open');
@@ -688,6 +807,312 @@ function syncPortalsToStorage() {
   } catch (e) { /* ignore storage errors */ }
 }
 
+// ============ MOU DETAILS ============
+function renderMouDetails() {
+  let html = pageHeader('MOU Details','Manage MOU details',`<button class="btn btn-primary" onclick="showMouDetailAddModal()"><i class="bx bx-plus"></i> Add MOU</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>S. No</th><th>College Name</th><th>Category</th><th>Date</th><th>Incharge</th><th>Status</th><th>Action</th></tr></thead><tbody>`;
+  MOCK.mouDetails.forEach((m, idx) => {
+    html += `<tr><td>${m.id}</td><td>${m.collegeName}</td><td>${m.category}</td><td>${m.date}</td><td>${m.incharge}</td><td><span class="badge badge-success">${m.status}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showMouDetailEditModal('${m.id}')"><i class="bx bx-edit"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="deleteMouDetail('${m.id}')"><i class="bx bx-trash"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+
+// ============ COLLEGE PROFILE ============
+function renderCollegeProfile() {
+  const p = MOCK.collegeProfile;
+  let html = pageHeader('College Profile','About NexGen IT College');
+  html += `<div class="row">`;
+  html += `<div class="col-lg-4"><div class="profile-card"><div class="profile-cover" style="background:linear-gradient(135deg,#4e73df,#224abe)"></div><div class="profile-avatar" style="background:var(--primary);font-size:28px;">N</div><div class="profile-info"><h5>NexGen IT College</h5><p>Established ${p.foundingYear}</p></div><div class="profile-details">`;
+  [['Founding Year',p.foundingYear],['Accreditation',p.accreditation]].forEach(f => {
+    html += `<div class="detail-row"><span class="label">${f[0]}</span><span class="value">${f[1]}</span></div>`;
+  });
+  html += `</div></div></div>`;
+  html += `<div class="col-lg-8"><div class="data-card"><div class="card-header"><h5>About Us</h5></div><div class="card-body"><p><strong>Vision:</strong> ${p.vision}</p><p class="mt-2"><strong>Mission:</strong> ${p.mission}</p><p class="mt-2"><strong>Principal Message:</strong> ${p.principalMessage}</p></div></div></div>`;
+  html += `</div>`;
+  return html;
+}
+
+// ============ MOU DOCUMENTS ============
+function renderMouDocuments() {
+  let html = pageHeader('MOU Documents','Official agreements and documents',`<button class="btn btn-primary" onclick="showMouDocumentAddModal()"><i class="bx bx-plus"></i> Upload Document</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Title</th><th>College</th><th>Upload Date</th><th>File Name</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  MOCK.mouDocuments.forEach(d => {
+    html += `<tr><td><strong>${d.id}</strong></td><td>${d.title}</td><td>${d.college}</td><td>${d.uploadDate}</td><td>${d.fileName}</td><td><span class="badge badge-success">${d.status}</span></td><td><button class="btn btn-sm btn-outline-success" onclick="showNotification('Download ${d.fileName}','info')"><i class="bx bx-download"></i></button> <button class="btn btn-sm btn-outline-warning" onclick="showNotification('Preview ${d.fileName}','info')"><i class="bx bx-show"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="deleteMouDocument('${d.id}')"><i class="bx bx-trash"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+
+// ============ VALIDITY & RENEWAL ============
+function renderValidityRenewal() {
+  let html = pageHeader('Validity & Renewal','Track MOU validity and renewal status',`<button class="btn btn-primary" onclick="showValidityAddModal()"><i class="bx bx-plus"></i> Add Entry</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>College</th><th>Start Date</th><th>Expiry Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  MOCK.validityRenewals.forEach(v => {
+    const stBadge = v.status==='Active'?'badge-success':v.status==='Pending'?'badge-warning':'badge-danger';
+    html += `<tr><td><strong>${v.id}</strong></td><td>${v.college}</td><td>${v.startDate}</td><td>${v.expiryDate}</td><td><span class="badge ${stBadge}">${v.status}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showValidityEditModal('${v.id}')"><i class="bx bx-edit"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="deleteValidity('${v.id}')"><i class="bx bx-trash"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+
+// ============ TRAINING PROGRAMS ============
+function renderTrainingPrograms() {
+  let html = pageHeader('Training Programs','List of training modules and objectives',`<button class="btn btn-primary" onclick="showTrainingAddModal()"><i class="bx bx-plus"></i> Add Program</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Title</th><th>Skill Objectives</th><th>Duration</th><th>Target</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  MOCK.trainingPrograms.forEach(t => {
+    html += `<tr><td><strong>${t.id}</strong></td><td>${t.title}</td><td>${t.skills}</td><td>${t.duration}</td><td>${t.target}</td><td><span class="badge badge-success">${t.status}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showTrainingEditModal('${t.id}')"><i class="bx bx-edit"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="deleteTraining('${t.id}')"><i class="bx bx-trash"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+
+// ============ INTERNSHIPS ============
+function renderInternships() {
+  let html = pageHeader('Internships','Internship opportunities and application details',`<button class="btn btn-primary" onclick="showInternshipAddModal()"><i class="bx bx-plus"></i> Add Internship</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Company</th><th>Role</th><th>Duration</th><th>Stipend</th><th>Apply By</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  MOCK.internships.forEach(i => {
+    html += `<tr><td><strong>${i.id}</strong></td><td>${i.company}</td><td>${i.role}</td><td>${i.duration}</td><td>${i.stipend}</td><td>${i.applyBy}</td><td><span class="badge ${i.status==='Open'?'badge-success':'badge-warning'}">${i.status}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showInternshipEditModal('${i.id}')"><i class="bx bx-edit"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="deleteInternship('${i.id}')"><i class="bx bx-trash"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+
+// ============ PLACEMENTS ============
+function renderPlacements() {
+  let html = pageHeader('Placements','Student placement statistics and recruiters',`<button class="btn btn-primary" onclick="showPlacementAddModal()"><i class="bx bx-plus"></i> Add Placement</button>`);
+  html += `<div class="row row-cols-1 row-cols-md-3 mb-3">`;
+  [{l:'Total Placements',v:MOCK.placements.length,ic:'bx-briefcase',cls:'bg-light-success text-success'},{l:'Highest Package',v:'₹ 6,00,000',ic:'bx-money',cls:'bg-light-warning text-warning'},{l:'Average Package',v:'₹ 5,43,333',ic:'bx-bar-chart-alt',cls:'bg-light-info text-info'}].forEach(s => {
+    html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">${s.l}</p><h4>${s.v}</h4></div><div class="stat-icon ${s.cls} ms-auto"><i class="bx ${s.ic}"></i></div></div></div></div>`;
+  });
+  html += `</div>`;
+  html += `<div class="data-card"><div class="card-header"><h5>Placement Records</h5></div><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Student</th><th>Company</th><th>Package</th><th>Role</th><th>Year</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  MOCK.placements.forEach(p => {
+    html += `<tr><td><strong>${p.id}</strong></td><td>${p.student}</td><td>${p.company}</td><td>${p.package}</td><td>${p.role}</td><td>${p.year}</td><td><span class="badge badge-success">${p.status}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showPlacementEditModal('${p.id}')"><i class="bx bx-edit"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="deletePlacement('${p.id}')"><i class="bx bx-trash"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+
+// ============ EVENTS & ACTIVITIES ============
+function renderEventsActivities() {
+  let html = pageHeader('Events & Activities','College events, seminars and activities',`<button class="btn btn-primary" onclick="showEventAddModal()"><i class="bx bx-plus"></i> Add Event</button>`);
+  html += `<div class="row row-cols-1 row-cols-md-3 g-3">`;
+  MOCK.eventsActivities.forEach(e => {
+    html += `<div class="col"><div class="data-card"><div class="card-body"><div style="height:160px;background:#e9ecef;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#6c757d;margin-bottom:1rem;"><i class="bx bx-image" style="font-size:32px;"></i></div><h6>${e.title}</h6><p class="font-13 text-secondary mb-1">${e.date} • ${e.type}</p><p class="mb-0">${e.description}</p><span class="badge ${e.status==='Completed'?'badge-success':'badge-warning'} mt-2">${e.status}</span></div></div></div>`;
+  });
+  html += `</div>`;
+  return html;
+}
+
+// ============ ANNOUNCEMENTS ============
+function renderAnnouncements() {
+  let html = pageHeader('Announcements','Notice board and updates',`<button class="btn btn-primary" onclick="showAnnouncementAddModal()"><i class="bx bx-plus"></i> Add Announcement</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Title</th><th>Date</th><th>Priority</th><th>Category</th><th>Message</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  MOCK.announcements.forEach(a => {
+    const priBadge = a.priority==='High'?'badge-danger':a.priority==='Medium'?'badge-warning':'badge-info';
+    html += `<tr><td><strong>${a.id}</strong></td><td>${a.title}</td><td>${a.date}</td><td><span class="badge ${priBadge}">${a.priority}</span></td><td>${a.category}</td><td>${a.message}</td><td><span class="badge badge-success">${a.status}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showAnnouncementEditModal('${a.id}')"><i class="bx bx-edit"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="deleteAnnouncement('${a.id}')"><i class="bx bx-trash"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+
+// ============ COMMUNICATION ============
+function renderCommunication() {
+  let html = pageHeader('Communication','Contact directory and feedback');
+  html += `<div class="row row-cols-1 row-cols-md-2 g-3 mb-3">`;
+  MOCK.communications.forEach(c => {
+    html += `<div class="col"><div class="data-card"><div class="card-body"><h6>${c.name} <span class="badge badge-info">${c.role}</span></h6><p class="mb-1"><i class="bx bx-phone" style="margin-right:6px;"></i>${c.phone}</p><p class="mb-1"><i class="bx bx-envelope" style="margin-right:6px;"></i>${c.email}</p><p class="mb-0 text-secondary">${c.message}</p></div></div></div>`;
+  });
+  html += `</div>`;
+  html += `<div class="data-card"><div class="card-header"><h5>Send Feedback</h5></div><div class="card-body"><div class="row g-3"><div class="col-md-6"><input type="text" class="form-control" placeholder="Your Name"></div><div class="col-md-6"><input type="email" class="form-control" placeholder="Email"></div><div class="col-12"><input type="text" class="form-control" placeholder="Subject"></div><div class="col-12"><textarea class="form-control" rows="4" placeholder="Message"></textarea></div><div class="col-12"><button class="btn btn-primary" onclick="showNotification('Feedback sent successfully','success')">Send Message</button></div></div></div></div>`;
+  return html;
+}
+
+// ============ PLACEMENT OFFICERS ============
+function renderPlacementDashboard() {
+  let html = pageHeader('Placement Dashboard','Overview of placement activities',`<button class="btn btn-primary" onclick="showNotification('Add new dashboard widget','info')"><i class="bx bx-plus"></i> Add Widget</button>`);
+  html += `<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mb-3">`;
+  [{l:'Total Students',v:1240,ic:'bx-user',cls:'bg-light-primary text-primary'},{l:'Eligible Students',v:856,ic:'bx-check-circle',cls:'bg-light-success text-success'},{l:'Placed Students',v:692,ic:'bx-briefcase',cls:'bg-light-warning text-warning'},{l:'Active Companies',v:48,ic:'bx-buildings',cls:'bg-light-info text-info'}].forEach(s => {
+    html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">${s.l}</p><h4>${s.v}</h4></div><div class="stat-icon ${s.cls} ms-auto"><i class="bx ${s.ic}"></i></div></div></div></div>`;
+  });
+  html += `</div>`;
+  html += `<div class="data-card"><div class="card-body"><div class="empty-state"><i class="bx bx-line-chart"></i><p>Placement dashboard overview - coming soon</p></div></div></div>`;
+  return html;
+}
+function renderPlacementStudentsAll() {
+  let html = pageHeader('All Students','Complete student directory for placements');
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Name</th><th>Course</th><th>Batch</th><th>CGPA</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['STU001','Anushiya P','Full Stack Dev','2024',8.5,'Eligible'],['STU002','Hari K','Full Stack Dev','2024',7.8,'Eligible'],['STU003','Sherlin JR','Web Dev','2024',6.9,'Not Eligible']].forEach(s => {
+    html += `<tr><td><strong>${s[0]}</strong></td><td>${s[1]}</td><td>${s[2]}</td><td>${s[3]}</td><td>${s[4]}</td><td><span class="badge ${s[5]==='Eligible'?'badge-success':'badge-danger'}">${s[5]}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('Edit student','info')"><i class="bx bx-edit"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementStudentsEligible() {
+  return renderPlacementStudentsAll();
+}
+function renderPlacementStudentsPlaced() {
+  let html = pageHeader('Placed Students','Students who received placement offers');
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Name</th><th>Company</th><th>Package</th><th>Role</th><th>Year</th><th>Actions</th></tr></thead><tbody>`;
+  MOCK.placements.forEach(p => {
+    html += `<tr><td><strong>${p.id}</strong></td><td>${p.student}</td><td>${p.company}</td><td>${p.package}</td><td>${p.role}</td><td>${p.year}</td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('View details','info')"><i class="bx bx-show"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementCompaniesPartner() {
+  let html = pageHeader('Partner Companies','List of partner companies for placements',`<button class="btn btn-primary" onclick="showNotification('Add company','info')"><i class="bx bx-plus"></i> Add Company</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Company</th><th>Industry</th><th>Contact Person</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['PC001','Jeno University','Education','Ragupathi','raghu@jenouni.edu','9876543210','Active'],['PC002','ABC Corp','IT','Priya','priya@abccorp.com','8765432109','Active']].forEach(c => {
+    html += `<tr><td><strong>${c[0]}</strong></td><td>${c[1]}</td><td>${c[2]}</td><td>${c[3]}</td><td>${c[4]}</td><td>${c[5]}</td><td><span class="badge badge-success">${c[6]}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('Edit company','info')"><i class="bx bx-edit"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementCompaniesNew() {
+  let html = pageHeader('New Companies','New company partnership requests',`<button class="btn btn-primary" onclick="showNotification('Add company request','info')"><i class="bx bx-plus"></i> Add Request</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Company</th><th>Industry</th><th>Contact Person</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['NC001','XYZ Ltd','Manufacturing','Asha','asha@xyz.com','7654321098','Pending']].forEach(c => {
+    html += `<tr><td><strong>${c[0]}</strong></td><td>${c[1]}</td><td>${c[2]}</td><td>${c[3]}</td><td>${c[4]}</td><td>${c[5]}</td><td><span class="badge badge-warning">${c[6]}</span></td><td><button class="btn btn-sm btn-outline-success" onclick="showNotification('Approved','success')"><i class="bx bx-check"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="showNotification('Rejected','error')"><i class="bx bx-x"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementCompaniesRequests() {
+  return renderPlacementCompaniesNew();
+}
+function renderPlacementJobs() {
+  let html = pageHeader('Jobs','Available job opportunities',`<button class="btn btn-primary" onclick="showNotification('Post new job','info')"><i class="bx bx-plus"></i> Post Job</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Title</th><th>Company</th><th>Location</th><th>Salary</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['JB001','Full Stack Developer','Jeno University','Tirunelveli','₹ 6,00,000','Full Time','Active'],['JB002','Frontend Developer','ABC Corp','Chennai','₹ 5,50,000','Full Time','Active']].forEach(j => {
+    html += `<tr><td><strong>${j[0]}</strong></td><td>${j[1]}</td><td>${j[2]}</td><td>${j[3]}</td><td>${j[4]}</td><td>${j[5]}</td><td><span class="badge badge-success">${j[6]}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('Edit job','info')"><i class="bx bx-edit"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="showNotification('Delete job','error')"><i class="bx bx-trash"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementInternships() {
+  return renderPlacementJobs();
+}
+function renderPlacementSavedJobs() {
+  let html = pageHeader('Saved Opportunities','Bookmarked job and internship opportunities');
+  html += `<div class="data-card"><div class="card-body"><div class="empty-state"><i class="bx bx-star"></i><p>No saved opportunities yet</p></div></div></div>`;
+  return html;
+}
+function renderPlacementDrives() {
+  let html = pageHeader('Placement Drives','Upcoming, ongoing and completed placement drives',`<button class="btn btn-primary" onclick="showNotification('Schedule drive','info')"><i class="bx bx-plus"></i> Schedule Drive</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Company</th><th>Date</th><th>Time</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['PD001','Jeno University','2024-08-20','10:00 AM','Training Hall','Upcoming'],['PD002','ABC Corp','2024-08-10','02:00 PM','Conference Room','Completed']].forEach(d => {
+    html += `<tr><td><strong>${d[0]}</strong></td><td>${d[1]}</td><td>${d[2]}</td><td>${d[3]}</td><td>${d[4]}</td><td><span class="badge ${d[5]==='Upcoming'?'badge-info':d[5]==='Completed'?'badge-success':'badge-warning'}">${d[5]}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('Edit drive','info')"><i class="bx bx-edit"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementApplications() {
+  let html = pageHeader('Applications','Student placement applications',`<button class="btn btn-primary" onclick="showNotification('View applications','info')"><i class="bx bx-plus"></i> View Applications</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Student</th><th>Company</th><th>Role</th><th>Applied Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['APP001','Anushiya P','Jeno University','Developer','2024-08-01','Shortlisted'],['APP002','Hari K','ABC Corp','Developer','2024-08-02','Applied'],['APP003','Sherlin JR','XYZ Ltd','Frontend Dev','2024-08-03','Rejected']].forEach(a => {
+    html += `<tr><td><strong>${a[0]}</strong></td><td>${a[1]}</td><td>${a[2]}</td><td>${a[3]}</td><td>${a[4]}</td><td><span class="badge ${a[5]==='Shortlisted'?'badge-success':a[5]==='Applied'?'badge-info':'badge-danger'}">${a[5]}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('Review application','info')"><i class="bx bx-edit"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementInterviews() {
+  let html = pageHeader('Interviews','Interview schedules and results',`<button class="btn btn-primary" onclick="showNotification('Schedule interview','info')"><i class="bx bx-plus"></i> Schedule Interview</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Student</th><th>Company</th><th>Date</th><th>Time</th><th>Mode</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['INT001','Anushiya P','Jeno University','2024-08-15','10:00 AM','Online','Upcoming'],['INT002','Hari K','ABC Corp','2024-08-12','02:00 PM','Offline','Completed']].forEach(i => {
+    html += `<tr><td><strong>${i[0]}</strong></td><td>${i[1]}</td><td>${i[2]}</td><td>${i[3]}</td><td>${i[4]}</td><td>${i[5]}</td><td><span class="badge ${i[6]==='Upcoming'?'badge-info':'badge-success'}">${i[6]}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('Edit interview','info')"><i class="bx bx-edit"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementOffers() {
+  let html = pageHeader('Offers & Placements','Track offers received and final placements',`<button class="btn btn-primary" onclick="showNotification('Add offer','info')"><i class="bx bx-plus"></i> Add Offer</button>`);
+  html += `<div class="row row-cols-1 row-cols-md-3 mb-3">`;
+  [{l:'Offers Received',v:15,ic:'bx-gift',cls:'bg-light-success text-success'},{l:'Students Placed',v:692,ic:'bx-briefcase',cls:'bg-light-warning text-warning'},{l:'Avg Package',v:'₹ 5,43,333',ic:'bx-money',cls:'bg-light-info text-info'}].forEach(s => {
+    html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">${s.l}</p><h4>${s.v}</h4></div><div class="stat-icon ${s.cls} ms-auto"><i class="bx ${s.ic}"></i></div></div></div></div>`;
+  });
+  html += `</div>`;
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Student</th><th>Company</th><th>Package</th><th>Role</th><th>Offer Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  MOCK.placements.forEach(p => {
+    html += `<tr><td><strong>${p.id}</strong></td><td>${p.student}</td><td>${p.company}</td><td>${p.package}</td><td>${p.role}</td><td>2024-08-01</td><td><span class="badge badge-success">Accepted</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('Edit offer','info')"><i class="bx bx-edit"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementResumes() {
+  let html = pageHeader('Resumes & Documents','Student resumes and placement documents',`<button class="btn btn-primary" onclick="showNotification('Upload resume','info')"><i class="bx bx-plus"></i> Upload Resume</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Student</th><th>Document Type</th><th>File Name</th><th>Upload Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['RES001','Anushiya P','Resume','anushiya_resume.pdf','2024-08-01','Verified'],['RES002','Hari K','Resume','hari_resume.pdf','2024-08-02','Pending']].forEach(r => {
+    html += `<tr><td><strong>${r[0]}</strong></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td><span class="badge ${r[5]==='Verified'?'badge-success':'badge-warning'}">${r[5]}</span></td><td><button class="btn btn-sm btn-outline-success" onclick="showNotification('Preview resume','info')"><i class="bx bx-show"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="showNotification('Delete resume','error')"><i class="bx bx-trash"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementCompanyMessages() {
+  let html = pageHeader('Company Messages','Communication with partner companies');
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Company</th><th>Message</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['CM001','Jeno University','We are hiring for 5 developer positions','2024-08-01','Unread'],['CM002','ABC Corp','Schedule placement drive for next week','2024-08-05','Read']].forEach(c => {
+    html += `<tr><td><strong>${c[0]}</strong></td><td>${c[1]}</td><td>${c[2]}</td><td>${c[3]}</td><td><span class="badge ${c[4]==='Unread'?'badge-danger':'badge-success'}">${c[4]}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('Reply to message','info')"><i class="bx bx-reply'></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementStudentMessages() {
+  let html = pageHeader('Student Messages','Communication with students');
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Student</th><th>Message</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['SM001','Anushiya P','When is the next placement drive?','2024-08-01','Unread'],['SM002','Hari K','I have updated my resume','2024-08-05','Read']].forEach(s => {
+    html += `<tr><td><strong>${s[0]}</strong></td><td>${s[1]}</td><td>${s[2]}</td><td>${s[3]}</td><td><span class="badge ${s[4]==='Unread'?'badge-danger':'badge-success'}">${s[4]}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('Reply to message','info')"><i class="bx bx-reply'></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementReports() {
+  let html = pageHeader('Placement Reports','Detailed placement statistics and reports',`<button class="btn btn-primary" onclick="showNotification('Generate report','info')"><i class="bx bx-plus"></i> Generate Report</button>`);
+  html += `<div class="row row-cols-1 row-cols-md-3 g-3 mb-3">`;
+  [{l:'Placement Statistics',v:'View Stats',ic:'bx-bar-chart-alt',pg:'#'},{l:'Department-wise Report',v:'View Report',ic:'bx-buildings',pg:'#'},{l:'Company-wise Report',v:'View Report',ic:'bx-group',pg:'#'}].forEach(s => {
+    html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">${s.l}</p><h4>${s.v}</h4></div><div class="stat-icon ${'bg-light-info text-info'} ms-auto"><i class="bx ${s.ic}"></i></div></div></div></div>`;
+  });
+  html += `</div>`;
+  html += `<div class="data-card"><div class="card-header"><h5>Salary Statistics</h5></div><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>Year</th><th>Total Offers</th><th>Highest Package</th><th>Average Package</th><th>Total Students</th></tr></thead><tbody>`;
+  [['2024',15,'₹ 6,00,000','₹ 5,43,333',692],['2023',12,'₹ 5,50,000','₹ 4,80,000',580]].forEach(r => {
+    html += `<tr><td><strong>${r[0]}</strong></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementNotifications() {
+  let html = pageHeader('Notifications','Placement related notifications and alerts',`<button class="btn btn-primary" onclick="showNotification('Create notification','info')"><i class="bx bx-plus"></i> Create Notification</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Title</th><th>Date</th><th>Priority</th><th>Message</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  [['NTF001','Placement Drive Tomorrow','2024-08-14','High','Jeno University drive on 15th Aug','Active'],['NTF002','Resume Submission Deadline','2024-08-10','Medium','Submit resumes by 18th Aug','Active']].forEach(n => {
+    html += `<tr><td><strong>${n[0]}</strong></td><td>${n[1]}</td><td>${n[2]}</td><td><span class="badge ${n[3]==='High'?'badge-danger':'badge-warning'}">${n[3]}</span></td><td>${n[4]}</td><td><span class="badge badge-success">${n[5]}</span></td><td><button class="btn btn-sm btn-outline-warning" onclick="showNotification('Edit notification','info')"><i class="bx bx-edit"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="showNotification('Delete notification','error')"><i class="bx bx-trash"></i></button></td></tr>`;
+  });
+  html += `</tbody></table></div></div></div>`;
+  return html;
+}
+function renderPlacementInstitution() {
+  let html = pageHeader('Institution Profile','Placement cell institution details',`<button class="btn btn-primary" onclick="showNotification('Edit profile','info')"><i class="bx bx-edit"></i> Edit Profile</button>`);
+  html += `<div class="row">`;
+  html += `<div class="col-lg-4"><div class="profile-card"><div class="profile-cover" style="background:linear-gradient(135deg,#1cc88a,#0d9e6e)"></div><div class="profile-avatar" style="background:var(--success)">P</div><div class="profile-info"><h5>NexGen IT College</h5><p>Placement Cell</p></div><div class="profile-details">`;
+  [['Established','2019'],['Accreditation','NAAC A+, AICTE'],['Placement Officer','Ragupathi'],['Contact','+91 9876543210']].forEach(f => {
+    html += `<div class="detail-row"><span class="label">${f[0]}</span><span class="value">${f[1]}</span></div>`;
+  });
+  html += `</div></div></div>`;
+  html += `<div class="col-lg-8"><div class="data-card"><div class="card-header"><h5>About Placement Cell</h5></div><div class="card-body"><p>The Placement Cell at NexGen IT College is dedicated to bridging the gap between academia and industry. We provide comprehensive training, career guidance, and placement opportunities to ensure our students achieve their career aspirations.</p></div></div></div>`;
+  html += `</div>`;
+  return html;
+}
+function renderPlacementSettings() {
+  let html = pageHeader('Settings','Placement cell configuration and preferences',`<button class="btn btn-primary" onclick="showNotification('Settings saved','success')"><i class="bx bx-save"></i> Save Settings</button>`);
+  html += `<div class="data-card"><div class="card-body"><div class="row g-3"><div class="col-md-6"><label class="form-label">Placement Officer Name</label><input type="text" class="form-control" value="Ragupathi"></div><div class="col-md-6"><label class="form-label">Contact Email</label><input type="email" class="form-control" value="placement@nexgenit.edu"></div><div class="col-md-6"><label class="form-label">Default Drive Location</label><input type="text" class="form-control" value="Training Hall"></div><div class="col-md-6"><label class="form-label">Notification Email</label><input type="email" class="form-control" value="notifications@nexgenit.edu"></div><div class="col-12"><label class="form-check" style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" checked><span>Send email notifications for new job postings</span></label></div><div class="col-12"><label class="form-check" style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" checked><span>Auto-shortlist students based on CGPA</span></label></div></div></div></div>`;
+  return html;
+}
+function renderPlacementLogout() {
+  let html = pageHeader('Logout','Secure logout from placement portal',`<button class="btn btn-danger" onclick="showNotification('Logged out successfully','success')"><i class="bx bx-log-out"></i> Confirm Logout</button>`);
+  html += `<div class="data-card"><div class="card-body"><p>Click the button above to securely logout from the Placement Officers portal. Make sure to save any unsaved work before logging out.</p></div></div>`;
+  return html;
+}
+
 // ============ RENDERERS ============
 var RENDERERS = window.RENDERERS = {
   'dashboard': renderDashboard,
@@ -782,7 +1207,39 @@ var RENDERERS = window.RENDERERS = {
   'riya-ias': renderExternal,
   'riya-neet': renderExternal,
   'roriri-foundation': renderExternal,
-  'rithish-farms': renderExternal
+  'rithish-farms': renderExternal,
+  'mou-details': renderMouDetails,
+  'college-profile': renderCollegeProfile,
+  'mou-documents': renderMouDocuments,
+  'validity-renewal': renderValidityRenewal,
+  'training-programs': renderTrainingPrograms,
+  'internships': renderInternships,
+  'placements': renderPlacements,
+  'events-activities': renderEventsActivities,
+  'announcements': renderAnnouncements,
+  'communication': renderCommunication,
+  'placement-dashboard': renderPlacementDashboard,
+  'placement-students-all': renderPlacementStudentsAll,
+  'placement-students-eligible': renderPlacementStudentsEligible,
+  'placement-students-placed': renderPlacementStudentsPlaced,
+  'placement-companies-partner': renderPlacementCompaniesPartner,
+  'placement-companies-new': renderPlacementCompaniesNew,
+  'placement-companies-requests': renderPlacementCompaniesRequests,
+  'placement-jobs': renderPlacementJobs,
+  'placement-internships': renderPlacementInternships,
+  'placement-saved-jobs': renderPlacementSavedJobs,
+  'placement-drives': renderPlacementDrives,
+  'placement-applications': renderPlacementApplications,
+  'placement-interviews': renderPlacementInterviews,
+  'placement-offers': renderPlacementOffers,
+  'placement-resumes': renderPlacementResumes,
+  'placement-company-messages': renderPlacementCompanyMessages,
+  'placement-student-messages': renderPlacementStudentMessages,
+  'placement-reports': renderPlacementReports,
+  'placement-notifications': renderPlacementNotifications,
+  'placement-institution': renderPlacementInstitution,
+  'placement-settings': renderPlacementSettings,
+  'placement-logout': renderPlacementLogout
 };
 
 window.RENDERERS = RENDERERS;
@@ -1644,7 +2101,14 @@ function doDelete(listKey, id, msg) {
 
 // ---------- TOGGLES ----------
 function toggleSubmenu(li) {
-  document.querySelectorAll('.sidebar-nav > li').forEach(sib => { if (sib !== li) sib.classList.remove('open'); });
+  const parent = li.parentElement;
+  if (parent) {
+    Array.from(parent.children).forEach(child => {
+      if (child !== li && child.tagName === 'LI') {
+        child.classList.remove('open');
+      }
+    });
+  }
   li.classList.toggle('open');
 }
 function toggleSidebar() { document.querySelector('.sidebar').classList.toggle('collapsed'); }
