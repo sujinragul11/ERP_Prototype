@@ -376,20 +376,7 @@ const SIDEBAR = [
     { id:'id-cards', icon:'bx bx-card', label:'ID Card' },
     { id:'mou', icon:'bx bx-file-blank', label:'MOU' },
     { id:'documents', icon:'bx bx-folder', label:'Documents' },
-    { id:'enquiries', icon:'bx bx-message-square-detail', label:'Enquiry' },
-    { id:'it-companies', icon:'bx bx-buildings', label:'IT Companies' },
-    { id:'consultancies', icon:'bx bxs-institution', label:'Consultancies' }
-  ]},
-  { type:'sub', icon:'lni lni-star-half', label:'Riya Consultancy', children:[
-    { id:'rc-dashboard', icon:'bx bx-home-alt', label:'Dashboard' },
-    { id:'rc-candidates', icon:'bx bx-user', label:'Candidates' },
-    { id:'rc-assessments', icon:'bx bx-check-shield', label:'Assessments' },
-    { id:'rc-attendance', icon:'bx bx-calendar-check', label:'Attendance' },
-    { id:'rc-placement', icon:'bx bx-target-lock', label:'Placement Readiness' },
-    { id:'rc-messages', icon:'bx bx-chat', label:'Communication' },
-    { id:'rc-announcements', icon:'bx bx-broadcast', label:'Announcements' },
-    { id:'rc-documents', icon:'bx bx-folder', label:'Documents' },
-    { id:'rc-reports', icon:'bx bx-file', label:'Reports' }
+    { id:'enquiries', icon:'bx bx-message-square-detail', label:'Enquiry' }
   ]},
   { type:'sub', icon:'bx bx-user-pin', label:'Freelancer', children:[
     { id:'freelancer-dashboard', icon:'bx bx-grid-alt', label:'Dashboard' },
@@ -408,6 +395,31 @@ const SIDEBAR = [
     { id:'freelancer-daily-reports', icon:'bx bx-file', label:'Daily Reports' },
     { id:'freelancer-payments', icon:'bx bx-wallet', label:'Earnings & Payments' },
     { id:'freelancer-notifications', icon:'bx bx-bell', label:'Notifications' }
+  ]},
+  { type:'sub', icon:'bx bxl-instagram-alt', label:'Influencer', children:[
+    { id:'influencer-dashboard', icon:'bx bx-grid-alt', label:'Dashboard' },
+    { id:'influencer-list', icon:'bx bx-user-check', label:'Influencers' },
+    { id:'influencer-verification', icon:'bx bx-shield-quarter', label:'Verification Queue' },
+    { id:'influencer-campaigns', icon:'bx bx-bullseye', label:'Campaigns' },
+    { id:'influencer-campaign-create', icon:'bx bx-plus-circle', label:'Create Campaign' },
+    { id:'influencer-applications', icon:'bx bx-paper-plane', label:'Applications' },
+    { id:'influencer-assignments', icon:'bx bx-briefcase', label:'Assignments' },
+    { id:'influencer-deliverables', icon:'bx bx-package', label:'Deliverables' },
+    { id:'influencer-content', icon:'bx bx-movie-play', label:'Content Review' },
+    { id:'influencer-leads', icon:'bx bx-user-pin', label:'Leads & Sales' },
+    { id:'influencer-conversions', icon:'bx bx-cart', label:'Conversions' },
+    { id:'influencer-performance', icon:'bx bx-line-chart', label:'Performance Analytics' },
+    { id:'influencer-earnings', icon:'bx bx-wallet', label:'Earnings' },
+    { id:'influencer-invoices', icon:'bx bx-receipt', label:'Invoices' },
+    { id:'influencer-payouts', icon:'bx bx-credit-card', label:'Payouts' },
+    { id:'influencer-rewards', icon:'bx bx-trophy', label:'Points & Rewards' },
+    { id:'influencer-marketing', icon:'bx bx-folder', label:'Brand Assets & Resources' },
+    { id:'influencer-messages', icon:'bx bx-message-square-dots', label:'Communication' },
+    { id:'influencer-calendar', icon:'bx bx-calendar', label:'Calendar' },
+    { id:'influencer-tasks', icon:'bx bx-check-square', label:'Tasks' },
+    { id:'influencer-support', icon:'bx bx-support', label:'Support Tickets' },
+    { id:'influencer-audit-logs', icon:'bx bx-history', label:'Audit Logs' },
+    { id:'influencer-settings', icon:'bx bx-cog', label:'Settings' }
   ]},
   { type:'sub', icon:'lni lni-code-alt', label:'NexGen IT Academy', children:[
     { id:'academy-trainees', icon:'bx bx-graduation', label:'Trainee' },
@@ -460,6 +472,8 @@ const SIDEBAR = [
   { type:'item', id:'web-tracking', icon:'bx bx-rocket', label:'Web Tracking' }
 ];
 
+window.SIDEBAR = SIDEBAR;
+
 // ============ NAVIGATION ============
 let currentPage = 'dashboard';
 let currentUser = null;
@@ -491,20 +505,8 @@ function handleFreelancerParentClick(li) {
 }
 
 function navigate(page, params) {
-  if (page === 'it-companies') {
-    sessionStorage.setItem('roriri_logged_in', 'true');
-    window.location.href = 'it-companies.html';
-    return;
-  }
-  if (page === 'consultancies') {
-    sessionStorage.setItem('roriri_logged_in', 'true');
-    window.location.href = 'consultancies.html';
-    return;
-  }
-  if (page === 'riya-consultancy') {
-    page = 'rc-dashboard';
-  }
   currentPage = page;
+  window.currentPage = page;
   window._params = params || {};
   document.querySelectorAll('.page-view,.page-content-render').forEach(v => v.remove());
   document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
@@ -515,6 +517,9 @@ function navigate(page, params) {
     if (parentLi) parentLi.classList.add('open');
   } else if (page.startsWith('freelancer-')) {
     const parentLi = document.getElementById('nav-freelancer');
+    if (parentLi) parentLi.classList.add('open');
+  } else if (page.startsWith('influencer-')) {
+    const parentLi = document.getElementById('nav-influencer');
     if (parentLi) parentLi.classList.add('open');
   }
   document.querySelector('.sidebar')?.classList.remove('mobile-open');
@@ -656,7 +661,7 @@ function syncPortalsToStorage() {
 }
 
 // ============ RENDERERS ============
-var RENDERERS = window.RENDERERS = {
+const RENDERERS = {
   'dashboard': renderDashboard,
   'org-directory': renderOrgDirectory,
   'employees': renderEmployees,
@@ -674,24 +679,6 @@ var RENDERERS = window.RENDERERS = {
   'mou': renderMou,
   'documents': renderDocuments,
   'enquiries': renderEnquiries,
-  'it-companies': function() { return typeof renderITCompaniesModule === 'function' ? renderITCompaniesModule() : buildPlaceholderPage('it-companies'); },
-  'consultancies': function() { return typeof renderConsultanciesModule === 'function' ? renderConsultanciesModule() : buildPlaceholderPage('consultancies'); },
-  'riya-consultancy': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('dashboard') : (typeof renderRiyaConsultancyModule === 'function' ? renderRiyaConsultancyModule() : buildPlaceholderPage('riya-consultancy')); },
-  'rc-dashboard': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('dashboard') : buildPlaceholderPage('rc-dashboard'); },
-  'rc-candidates': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('candidates') : buildPlaceholderPage('rc-candidates'); },
-  'rc-add-candidate': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('add-candidate') : buildPlaceholderPage('rc-add-candidate'); },
-  'rc-payments': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('candidate-payments') : buildPlaceholderPage('rc-payments'); },
-  'rc-pending-payments': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('pending-payments') : buildPlaceholderPage('rc-pending-payments'); },
-  'rc-revenue': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('revenue-overview') : buildPlaceholderPage('rc-revenue'); },
-  'rc-skills': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('skills') : buildPlaceholderPage('rc-skills'); },
-  'rc-assessments': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('assessments') : buildPlaceholderPage('rc-assessments'); },
-  'rc-attendance': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('attendance') : buildPlaceholderPage('rc-attendance'); },
-  'rc-placement': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('placement-readiness') : buildPlaceholderPage('rc-placement'); },
-  'rc-messages': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('candidate-messages') : buildPlaceholderPage('rc-messages'); },
-  'rc-announcements': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('announcements') : buildPlaceholderPage('rc-announcements'); },
-  'rc-documents': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('documents') : buildPlaceholderPage('rc-documents'); },
-  'rc-reports': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('reports') : buildPlaceholderPage('rc-reports'); },
-  'rc-candidate-profile': function() { return typeof rcRenderPageWithHeader === 'function' ? rcRenderPageWithHeader('candidate-profile', window._params) : buildPlaceholderPage('rc-candidate-profile'); },
   'employee-clients': renderEmployeeClients,
   'academy-trainees': renderAcademyTrainees,
   'trainee-detail': renderTraineeDetail,
@@ -748,9 +735,12 @@ var RENDERERS = window.RENDERERS = {
   'nexemy': renderExternal,
   'riya-ias': renderExternal,
   'riya-neet': renderExternal,
+  'riya-consultancy': renderExternal,
   'roriri-foundation': renderExternal,
   'rithish-farms': renderExternal
 };
+
+window.RENDERERS = RENDERERS;
 
 function buildPlaceholderPage(page) {
   return `<div class="page-header"><h4>${page.replace(/-/g,' ').replace(/\b\w/g,l=>l.toUpperCase())}</h4><div class="font-13 text-secondary">This module is not available in the prototype.</div></div><div class="empty-state"><i class="bx bx-lock"></i><p>Module coming soon</p></div>`;
@@ -3207,74 +3197,3 @@ function deleteWorkspace(id) {
     }
   }
 }
-
-// ============ IT COMPANIES PORTAL INTEGRATION ============
-function renderITCompaniesModule() {
-  return `
-    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:1rem;">
-      <div>
-        <h4 style="font-size:20px;font-weight:700;color:var(--text-dark);margin:0;display:flex;align-items:center;gap:8px;">
-          <i class="bx bx-buildings" style="color:var(--primary);"></i> IT Companies Portal
-        </h4>
-        <p class="text-secondary" style="font-size:13px;color:#858796;margin:3px 0 0 0;">
-          Roriri Software Solutions &bull; Corporate Partner Registry, Job Opportunities &amp; Student Placements
-        </p>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <a href="it-companies.html" target="_blank" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:13px;font-weight:600;background:var(--primary);color:#fff;border-radius:6px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-          <i class="bx bx-window-open"></i> Launch Standalone Portal
-        </a>
-      </div>
-    </div>
-    <div class="card" style="border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);border:1px solid #e3e6f0;background:#fff;margin-bottom:1.5rem;">
-      <div style="background:#0e2238;color:#fff;padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.1);">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:28px;height:28px;border-radius:6px;background:#4e73df;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">R</div>
-          <span style="font-size:13px;font-weight:600;letter-spacing:0.5px;">RORIRI SOFTWARE SOLUTIONS &rarr; IT COMPANIES</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <a href="it-companies.html" class="btn btn-sm" style="background:rgba(255,255,255,0.12);color:#fff;font-size:11.5px;padding:4px 10px;border-radius:4px;text-decoration:none;">
-            Full Screen <i class="bx bx-fullscreen"></i>
-          </a>
-        </div>
-      </div>
-      <iframe src="it-companies.html" style="width:100%;height:920px;border:none;background:#f8f9fc;" title="IT Companies Portal"></iframe>
-    </div>
-  `;
-}
-
-// ============ CONSULTANCIES PORTAL INTEGRATION ============
-function renderConsultanciesModule() {
-  return `
-    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:1rem;">
-      <div>
-        <h4 style="font-size:20px;font-weight:700;color:var(--text-dark);margin:0;display:flex;align-items:center;gap:8px;">
-          <i class="bx bxs-institution" style="color:var(--primary);"></i> Consultancies Portal
-        </h4>
-        <p class="text-secondary" style="font-size:13px;color:#858796;margin:3px 0 0 0;">
-          Roriri Software Solutions &bull; Tied-up Consultancies, Student Profiles &amp; Placement Readiness
-        </p>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <a href="consultancies.html" target="_blank" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:13px;font-weight:600;background:var(--primary);color:#fff;border-radius:6px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-          <i class="bx bx-window-open"></i> Launch Standalone Portal
-        </a>
-      </div>
-    </div>
-    <div class="card" style="border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);border:1px solid #e3e6f0;background:#fff;margin-bottom:1.5rem;">
-      <div style="background:#0e2238;color:#fff;padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.1);">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:28px;height:28px;border-radius:6px;background:#4e73df;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">R</div>
-          <span style="font-size:13px;font-weight:600;letter-spacing:0.5px;">RORIRI SOFTWARE SOLUTIONS &rarr; CONSULTANCIES</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <a href="consultancies.html" class="btn btn-sm" style="background:rgba(255,255,255,0.12);color:#fff;font-size:11.5px;padding:4px 10px;border-radius:4px;text-decoration:none;">
-            Full Screen <i class="bx bx-fullscreen"></i>
-          </a>
-        </div>
-      </div>
-      <iframe src="consultancies.html" style="width:100%;height:920px;border:none;background:#f8f9fc;" title="Consultancies Portal"></iframe>
-    </div>
-  `;
-}
-
