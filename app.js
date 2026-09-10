@@ -548,6 +548,9 @@ function navigate(page, params) {
     if (parentLi) parentLi.classList.add('open');
   }
   document.querySelector('.sidebar')?.classList.remove('mobile-open');
+  const sbBackdrop = document.getElementById('sidebar-backdrop');
+  if (sbBackdrop) sbBackdrop.classList.remove('show');
+  document.body.style.overflow = '';
   window.scrollTo(0,0);
   const container = document.getElementById('page-content');
   if (!container) return;
@@ -1645,7 +1648,21 @@ function toggleSubmenu(li) {
   li.classList.toggle('open');
 }
 function toggleSidebar() { document.querySelector('.sidebar').classList.toggle('collapsed'); }
-function toggleMobileSidebar() { document.querySelector('.sidebar').classList.toggle('mobile-open'); }
+function toggleMobileSidebar() {
+  const sb = document.querySelector('.sidebar');
+  const bd = document.getElementById('sidebar-backdrop');
+  const open = sb.classList.toggle('mobile-open');
+  if (bd) bd.classList.toggle('show', open);
+  if (open) document.body.style.overflow = 'hidden';
+  else document.body.style.overflow = '';
+}
+function closeMobileSidebar() {
+  const sb = document.querySelector('.sidebar');
+  const bd = document.getElementById('sidebar-backdrop');
+  if (sb) sb.classList.remove('mobile-open');
+  if (bd) bd.classList.remove('show');
+  document.body.style.overflow = '';
+}
 function toggleDropdown(id) { const el = document.getElementById(id); if (el) el.classList.toggle('show'); }
 function togglePasswordVisibility() {
   const inp = document.getElementById('login-password');
