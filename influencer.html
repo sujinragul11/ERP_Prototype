@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Influencer User Portal - RORIRI ERP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lineicons@4.2.0/assets/lineicons/css/lineicons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="influencer-portal.css">
+</head>
+<body class="inf-body">
+
+  <!-- ==========================================================================
+       1. AUTHENTICATION / LOGIN SCREEN (Split Screen)
+       ========================================================================== -->
+  <div id="inf-auth-screen" class="inf-auth-screen">
+    <!-- Left Hero Banner -->
+    <div class="inf-auth-banner">
+      <div class="inf-banner-content">
+        <div class="inf-banner-pill">
+          <i class="bx bx-badge-check" style="font-size:16px;color:#34d399;"></i>
+          <span>RORIRI SOFTWARE SOLUTIONS ERP</span>
+        </div>
+        <h1 class="inf-banner-title">Creator & Influencer Workspace</h1>
+        <p class="inf-banner-desc">
+          The unified user portal for certified creators to manage campaign deliverables, track leads & conversions, review multi-version content feedback, and request instant ACH payouts.
+        </p>
+        <ul class="inf-banner-features">
+          <li><i class="bx bx-check-circle"></i> Granular deliverable tracking & versioned review workflows</li>
+          <li><i class="bx bx-check-circle"></i> Attributed leads CRM & transparent affiliate conversion telemetry</li>
+          <li><i class="bx bx-check-circle"></i> Separate accounting ledger: Approved revenue vs Disbursable balance</li>
+          <li><i class="bx bx-check-circle"></i> Integrated media kit, achievement badges, and creator leaderboard</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right Login Area -->
+    <div class="inf-auth-form-wrap">
+      <div class="inf-auth-card">
+        <div class="inf-auth-brand">
+          <div class="inf-auth-logo-row">
+            <div class="inf-logo-sq">R</div>
+            <div>
+              <h2 class="inf-brand-name">RORIRI</h2>
+              <div class="inf-brand-tagline">Software Solutions ERP</div>
+            </div>
+          </div>
+          <span class="inf-portal-chip"><i class="bx bx-user-pin"></i> Influencer User Portal (Creator Side)</span>
+        </div>
+
+        <!-- Quick 1-Click Login Simulator for Reviewers -->
+        <div class="inf-quick-users">
+          <div class="inf-quick-users-label">
+            <span>Demo Quick-Login Profiles</span>
+            <span style="font-size:10px;color:var(--inf-primary);font-weight:700;">1-CLICK SWITCH</span>
+          </div>
+          <div class="inf-user-pills">
+            <button type="button" class="inf-user-pill-btn" onclick="doQuickLogin('INF-8842')">
+              <div>
+                <div class="name">Alex Rivera</div>
+                <div style="font-size:11px;color:#64748b;">Tech & Lifestyle &bull; @alexrivera_tech</div>
+              </div>
+              <span class="badge-pill inf-badge-success">Active (Tier 3)</span>
+            </button>
+            <button type="button" class="inf-user-pill-btn" onclick="doQuickLogin('INF-9104')">
+              <div>
+                <div class="name">Priya Sundaram</div>
+                <div style="font-size:11px;color:#64748b;">Fashion & Design &bull; @priyastyle_official</div>
+              </div>
+              <span class="badge-pill inf-badge-primary">Active (Tier 2)</span>
+            </button>
+            <button type="button" class="inf-user-pill-btn" onclick="doQuickLogin('INF-7721')">
+              <div>
+                <div class="name">Marcus Vance</div>
+                <div style="font-size:11px;color:#64748b;">Fitness & Health &bull; @marcus_vance_fit</div>
+              </div>
+              <span class="badge-pill inf-badge-danger">Suspended Demo</span>
+            </button>
+          </div>
+        </div>
+
+        <form onsubmit="event.preventDefault(); doQuickLogin('INF-8842');">
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:12.5px;font-weight:600;color:#334155;display:block;margin-bottom:5px;">Creator Email or Handle</label>
+            <input type="text" class="inf-search-input" value="alex.rivera@creatornetwork.io" required>
+          </div>
+          <div style="margin-bottom:1.25rem;">
+            <label style="font-size:12.5px;font-weight:600;color:#334155;display:block;margin-bottom:5px;">Password</label>
+            <input type="password" class="inf-search-input" value="••••••••••••" required>
+          </div>
+          <button type="submit" class="inf-btn inf-btn-primary" style="width:100%;padding:10px;font-size:14px;">
+            <i class="bx bx-log-in"></i> Sign In to Influencer Portal
+          </button>
+        </form>
+
+        <p style="text-align:center;margin-top:1.5rem;font-size:12px;color:#94a3b8;">
+          Return to <a href="index.html" style="color:var(--inf-primary);text-decoration:none;font-weight:600;">Main ERP Index</a> &bull;
+          <a href="freelancer.html" style="color:var(--inf-primary);text-decoration:none;">Freelancer Portal</a> &bull;
+          <a href="client.html" style="color:var(--inf-primary);text-decoration:none;">Client Portal</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       2. MASTER APP LAYOUT (Sidebar + Main Content)
+       ========================================================================== -->
+  <div id="inf-app-layout" class="inf-app-layout" style="display:none;">
+
+    <!-- SIDEBAR -->
+    <aside id="inf-sidebar" class="inf-sidebar">
+      <div class="inf-sidebar-header">
+        <a href="javascript:void(0)" onclick="navigateInf('dashboard')" class="inf-sidebar-brand">
+          <div class="icon">R</div>
+          <div class="text-group">
+            <span class="title">RORIRI ERP</span>
+            <span class="subtitle">Influencer Portal</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="inf-sidebar-nav">
+        <!-- Dashboard -->
+        <div class="inf-nav-section-title">Dashboard</div>
+        <a class="inf-nav-link active" data-route="dashboard" onclick="navigateInf('dashboard')">
+          <span class="inf-nav-link-left"><i class="bx bx-grid-alt"></i> Overview</span>
+        </a>
+
+        <!-- My Profile -->
+        <div class="inf-nav-section-title">My Profile</div>
+        <a class="inf-nav-link" data-route="profile" onclick="navigateInf('profile')">
+          <span class="inf-nav-link-left"><i class="bx bx-user"></i> My Profile</span>
+        </a>
+        <a class="inf-nav-link" data-route="social-accounts" onclick="navigateInf('social-accounts')">
+          <span class="inf-nav-link-left"><i class="bx bx-share-alt"></i> Social Accounts</span>
+        </a>
+        <a class="inf-nav-link" data-route="media-kit" onclick="navigateInf('media-kit')">
+          <span class="inf-nav-link-left"><i class="bx bx-id-card"></i> Media Kit</span>
+        </a>
+        <a class="inf-nav-link" data-route="portfolio" onclick="navigateInf('portfolio')">
+          <span class="inf-nav-link-left"><i class="bx bx-collection"></i> Portfolio</span>
+        </a>
+        <a class="inf-nav-link" data-route="verification" onclick="navigateInf('verification')">
+          <span class="inf-nav-link-left"><i class="bx bx-shield-quarter"></i> Verification</span>
+        </a>
+        <a class="inf-nav-link" data-route="documents" onclick="navigateInf('documents')">
+          <span class="inf-nav-link-left"><i class="bx bx-folder"></i> Documents</span>
+        </a>
+
+        <!-- Campaigns -->
+        <div class="inf-nav-section-title">Campaigns</div>
+        <a class="inf-nav-link" data-route="available-campaigns" onclick="navigateInf('available-campaigns')">
+          <span class="inf-nav-link-left"><i class="bx bx-compass"></i> Available Campaigns</span>
+          <span class="inf-nav-badge inf-badge-info">6 New</span>
+        </a>
+        <a class="inf-nav-link" data-route="my-campaigns" onclick="navigateInf('my-campaigns')">
+          <span class="inf-nav-link-left"><i class="bx bx-briefcase-alt-2"></i> My Campaigns</span>
+          <span class="inf-nav-badge inf-badge-success">4 Active</span>
+        </a>
+        <a class="inf-nav-link" data-route="applications" onclick="navigateInf('applications')">
+          <span class="inf-nav-link-left"><i class="bx bx-paper-plane"></i> Applications</span>
+        </a>
+        <a class="inf-nav-link" data-route="deliverables" onclick="navigateInf('deliverables')">
+          <span class="inf-nav-link-left"><i class="bx bx-list-check"></i> Deliverables</span>
+          <span class="inf-nav-badge inf-badge-danger">1 Overdue</span>
+        </a>
+        <a class="inf-nav-link" data-route="contracts" onclick="navigateInf('contracts')">
+          <span class="inf-nav-link-left"><i class="bx bx-file"></i> Contracts & Terms</span>
+        </a>
+        <a class="inf-nav-link" data-route="campaign-history" onclick="navigateInf('campaign-history')">
+          <span class="inf-nav-link-left"><i class="bx bx-history"></i> Campaign History</span>
+        </a>
+
+        <!-- Content & Performance -->
+        <div class="inf-nav-section-title">Content & Performance</div>
+        <a class="inf-nav-link" data-route="content-library" onclick="navigateInf('content-library')">
+          <span class="inf-nav-link-left"><i class="bx bx-video-recording"></i> My Content</span>
+        </a>
+        <a class="inf-nav-link" data-route="content-calendar" onclick="navigateInf('content-calendar')">
+          <span class="inf-nav-link-left"><i class="bx bx-calendar-event"></i> Content Calendar</span>
+        </a>
+        <a class="inf-nav-link" data-route="performance" onclick="navigateInf('performance')">
+          <span class="inf-nav-link-left"><i class="bx bx-line-chart"></i> Performance</span>
+        </a>
+        <a class="inf-nav-link" data-route="analytics" onclick="navigateInf('analytics')">
+          <span class="inf-nav-link-left"><i class="bx bx-bar-chart-alt-2"></i> Analytics</span>
+        </a>
+
+        <!-- Leads & Sales -->
+        <div class="inf-nav-section-title">Leads & Sales</div>
+        <a class="inf-nav-link" data-route="leads" onclick="navigateInf('leads')">
+          <span class="inf-nav-link-left"><i class="bx bx-user-voice"></i> My Leads</span>
+          <span class="inf-nav-badge inf-badge-primary">12</span>
+        </a>
+        <a class="inf-nav-link" data-route="conversions" onclick="navigateInf('conversions')">
+          <span class="inf-nav-link-left"><i class="bx bx-check-shield"></i> My Conversions</span>
+        </a>
+        <a class="inf-nav-link" data-route="referrals" onclick="navigateInf('referrals')">
+          <span class="inf-nav-link-left"><i class="bx bx-link"></i> Referrals & Links</span>
+        </a>
+
+        <!-- Finance -->
+        <div class="inf-nav-section-title">Finance & Payouts</div>
+        <a class="inf-nav-link" data-route="earnings" onclick="navigateInf('earnings')">
+          <span class="inf-nav-link-left"><i class="bx bx-dollar-circle"></i> Earnings Summary</span>
+        </a>
+        <a class="inf-nav-link" data-route="payouts" onclick="navigateInf('payouts')">
+          <span class="inf-nav-link-left"><i class="bx bx-wallet"></i> Payouts</span>
+          <span class="inf-nav-badge inf-badge-success">$3,200</span>
+        </a>
+        <a class="inf-nav-link" data-route="invoices" onclick="navigateInf('invoices')">
+          <span class="inf-nav-link-left"><i class="bx bx-receipt"></i> Invoices</span>
+        </a>
+
+        <!-- Engagement -->
+        <div class="inf-nav-section-title">Engagement & Rewards</div>
+        <a class="inf-nav-link" data-route="points" onclick="navigateInf('points')">
+          <span class="inf-nav-link-left"><i class="bx bx-coin-stack"></i> My Points</span>
+          <span class="inf-nav-badge inf-badge-purple">3,850 pts</span>
+        </a>
+        <a class="inf-nav-link" data-route="rewards" onclick="navigateInf('rewards')">
+          <span class="inf-nav-link-left"><i class="bx bx-gift"></i> Rewards Catalog</span>
+        </a>
+        <a class="inf-nav-link" data-route="badges" onclick="navigateInf('badges')">
+          <span class="inf-nav-link-left"><i class="bx bx-award"></i> Badges</span>
+        </a>
+        <a class="inf-nav-link" data-route="leaderboard" onclick="navigateInf('leaderboard')">
+          <span class="inf-nav-link-left"><i class="bx bx-crown"></i> Leaderboard</span>
+        </a>
+
+        <!-- Marketing -->
+        <div class="inf-nav-section-title">Marketing & Assets</div>
+        <a class="inf-nav-link" data-route="promotions" onclick="navigateInf('promotions')">
+          <span class="inf-nav-link-left"><i class="bx bx-purchase-tag"></i> Promotions</span>
+        </a>
+        <a class="inf-nav-link" data-route="resources" onclick="navigateInf('resources')">
+          <span class="inf-nav-link-left"><i class="bx bx-book-open"></i> Resources</span>
+        </a>
+        <a class="inf-nav-link" data-route="brand-assets" onclick="navigateInf('brand-assets')">
+          <span class="inf-nav-link-left"><i class="bx bx-images"></i> Brand Assets</span>
+        </a>
+
+        <!-- Communication -->
+        <div class="inf-nav-section-title">Communication</div>
+        <a class="inf-nav-link" data-route="messages" onclick="navigateInf('messages')">
+          <span class="inf-nav-link-left"><i class="bx bx-message-square-dots"></i> Messages</span>
+          <span class="inf-nav-badge inf-badge-primary">1</span>
+        </a>
+        <a class="inf-nav-link" data-route="notifications" onclick="navigateInf('notifications')">
+          <span class="inf-nav-link-left"><i class="bx bx-bell"></i> Notifications</span>
+          <span class="inf-nav-badge inf-badge-danger">3</span>
+        </a>
+
+        <!-- Productivity -->
+        <div class="inf-nav-section-title">Productivity</div>
+        <a class="inf-nav-link" data-route="calendar" onclick="navigateInf('calendar')">
+          <span class="inf-nav-link-left"><i class="bx bx-calendar"></i> Master Calendar</span>
+        </a>
+        <a class="inf-nav-link" data-route="tasks" onclick="navigateInf('tasks')">
+          <span class="inf-nav-link-left"><i class="bx bx-task"></i> My Tasks</span>
+          <span class="inf-nav-badge inf-badge-warning">6</span>
+        </a>
+
+        <!-- Support -->
+        <div class="inf-nav-section-title">Support</div>
+        <a class="inf-nav-link" data-route="help-center" onclick="navigateInf('help-center')">
+          <span class="inf-nav-link-left"><i class="bx bx-help-circle"></i> Help Center & FAQs</span>
+        </a>
+        <a class="inf-nav-link" data-route="support-tickets" onclick="navigateInf('support-tickets')">
+          <span class="inf-nav-link-left"><i class="bx bx-support"></i> Support Tickets</span>
+        </a>
+
+        <!-- Account -->
+        <div class="inf-nav-section-title">Account</div>
+        <a class="inf-nav-link" data-route="settings" onclick="navigateInf('settings')">
+          <span class="inf-nav-link-left"><i class="bx bx-cog"></i> Settings & Security</span>
+        </a>
+        <a class="inf-nav-link" onclick="doInfLogout()">
+          <span class="inf-nav-link-left"><i class="bx bx-log-out"></i> Sign Out</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <div class="inf-main-wrap">
+      <!-- TOPBAR -->
+      <header class="inf-topbar">
+        <div class="inf-topbar-left">
+          <button class="inf-topbar-btn" onclick="toggleInfSidebar()"><i class="bx bx-menu"></i></button>
+          <div class="inf-topbar-breadcrumb">
+            <span>Roriri ERP</span> &bull; <span>Influencer Portal</span> &bull; <strong id="inf-breadcrumb-current">Dashboard</strong>
+          </div>
+        </div>
+        <div class="inf-topbar-right">
+          <button class="inf-topbar-btn" onclick="navigateInf('available-campaigns')" title="Browse Campaigns"><i class="bx bx-search"></i></button>
+          <button class="inf-topbar-btn" onclick="navigateInf('notifications')" title="Notifications">
+            <i class="bx bx-bell"></i>
+            <span class="dot-count">3</span>
+          </button>
+          <button class="inf-topbar-btn" onclick="navigateInf('messages')" title="Messages">
+            <i class="bx bx-message-dots"></i>
+            <span class="dot-count">1</span>
+          </button>
+
+          <!-- User Menu Dropdown Button -->
+          <div class="inf-user-menu-btn" onclick="navigateInf('profile')">
+            <div id="inf-topbar-avatar" class="inf-user-menu-avatar">A</div>
+            <div class="inf-user-menu-text">
+              <span id="inf-topbar-name" class="inf-user-menu-name">Alex Rivera</span>
+              <span id="inf-topbar-role" class="inf-user-menu-role">Tier 3 Elite Creator</span>
+            </div>
+            <i class="bx bx-chevron-down" style="font-size:16px;color:#94a3b8;"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT INJECTION AREA -->
+      <main id="inf-page-body" class="inf-page-body">
+        <!-- Rendered by influencer-portal-app.js -->
+      </main>
+
+      <!-- FOOTER -->
+      <footer style="padding:1.25rem 1.75rem;border-top:1px solid var(--inf-border);background:#ffffff;font-size:12px;color:var(--inf-text-muted);display:flex;justify-content:space-between;align-items:center;">
+        <div>Copyright &copy; 2026 RORIRI Software Solutions ERP. All rights reserved. &bull; Influencer User Portal v3.2.0</div>
+        <div>
+          <a href="index.html" style="color:var(--inf-primary);text-decoration:none;margin-right:10px;">ERP Main Admin</a>
+          <a href="freelancer.html" style="color:var(--inf-primary);text-decoration:none;">Freelancer Portal</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       3. MODAL CONTAINER
+       ========================================================================== -->
+  <div id="inf-modal-backdrop" class="inf-modal-backdrop">
+    <div id="inf-modal-box" class="inf-modal-box">
+      <div class="inf-modal-header">
+        <h3 id="inf-modal-title" class="inf-modal-title">Modal Title</h3>
+        <button class="inf-modal-close-btn" onclick="closeInfModal()">&times;</button>
+      </div>
+      <div id="inf-modal-body" class="inf-modal-body"></div>
+      <div id="inf-modal-footer" class="inf-modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       4. TOAST NOTIFICATIONS CONTAINER
+       ========================================================================== -->
+  <div id="inf-toast-container" class="inf-toast-container"></div>
+
+  <!-- ==========================================================================
+       5. PROTOTYPE DEMO STATE CONTROLS BAR
+       ========================================================================== -->
+  <button type="button" class="inf-demo-toggle-btn" onclick="toggleDemoPanel()">
+    <i class="bx bx-slider-alt"></i> Demo Controls
+  </button>
+
+  <div id="inf-demo-panel" class="inf-demo-panel">
+    <div class="inf-demo-panel-header">
+      <span><i class="bx bx-cog"></i> Prototype State Simulator</span>
+      <button onclick="toggleDemoPanel()" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer;">&times;</button>
+    </div>
+    <div class="inf-demo-panel-body">
+      <div>
+        <label style="font-weight:600;display:block;margin-bottom:4px;">Account Status (Rule #54):</label>
+        <div style="display:flex;gap:6px;">
+          <button class="inf-btn inf-btn-outline inf-btn-sm" style="flex:1;" onclick="demoSwitchAccountStatus('Active')">Active</button>
+          <button class="inf-btn inf-btn-danger inf-btn-sm" style="flex:1;" onclick="demoSwitchAccountStatus('Suspended')">Suspended</button>
+        </div>
+      </div>
+      <div>
+        <label style="font-weight:600;display:block;margin-bottom:4px;">Application Flow Simulation:</label>
+        <button class="inf-btn inf-btn-outline inf-btn-sm" style="width:100%;" onclick="demoFastForwardApplication()">
+          <i class="bx bx-fast-forward"></i> Under Review &rarr; Approved
+        </button>
+      </div>
+      <div>
+        <label style="font-weight:600;display:block;margin-bottom:4px;">Content Review Flow Simulation:</label>
+        <button class="inf-btn inf-btn-outline inf-btn-sm" style="width:100%;" onclick="demoAdvanceContentReview()">
+          <i class="bx bx-check-double"></i> Submitted &rarr; Approved
+        </button>
+      </div>
+      <div>
+        <label style="font-weight:600;display:block;margin-bottom:4px;">Finance Payout Realization:</label>
+        <button class="inf-btn inf-btn-outline inf-btn-sm" style="width:100%;" onclick="demoFastForwardPayout()">
+          <i class="bx bx-money"></i> Processing &rarr; Paid Out
+        </button>
+      </div>
+      <div style="font-size:10.5px;color:var(--inf-text-muted);border-top:1px solid #e2e8f0;padding-top:6px;">
+        Pure frontend prototype &bull; Zero backend or SQL &bull; State stored in memory
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTAL SCRIPTS -->
+  <script src="influencer-portal-data.js"></script>
+  <script src="influencer-portal-app.js"></script>
+</body>
+</html>
