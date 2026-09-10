@@ -533,6 +533,7 @@ function navigate(page, params) {
   currentPage = page;
   window.currentPage = page;
   window._params = params || {};
+  sessionStorage.setItem('roriri_currentPage', page);
   document.querySelectorAll('.page-view,.page-content-render').forEach(v => v.remove());
   document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
   const link = document.querySelector(`.sidebar-nav a[data-page="${page}"]`);
@@ -1696,6 +1697,8 @@ function doLogin(e) {
   let user = MOCK.admin.find(a => a.username === u && a.password === p);
   if (!user && MOCK.admin.length) user = MOCK.admin[0];
   currentUser = user;
+  sessionStorage.setItem('roriri_loggedIn', 'true');
+  sessionStorage.setItem('roriri_user', JSON.stringify(user));
   window._params = {};
   document.getElementById('login-page').style.display = 'none';
   document.getElementById('app-page').style.display = 'flex';
@@ -1708,6 +1711,9 @@ function doLogin(e) {
 }
 function doLogout() {
   currentUser = null;
+  sessionStorage.removeItem('roriri_loggedIn');
+  sessionStorage.removeItem('roriri_user');
+  sessionStorage.removeItem('roriri_currentPage');
   document.getElementById('app-page').style.display = 'none';
   document.getElementById('login-page').style.display = '';
   showNotification('Logged out successfully', 'info');
@@ -2886,8 +2892,29 @@ function deleteIvBanner(id) {
 // ============ INIT ============
 function initApp() {
   loadAdminDB();
-  document.getElementById('app-page').style.display = 'none';
   buildSidebar();
+  
+  if (sessionStorage.getItem('roriri_loggedIn') === 'true') {
+    const savedUser = sessionStorage.getItem('roriri_user');
+    if (savedUser) {
+      currentUser = JSON.parse(savedUser);
+      document.getElementById('login-page').style.display = 'none';
+      document.getElementById('app-page').style.display = 'flex';
+      document.getElementById('topbar-user-name').textContent = currentUser.name.split(' ')[0];
+      document.getElementById('topbar-user-role').textContent = currentUser.role;
+      document.getElementById('topbar-user-avatar').textContent = currentUser.name.charAt(0);
+      
+      const savedPage = sessionStorage.getItem('roriri_currentPage') || 'dashboard';
+      navigate(savedPage);
+    } else {
+      document.getElementById('app-page').style.display = 'none';
+      document.getElementById('login-page').style.display = '';
+    }
+  } else {
+    document.getElementById('app-page').style.display = 'none';
+    document.getElementById('login-page').style.display = '';
+  }
+
   saveAdminDB();
   syncPortalsToStorage();
 }
