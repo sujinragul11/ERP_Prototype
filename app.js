@@ -396,6 +396,31 @@ const SIDEBAR = [
     { id:'freelancer-payments', icon:'bx bx-wallet', label:'Earnings & Payments' },
     { id:'freelancer-notifications', icon:'bx bx-bell', label:'Notifications' }
   ]},
+  { type:'sub', icon:'bx bxl-instagram-alt', label:'Influencer', children:[
+    { id:'influencer-dashboard', icon:'bx bx-grid-alt', label:'Dashboard' },
+    { id:'influencer-list', icon:'bx bx-user-check', label:'Influencers' },
+    { id:'influencer-verification', icon:'bx bx-shield-quarter', label:'Verification Queue' },
+    { id:'influencer-campaigns', icon:'bx bx-bullseye', label:'Campaigns' },
+    { id:'influencer-campaign-create', icon:'bx bx-plus-circle', label:'Create Campaign' },
+    { id:'influencer-applications', icon:'bx bx-paper-plane', label:'Applications' },
+    { id:'influencer-assignments', icon:'bx bx-briefcase', label:'Assignments' },
+    { id:'influencer-deliverables', icon:'bx bx-package', label:'Deliverables' },
+    { id:'influencer-content', icon:'bx bx-movie-play', label:'Content Review' },
+    { id:'influencer-leads', icon:'bx bx-user-pin', label:'Leads & Sales' },
+    { id:'influencer-conversions', icon:'bx bx-cart', label:'Conversions' },
+    { id:'influencer-performance', icon:'bx bx-line-chart', label:'Performance Analytics' },
+    { id:'influencer-earnings', icon:'bx bx-wallet', label:'Earnings' },
+    { id:'influencer-invoices', icon:'bx bx-receipt', label:'Invoices' },
+    { id:'influencer-payouts', icon:'bx bx-credit-card', label:'Payouts' },
+    { id:'influencer-rewards', icon:'bx bx-trophy', label:'Points & Rewards' },
+    { id:'influencer-marketing', icon:'bx bx-folder', label:'Brand Assets & Resources' },
+    { id:'influencer-messages', icon:'bx bx-message-square-dots', label:'Communication' },
+    { id:'influencer-calendar', icon:'bx bx-calendar', label:'Calendar' },
+    { id:'influencer-tasks', icon:'bx bx-check-square', label:'Tasks' },
+    { id:'influencer-support', icon:'bx bx-support', label:'Support Tickets' },
+    { id:'influencer-audit-logs', icon:'bx bx-history', label:'Audit Logs' },
+    { id:'influencer-settings', icon:'bx bx-cog', label:'Settings' }
+  ]},
   { type:'sub', icon:'lni lni-code-alt', label:'NexGen IT Academy', children:[
     { id:'academy-trainees', icon:'bx bx-graduation', label:'Trainee' },
     { id:'academy-subjects', icon:'bx bx-pencil', label:'Subject' },
@@ -447,6 +472,8 @@ const SIDEBAR = [
   { type:'item', id:'web-tracking', icon:'bx bx-rocket', label:'Web Tracking' }
 ];
 
+window.SIDEBAR = SIDEBAR;
+
 // ============ NAVIGATION ============
 let currentPage = 'dashboard';
 let currentUser = null;
@@ -479,6 +506,7 @@ function handleFreelancerParentClick(li) {
 
 function navigate(page, params) {
   currentPage = page;
+  window.currentPage = page;
   window._params = params || {};
   document.querySelectorAll('.page-view,.page-content-render').forEach(v => v.remove());
   document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
@@ -489,6 +517,9 @@ function navigate(page, params) {
     if (parentLi) parentLi.classList.add('open');
   } else if (page.startsWith('freelancer-')) {
     const parentLi = document.getElementById('nav-freelancer');
+    if (parentLi) parentLi.classList.add('open');
+  } else if (page.startsWith('influencer-')) {
+    const parentLi = document.getElementById('nav-influencer');
     if (parentLi) parentLi.classList.add('open');
   }
   document.querySelector('.sidebar')?.classList.remove('mobile-open');
@@ -708,6 +739,8 @@ const RENDERERS = {
   'roriri-foundation': renderExternal,
   'rithish-farms': renderExternal
 };
+
+window.RENDERERS = RENDERERS;
 
 function buildPlaceholderPage(page) {
   return `<div class="page-header"><h4>${page.replace(/-/g,' ').replace(/\b\w/g,l=>l.toUpperCase())}</h4><div class="font-13 text-secondary">This module is not available in the prototype.</div></div><div class="empty-state"><i class="bx bx-lock"></i><p>Module coming soon</p></div>`;
