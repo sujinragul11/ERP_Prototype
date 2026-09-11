@@ -49,8 +49,11 @@ a { text-decoration:none; }
 .sidebar-header { display:flex; align-items:center; padding:1rem; gap:10px; }
 .sidebar-header .logo-icon { width:32px; height:32px; background:var(--primary); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px; flex-shrink:0; }
 .sidebar-header .logo-text { color:#fff; font-weight:700; font-size:18px; white-space:nowrap; }
-.sidebar-header .toggle-btn { margin-left:auto; color:#8aa2c0; cursor:pointer; font-size:20px; background:none; border:none; }
+.sidebar-header .toggle-btn { margin-left:auto; color:#8aa2c0; cursor:pointer; font-size:20px; background:none; border:none; transition: margin 0.3s; }
 .sidebar-header .toggle-btn:hover { color:#fff; }
+.sidebar.collapsed .logo-text { display: none; }
+.sidebar.collapsed .sidebar-header { padding: 1rem 10px; justify-content: center; flex-wrap: wrap; }
+.sidebar.collapsed .toggle-btn { margin-left: 0; margin-top: 10px; width: 100%; text-align: center; }
 .sidebar-nav { list-style:none; padding:0 0 1rem 0; margin:0; }
 .sidebar-nav > li > a { display:flex; align-items:center; padding:0.6rem 1rem; color:#b0c4de; text-decoration:none; font-size:14px; transition:all 0.2s; gap:10px; white-space:nowrap; }
 .sidebar-nav > li > a:hover { background:var(--sidebar-hover); color:#fff; }
@@ -402,6 +405,36 @@ textarea.form-control { min-height:80px; resize:vertical; }
 }
 .align-middle {
   vertical-align: middle !important;
+}
+
+/* Table Actions & Button Alignment */
+.table-actions {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  vertical-align: middle;
+}
+.table th.text-end,
+.table td.text-end,
+.table th:last-child,
+.table td:last-child {
+  white-space: nowrap;
+}
+.btn-action-icon {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  font-size: 15px !important;
+  flex-shrink: 0 !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
 }
 
 /* NAVIGATION TABS */
