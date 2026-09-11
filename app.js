@@ -606,9 +606,7 @@ function buildSidebar() {
       html += `<li id="nav-${item.label.replace(/\s+/g,'-').toLowerCase()}"><a href="javascript:void(0)" onclick="toggleSubmenu(this.parentElement)"><i class="${item.icon}"></i><span class="menu-text">${item.label}</span><i class="bx bx-chevron-right arrow"></i></a><ul class="sub-menu">`;
       item.children.forEach(child => {
         if (child.type === 'sub') {
-          const firstChild = (child.children || [])[0];
-          const firstPage = firstChild ? (firstChild.page || firstChild.id) : null;
-          const clickAttr = firstPage ? `onclick="toggleSubmenu(this.parentElement);navigate('${firstPage}')"` : `onclick="toggleSubmenu(this.parentElement)"`;
+          const clickAttr = `onclick="toggleSubmenu(this.parentElement)"`;
           html += `<li id="nav-${child.label.replace(/\s+/g,'-').toLowerCase()}"><a href="javascript:void(0)" ${clickAttr}><i class="${child.icon}"></i><span class="menu-text">${child.label}</span><i class="bx bx-chevron-right arrow"></i></a><ul class="sub-menu">`;
           child.children.forEach(grand => {
             const cpage = grand.page || grand.id;
