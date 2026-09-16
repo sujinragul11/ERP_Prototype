@@ -7,9 +7,15 @@
 (function() {
   'use strict';
 
-  var API_BASE = (typeof window !== 'undefined' && window.location && window.location.origin)
-    ? window.location.origin + '/api'
-    : 'http://localhost:8080/api';
+  var API_BASE = (function() {
+    if (typeof window !== 'undefined' && window.ENV && window.ENV.API_URL) {
+      return window.ENV.API_URL + '/api';
+    }
+    if (typeof window !== 'undefined' && window.location && window.location.origin) {
+      return window.location.origin + '/api';
+    }
+    return 'http://localhost:8080/api';
+  })();
 
   var TOKEN_KEY = 'roriri_auth_token_v1';
   var USER_KEY = 'roriri_auth_user_v1';

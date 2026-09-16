@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS files
+Thumbs.db
+.DS_Store
+*.log
+
+# IDE
+.vscode/
+.idea/

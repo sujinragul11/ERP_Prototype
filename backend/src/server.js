@@ -23,8 +23,14 @@ const workspaceRoutes = require('./routes/workspace.routes');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// CORS - allow configured origins
+const allowedOrigin = process.env.CORS_ORIGIN || 'http://localhost:8080';
+app.use(cors({
+  origin: allowedOrigin,
+  credentials: true
+}));
+
 // Standard Middlewares
-app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -63,11 +69,10 @@ app.use('/api/influencer', influencerRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/workspaces', workspaceRoutes);
 
-// 3. Serve Frontend Static Portals
+// 3. Serve Frontend Static Portals (for local dev / monolith mode)
 const frontendPath = path.resolve(__dirname, '../../frontend');
 app.use(express.static(frontendPath));
 
-// Fallback to index.html for root navigation if route not handled
 app.get('/', (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
 });
