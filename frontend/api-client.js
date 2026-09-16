@@ -9,12 +9,12 @@
 
   var API_BASE = (function() {
     if (typeof window !== 'undefined' && window.ENV && window.ENV.API_URL) {
-      return window.ENV.API_URL + '/api';
+      return window.ENV.API_URL.replace(/\/+$/, '') + '/api';
     }
-    if (typeof window !== 'undefined' && window.location && window.location.origin) {
-      return window.location.origin + '/api';
+    if (typeof window !== 'undefined' && window.location && window.location.origin && window.location.origin !== 'null') {
+      return window.location.origin.replace(/\/+$/, '') + '/api';
     }
-    return 'http://localhost:8080/api';
+    return 'https://erp-prototype-be.onrender.com/api';
   })();
 
   var TOKEN_KEY = 'roriri_auth_token_v1';

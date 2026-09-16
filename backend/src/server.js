@@ -23,11 +23,44 @@ const workspaceRoutes = require('./routes/workspace.routes');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// CORS - allow configured origins
-const allowedOrigin = process.env.CORS_ORIGIN || 'http://localhost:8080';
+// CORS - allow configured origins, deployed Render frontend, and localhost
+const configuredOrigins = (process.env.CORS_ORIGIN || '')
+  .split(',')
+  .map(function(origin) { return origin.trim().replace(/\/+$/, ''); })
+  .filter(Boolean);
+
+const defaultOrigins = [
+  'https://erp-prototype-9rki.onrender.com',
+  'http://localhost:8080',
+  'http://127.0.0.1:8080',
+  'http://localhost:3000',
+  'http://localhost:5500',
+  'http://127.0.0.1:5500'
+];
+
+const allowedOrigins = Array.from(new Set([...defaultOrigins, ...configuredOrigins]));
+
 app.use(cors({
-  origin: allowedOrigin,
-  credentials: true
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, or server-to-server)
+    if (!origin) return callback(null, true);
+
+    var normalizedOrigin = origin.replace(/\/+$/, '');
+    if (allowedOrigins.includes(normalizedOrigin) || allowedOrigins.includes('*')) {
+      return callback(null, true);
+    }
+
+    // Also permit any Render subdomain (*.onrender.com) for preview and staging environments
+    if (/^https:\/\/.*\.onrender\.com$/.test(normalizedOrigin)) {
+      return callback(null, true);
+    }
+
+    console.warn('[CORS] Blocked request from unauthorized origin: ' + origin);
+    return callback(new Error('CORS policy: origin ' + origin + ' is not allowed'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 // Standard Middlewares
@@ -37,19 +70,29 @@ app.use(express.urlencoded({ extended: true }));
 
 // 1. Health Check Endpoint
 app.get('/api/health', async (req, res) => {
+  let dbHost = 'unknown';
+  try {
+    const dbUrl = process.env.DATABASE_URL || '';
+    const match = dbUrl.match(/@([^:\/?]+)/);
+    if (match && match[1]) {
+      dbHost = match[1];
+    }
+  } catch (e) {}
+
   try {
     await prisma.$queryRaw`SELECT 1`;
     res.json({
       status: 'ok',
       database: 'connected',
       engine: 'PostgreSQL',
-      dbName: 'roriri_erp_db',
+      host: dbHost,
       timestamp: new Date().toISOString()
     });
   } catch (err) {
     res.status(500).json({
       status: 'error',
       database: 'disconnected',
+      host: dbHost,
       error: err.message
     });
   }
