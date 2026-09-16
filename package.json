@@ -1,0 +1,17 @@
+{
+  "name": "roriri-erp",
+  "version": "2.0.0",
+  "description": "RORIRI ERP - Enterprise Resource Planning System",
+  "scripts": {
+    "dev": "npm --prefix backend run dev",
+    "start": "npm --prefix backend start",
+    "install:backend": "npm --prefix backend install",
+    "db:push": "npm --prefix backend run db:push",
+    "db:migrate": "npm --prefix backend run db:migrate",
+    "db:seed": "npm --prefix backend run db:seed",
+    "db:studio": "npm --prefix backend run db:studio"
+  },
+  "keywords": ["roriri", "erp", "enterprise", "software"],
+  "author": "RORIRI Software Solutions",
+  "license": "ISC"
+}
