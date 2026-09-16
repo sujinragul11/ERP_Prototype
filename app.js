@@ -34,7 +34,10 @@ const MOCK = {
     { id:'E005', firstName:'CDS', lastName:'', name:'CDS', role:'Digital Marketing', entity:'Roriri Software', phone:'8765435432', personalEmail:'swd@gmail.com', companyEmail:'cds@roririsoft.com', status:'Active', joinDate:'2024-07-17', dob:'22-02-2000', bloodGroup:'', gender:'Male', maritalStatus:'Single', address:'gfhghf', username:'cds', password:'2000-02-22', payroll:'12,000', department:'Marketing', regNo:180020 },
     { id:'E006', firstName:'Emp', lastName:'001', name:'Emp 001', role:'Designer', entity:'Roriri Software', phone:'0987654321', personalEmail:'demo11@gmail.com', companyEmail:'emp@roririsoft.com', status:'Active', joinDate:'2024-07-01', dob:'30-06-2000', bloodGroup:'', gender:'Female', maritalStatus:'Single', address:'sdd', username:'emp', password:'2000-06-30', payroll:'10,000', department:'Design', regNo:180019 },
     { id:'E007', firstName:'Sherlin', lastName:'H', name:'Sherlin H', role:'Developer', entity:'Roriri Software', phone:'1234578963', personalEmail:'sherlinhh@gmail.com', companyEmail:'sherlinhh@roririsoft.com', status:'Active', joinDate:'2024-08-01', dob:'01-08-2000', bloodGroup:'', gender:'Female', maritalStatus:'Single', address:'Tirunelveli', username:'sherlinhh', password:'2024-08-01', payroll:'10,000', department:'Development', regNo:180026 },
-    { id:'E008', firstName:'GGG', lastName:'', name:'GGG', role:'Trainer', entity:'NexGen IT Academy', phone:'1234569875', personalEmail:'ggg@gmail.com', companyEmail:'ggg@roririsoft.com', status:'Active', joinDate:'2024-08-01', dob:'01-08-2000', bloodGroup:'', gender:'Male', maritalStatus:'Single', address:'Chennai', username:'ggg', password:'2024-08-01', payroll:'11,000', department:'Training', regNo:180027 }
+    { id:'E008', firstName:'GGG', lastName:'', name:'GGG', role:'Trainer', entity:'NexGen IT Academy', phone:'1234569875', personalEmail:'ggg@gmail.com', companyEmail:'ggg@roririsoft.com', status:'Active', joinDate:'2024-08-01', dob:'01-08-2000', bloodGroup:'', gender:'Male', maritalStatus:'Single', address:'Chennai', username:'ggg', password:'2024-08-01', payroll:'11,000', department:'Training', regNo:180027 },
+    { id:'E009', firstName:'Ragupathi', lastName:'', name:'Ragupathi', role:'Founder', entity:'Roriri Software', phone:'9876543009', personalEmail:'ragu@gmail.com', companyEmail:'ragu@roririsoft.com', status:'Active', joinDate:'2019-01-01', dob:'', bloodGroup:'', gender:'Male', maritalStatus:'Married', address:'Tirunelveli', username:'ragu', password:'pass', payroll:'0', department:'Management', regNo:180009 },
+    { id:'E010', firstName:'Priya', lastName:'', name:'Priya', role:'Super Admin', entity:'Roriri Software', phone:'9876543010', personalEmail:'priya@gmail.com', companyEmail:'priya@roririsoft.com', status:'Active', joinDate:'2019-01-01', dob:'', bloodGroup:'', gender:'Female', maritalStatus:'Married', address:'Tirunelveli', username:'priya', password:'pass', payroll:'0', department:'Management', regNo:180010 },
+    { id:'E011', firstName:'Vino', lastName:'M', name:'Vino M', role:'Marketing Analyst', entity:'Roriri Software', phone:'9876543011', personalEmail:'vino@gmail.com', companyEmail:'vino@roririsoft.com', status:'Active', joinDate:'2024-08-01', dob:'', bloodGroup:'', gender:'Female', maritalStatus:'Single', address:'Tirunelveli', username:'vino', password:'2024-08-01', payroll:'12,000', department:'Marketing', regNo:180011 }
   ],
 
   clients: [
@@ -113,6 +116,13 @@ const MOCK = {
     { id:'DR002', date:'2024-08-01', employee:'Hari K', category:'Development', subcategory:'Backend', task:'API Development', hours:6, status:'In Progress', description:'Working on REST API endpoints', url:'' },
     { id:'DR003', date:'2024-08-02', employee:'Anushiya P', category:'Development', subcategory:'Frontend', task:'Dashboard Page', hours:5, status:'In Progress', description:'Dashboard layout and stat cards', url:'' },
     { id:'DR004', date:'2024-08-05', employee:'Sherlin JR', category:'Design', subcategory:'UI/UX', task:'Logo Design', hours:3, status:'Completed', description:'Created logo variations for client', url:'' }
+  ],
+
+  dailyWorkTeam: ['Sujin','Kingsly','Madasamy','Dhanush','Abishek','Nambi','Josua','Sundar'],
+
+  teamDailyReports: [
+    { id:'TDR001', date: today(), employee:'Sujin', task:'ERP dashboard development', hours:7, status:'Completed', description:'Built the admin dashboard cards and role filters' },
+    { id:'TDR002', date: today(), employee:'Kingsly', task:'Client project review', hours:6, status:'In Progress', description:'Reviewed login module code and API integration' }
   ],
 
   taskAssignments: [
@@ -325,7 +335,7 @@ const MOCK = {
     ]}
   ],
 
-  roles: ['CEO','CTO','Business Analyst','HR','Project Manager','Developer','Designer','Digital Marketing','Trainer','Trainee','Student'],
+  roles: ['CEO','CTO','Business Analyst','HR','Project Manager','Developer','Designer','Digital Marketing','Trainer','Trainee','Student','Founder','Super Admin','Marketing Analyst'],
   departments: ['Development','Design','Marketing','Training','HR','Management'],
   services: ['ERP','Website(Static)','Website(Dynamic)','Logo Design','Mobile Application','Multimedia','Marketing'],
   technologies: ['PHP','React JS','React Native','Flutter','Python','Node.js','Angular'],
@@ -401,14 +411,14 @@ const MOCK = {
 
 // ============ SIDEBAR STRUCTURE ============
 const DEPARTMENTS = [
-  { id:'management', name:'Management', icon:'bx bxs-crown', roles:['Director','Managing Director','CEO','COO','CFO','CTO','Business Head','General Manager'] },
+  { id:'management', name:'Management', icon:'bx bxs-crown', roles:['Director','Managing Director','CEO','COO','CFO','CTO','Business Head','General Manager','Founder','Super Admin'] },
   { id:'project', name:'Project Management', icon:'bx bx-timeline', roles:['Project Manager','Program Manager','Delivery Manager','Scrum Master','Project Coordinator'] },
   { id:'development', name:'Development', icon:'bx bx-code-alt', roles:['Team Lead','Technical Lead','Full Stack Developer','Frontend Developer','Backend Developer','Mobile App Developer','Software Engineer','Junior Developer','WordPress Developer','Database Developer'] },
   { id:'design', name:'Design', icon:'bx bxs-palette', roles:['Creative Director','UI/UX Designer','Graphic Designer','Motion Designer','Brand Designer','Web Designer'] },
   { id:'qa', name:'Quality Assurance', icon:'bx bx-check-shield', roles:['QA Lead','Automation Tester','Manual Tester','Software Tester','QA Engineer'] },
   { id:'hr', name:'Human Resources', icon:'bx bx-user-pin', roles:['HR Manager','HR Executive','Recruiter','HR Generalist','HR Coordinator','Training & Development'] },
   { id:'accounts', name:'Accounts & Finance', icon:'bx bx-money', roles:['Finance Manager','Accountant','Accounts Executive','Payroll Specialist','Tax Executive','Auditor'] },
-  { id:'marketing', name:'Marketing', icon:'bx bx-megaphone', roles:['Marketing Manager','Digital Marketing','SEO Specialist','Content Writer','Social Media Executive','Brand Executive'] },
+  { id:'marketing', name:'Marketing', icon:'bx bx-megaphone', roles:['Marketing Manager','Digital Marketing','SEO Specialist','Content Writer','Social Media Executive','Brand Executive','Marketing Analyst'] },
   { id:'sales', name:'Sales', icon:'bx bx-cart-alt', roles:['Sales Manager','Business Development Executive','Sales Executive','Inside Sales','Account Manager'] },
   { id:'operations', name:'Operations', icon:'bx bx-cog', roles:['Operations Manager','Operations Executive','Administrator','Office Manager'] },
   { id:'admin', name:'Administration', icon:'bx bx-home-circle', roles:['Admin Manager','Office Administrator','Receptionist','Front Office Executive','Facilities Executive'] },
@@ -583,6 +593,7 @@ const SIDEBAR = [
   { type:'item', id:'iv-dashboard', icon:'bx bx-building', label:'Industrial Visit' },
   { type:'item', id:'expense-dashboard', icon:'bx bx-money', label:'Expense' },
   { type:'item', id:'database-report', icon:'bx bx-merge', label:'Database Report' },
+  { type:'item', id:'daily-report-update', icon:'bx bx-notepad', label:'Daily Report' },
   { type:'item', id:'social-media', icon:'bx bxl-twitter', label:'Social Media' },
   { type:'item', id:'web-tracking', icon:'bx bx-rocket', label:'Web Tracking' }
 ];
@@ -1199,6 +1210,7 @@ var RENDERERS = window.RENDERERS = {
   'policy': renderExternal,
   'data': renderExternal,
   'database-report': renderExternal,
+  'daily-report-update': renderDailyReportUpdate,
   'social-media': renderExternal,
   'web-tracking': renderExternal,
   'workspace': renderWorkspace,
@@ -2437,6 +2449,83 @@ function viewDailyReport(id) {
 }
 function deleteDailyReport(id) {
   confirmDelete('Are you sure you want to delete report ' + id + '?', `doDelete('dailyReports','${id}','Daily report deleted successfully')`);
+}
+
+// ---------- TEAM DAILY REPORT (Daily Report sidebar) ----------
+function teamDailyReportFields() {
+  return [
+    { name: 'id', type: 'hidden' },
+    { name: 'date', label: 'Date', type: 'date', value: today(), required: true },
+    { name: 'employee', label: 'Name', type: 'select', options: MOCK.dailyWorkTeam, required: true },
+    { name: 'task', label: 'Task / Work Done', required: true },
+    { name: 'hours', label: 'Hours', type: 'number' },
+    { name: 'status', label: 'Status', type: 'select', options: ['Completed', 'In Progress', 'Pending'] },
+    { name: 'description', label: 'Details', type: 'textarea', rows: 2 }
+  ];
+}
+function showTeamDailyReportAddModal() {
+  openFormModal({ title: 'Add Daily Work Update', submit: 'submitTeamDailyReport', fields: teamDailyReportFields() });
+}
+function showTeamDailyReportEditModal(id) {
+  const d = MOCK.teamDailyReports.find(x => x.id === id);
+  if (!d) return;
+  openFormModal({ title: 'Edit Daily Work Update', submit: 'submitTeamDailyReport', fields: teamDailyReportFields(), values: d });
+}
+function submitTeamDailyReport() {
+  const v = serializeForm('modal-form');
+  if (!v.task) { showNotification('Task is required', 'error'); return; }
+  const existing = MOCK.teamDailyReports.find(x => x.id === v.id);
+  const base = { date: v.date, employee: v.employee, task: v.task, hours: Number(v.hours) || 0, status: v.status, description: v.description || '' };
+  if (existing) Object.assign(existing, base);
+  else MOCK.teamDailyReports.push(Object.assign({ id: genId(MOCK.teamDailyReports, 'TDR') }, base));
+  closeModal(); navigate('daily-report-update');
+  showNotification('Daily work update saved successfully', 'success');
+}
+function viewTeamDailyReport(id) {
+  const d = MOCK.teamDailyReports.find(x => x.id === id);
+  if (!d) return;
+  viewModal('Daily Report - ' + d.id, [
+    ['Date', d.date], ['Name', d.employee], ['Task', d.task],
+    ['Hours', (Number(d.hours) || 0) + 'h'], ['Status', d.status], ['Details', d.description || '-']
+  ]);
+}
+function deleteTeamDailyReport(id) {
+  confirmDelete('Are you sure you want to delete report ' + id + '?', `doDelete('teamDailyReports','${id}','Daily report deleted successfully')`);
+}
+
+function renderDailyReportUpdate() {
+  const rows = MOCK.teamDailyReports.slice().sort((a, b) => (a.date < b.date ? 1 : -1));
+  const members = MOCK.dailyWorkTeam;
+  const tStr = today();
+  const doneNames = rows.filter(r => r.date === tStr).map(r => r.employee);
+  const pending = members.filter(m => doneNames.indexOf(m) === -1);
+
+  let html = pageHeader('Daily Report','Update and track the daily work done by the team.',`<button class="btn btn-primary" onclick="showTeamDailyReportAddModal()"><i class="bx bx-plus"></i> Add Entry</button>`);
+  html += `<div class="row row-cols-1 row-cols-md-3 g-3 mb-3">`;
+  [{l:'Team Members',v:members.length,ic:'bx-group',cls:'bg-light-primary text-primary'},{l:'Updated Today',v:doneNames.length,ic:'bx-check-circle',cls:'bg-light-success text-success'},{l:'Pending Today',v:pending.length,ic:'bx-time-five',cls:'bg-light-warning text-warning'}].forEach(s => {
+    html += `<div class="col"><div class="stat-card"><div class="d-flex align-items-center"><div class="stat-content"><p class="mb-0 text-secondary">${s.l}</p><h4>${s.v}</h4></div><div class="stat-icon ${s.cls} ms-auto"><i class="bx ${s.ic}"></i></div></div></div></div>`;
+  });
+  html += `</div>`;
+
+  html += `<div class="data-card" style="margin-bottom:1rem;"><div class="card-header"><h5>Today's Update — ${tStr}</h5></div><div class="card-body"><div class="role-people" style="padding-left:0;">`;
+  members.forEach(m => {
+    const has = doneNames.indexOf(m) !== -1;
+    html += `<span class="emp-chip"><span class="chip-av" style="background:${has ? 'linear-gradient(135deg,#1cc88a,#0d9e6e)' : 'linear-gradient(135deg,#cbd5e1,#94a3b8)'}">${m.charAt(0)}</span>${m}<span class="badge ${has ? 'badge-success' : 'badge-warning'}" style="font-size:0.65rem;padding:0.15rem 0.5rem;">${has ? 'Updated' : 'Pending'}</span></span>`;
+  });
+  html += `</div></div></div>`;
+
+  html += `<div class="data-card"><div class="card-header"><h5>Daily Work Log</h5><input type="text" class="form-control" placeholder="Search..." style="width:200px;padding:0.4rem 0.7rem;font-size:12px;" oninput="searchTable(this,'tdr-tbody')"></div><div class="card-body">`;
+  if (!rows.length) {
+    html += `<div class="empty-state"><i class="bx bx-file"></i><p>No daily work updates yet. Click "Add Entry" to log today's work.</p></div>`;
+  } else {
+    html += `<div class="overflow-x"><table class="data-table"><thead><tr><th>ID</th><th>Date</th><th>Name</th><th>Task / Work Done</th><th>Hours</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tdr-tbody">`;
+    rows.forEach(d => {
+      html += `<tr><td><strong>${d.id}</strong></td><td>${d.date}</td><td>${d.employee}</td><td>${d.task}</td><td>${Number(d.hours) || 0}h</td><td><span class="badge ${d.status==='Completed'?'badge-success':d.status==='In Progress'?'badge-warning':'badge-info'}">${d.status}</span></td><td><button class="btn btn-sm btn-outline-success" onclick="viewTeamDailyReport('${d.id}')"><i class="bx bx-show"></i></button> <button class="btn btn-sm btn-outline-warning" onclick="showTeamDailyReportEditModal('${d.id}')"><i class="bx bx-edit"></i></button> <button class="btn btn-sm btn-outline-danger" onclick="deleteTeamDailyReport('${d.id}')"><i class="bx bx-trash"></i></button></td></tr>`;
+    });
+    html += `</tbody></table></div>`;
+  }
+  html += `</div></div>`;
+  return html;
 }
 
 // ---------- TASK ASSIGNMENT ----------
