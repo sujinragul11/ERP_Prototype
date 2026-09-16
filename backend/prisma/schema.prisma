@@ -1,0 +1,828 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserType {
+  employee
+  client
+  intern
+  trainee
+  freelancer
+  influencer
+  iv_student
+  candidate
+  startup
+  consultancy
+  vendor
+  guest
+}
+
+enum UserStatus {
+  new
+  active
+  converted
+  inactive
+  blocked
+}
+
+enum AuthType {
+  authless
+  otp
+  password
+}
+
+enum CompanyType {
+  software
+  academy
+  college
+  consultancy
+  startup
+  foundation
+  farms
+  nexemy
+  workspace_cabin
+}
+
+enum EnquiryType {
+  project
+  internship
+  job
+  training
+  consultancy
+  placement
+  visit
+  partnership
+  other
+}
+
+enum EnquiryStatus {
+  new
+  contacted
+  qualified
+  converted
+  closed
+}
+
+enum ProjectStatus {
+  new
+  in_progress
+  review
+  delivered
+  closed
+  cancelled
+}
+
+enum PayStatus {
+  pending
+  partial
+  paid
+}
+
+enum AssigneeType {
+  employee
+  freelancer
+  startup
+  agency
+}
+
+enum MilestoneStatus {
+  pending
+  in_review
+  approved
+  paid
+}
+
+enum TaskPriority {
+  low
+  medium
+  high
+  urgent
+}
+
+enum TaskStatus {
+  todo
+  in_progress
+  review
+  done
+  cancelled
+}
+
+enum TxnDirection {
+  credit
+  debit
+}
+
+enum TxnRefType {
+  project
+  academy
+  iv
+  intern
+  freelancer
+  influencer
+  consultancy
+  expense
+  general
+}
+
+enum AttendanceStatus {
+  Present
+  Absent
+  Holiday
+  Weekend
+  Leave
+}
+
+model Company {
+  id              Int          @id @default(autoincrement())
+  name            String
+  type            CompanyType  @default(software)
+  income          String?      @default("0")
+  icon            String?
+  color           String?
+  parentId        Int?
+  parent          Company?     @relation("CompanyHierarchy", fields: [parentId], references: [id])
+  children        Company[]    @relation("CompanyHierarchy")
+  primaryOwnerId  Int?
+  contactEmail    String?
+  contactPhone    String?
+  address         String?
+  status          String       @default("active")
+  meta            Json?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  users           User[]
+  departments     Department[]
+  projects        Project[]
+
+  @@map("companies")
+}
+
+model Department {
+  id          Int        @id @default(autoincrement())
+  companyId   Int?
+  company     Company?   @relation(fields: [companyId], references: [id])
+  name        String
+  code        String?
+  icon        String?
+  status      String     @default("active")
+  createdAt   DateTime   @default(now())
+
+  jobTitles   JobTitle[]
+  users       User[]
+
+  @@map("departments")
+}
+
+model JobTitle {
+  id           Int         @id @default(autoincrement())
+  name         String
+  departmentId Int?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  permissions  Json?
+  createdAt    DateTime    @default(now())
+
+  @@map("job_titles")
+}
+
+model User {
+  id               Int          @id @default(autoincrement())
+  username         String?      @unique
+  type             UserType     @default(candidate)
+  companyId        Int?
+  company          Company?     @relation(fields: [companyId], references: [id])
+  departmentId     Int?
+  department       Department?  @relation(fields: [departmentId], references: [id])
+  firstName        String
+  lastName         String?
+  name             String
+  email            String?      @unique
+  phone            String?      @unique
+  whatsappEnabled  Boolean      @default(false)
+  gender           String?
+  dob              String?
+  bloodGroup       String?
+  maritalStatus    String?
+  companyTitle     String?
+  location         String?
+  address          String?
+  qualification    String?
+  college          String?
+  gradYear         String?
+  experienceYears  Float?
+  skills           Json?
+  avatarUrl        String?
+  purpose          String?
+  authType         AuthType     @default(password)
+  password         String?
+  status           UserStatus   @default(active)
+  source           String?
+  sourceEnquiryId  Int?
+  onboardingStep   Int          @default(1)
+  payroll          String?
+  regNo            Int?
+  lastLoginAt      DateTime?
+  meta             Json?
+  deletedAt        DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  roles            UserRole[]
+  history          UserHistory[]
+  projectsAssigned ProjectAssignment[]
+  projectsAsClient Project[]
+  tasksAssigned    TaskAssignment[]    @relation("TaskAssignee")
+  tasksCreated     TaskAssignment[]    @relation("TaskAssigner")
+  attendances      Attendance[]
+  dailyReports     DailyReport[]
+  sentMessages     Message[]
+
+  candidateProfile CandidateProfile?
+  freelancerProfile FreelancerProfile?
+  influencerProfile InfluencerProfile?
+  academyEnrollments AcademyEnrollment[]
+
+  @@map("users")
+}
+
+model UserRole {
+  id             Int       @id @default(autoincrement())
+  userId         Int
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           String
+  effectiveFrom  DateTime  @default(now())
+  effectiveUntil DateTime?
+  status         String    @default("active")
+
+  @@map("user_roles")
+}
+
+model UserHistory {
+  id              Int      @id @default(autoincrement())
+  userId          Int
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fromType        String?
+  toType          String
+  note            String?
+  changedByUserId Int?
+  createdAt       DateTime @default(now())
+
+  @@map("user_history")
+}
+
+model Workspace {
+  id        Int               @id @default(autoincrement())
+  code      String?
+  name      String
+  type      String?           @default("Cabin")
+  capacity  Int               @default(1)
+  leadName  String?
+  status    String            @default("Available")
+  createdAt DateTime          @default(now())
+
+  members   WorkspaceMember[]
+
+  @@map("workspaces")
+}
+
+model WorkspaceMember {
+  id          Int       @id @default(autoincrement())
+  workspaceId Int
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId      Int?
+  name        String?
+  role        String?
+  joinedAt    DateTime  @default(now())
+
+  @@map("workspace_members")
+}
+
+model Enquiry {
+  id               Int           @id @default(autoincrement())
+  type             EnquiryType   @default(project)
+  name             String
+  phone            String?
+  email            String?
+  organization     String?
+  message          String?
+  sourcePage       String?
+  status           EnquiryStatus @default(new)
+  assignedToUserId Int?
+  createdUserId    Int?
+  convertedTo      Json?
+  closedReason     String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  updates          EnquiryUpdate[]
+
+  @@map("enquiries")
+}
+
+model EnquiryUpdate {
+  id             Int      @id @default(autoincrement())
+  enquiryId      Int
+  enquiry        Enquiry  @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  field          String
+  oldValue       String?
+  newValue       String
+  verifiedByOtp  Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  @@map("enquiry_updates")
+}
+
+model IvRegistration {
+  id            Int         @id @default(autoincrement())
+  collegeName   String
+  department    String?
+  contactPerson String
+  contactPhone  String
+  contactEmail  String?
+  visitDate     DateTime
+  studentCount  Int         @default(0)
+  status        String      @default("Scheduled")
+  notes         String?
+  createdAt     DateTime    @default(now())
+
+  visitors      IvVisitor[]
+
+  @@map("iv_registrations")
+}
+
+model IvVisitor {
+  id              Int            @id @default(autoincrement())
+  registrationId  Int
+  registration    IvRegistration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+  name            String
+  phone           String?
+  email           String?
+  department      String?
+  year            String?
+  convertedUserId Int?
+  status          String         @default("Attended")
+
+  @@map("iv_visitors")
+}
+
+model Project {
+  id           Int           @id @default(autoincrement())
+  code         String?
+  name         String
+  companyId    Int?
+  company      Company?      @relation(fields: [companyId], references: [id])
+  clientUserId Int?
+  clientUser   User?         @relation(fields: [clientUserId], references: [id])
+  clientName   String?
+  clientEmail  String?
+  services     String?
+  techStack    String?
+  amount       Float         @default(0)
+  balance      Float         @default(0)
+  duration     String?
+  startDate    DateTime?
+  dueDate      DateTime?
+  status       ProjectStatus @default(new)
+  payStatus    PayStatus     @default(pending)
+  description  String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  assignments  ProjectAssignment[]
+  milestones   ProjectMilestone[]
+  tasks        TaskAssignment[]
+  transactions Transaction[]
+
+  @@map("projects")
+}
+
+model ProjectAssignment {
+  id             Int          @id @default(autoincrement())
+  projectId      Int
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assigneeUserId Int
+  assigneeUser   User         @relation(fields: [assigneeUserId], references: [id])
+  assigneeType   AssigneeType @default(employee)
+  roleOnProject  String?
+  rate           Float?
+  sharingPct     Float?
+  status         String       @default("active")
+  startedAt      DateTime     @default(now())
+
+  @@map("project_assignments")
+}
+
+model ProjectMilestone {
+  id        Int             @id @default(autoincrement())
+  projectId Int
+  project   Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name      String
+  amount    Float           @default(0)
+  dueDate   DateTime?
+  status    MilestoneStatus @default(pending)
+  createdAt DateTime        @default(now())
+
+  @@map("project_milestones")
+}
+
+model TaskAssignment {
+  id             Int          @id @default(autoincrement())
+  projectId      Int?
+  project        Project?     @relation(fields: [projectId], references: [id])
+  projectName    String?
+  assigneeUserId Int?
+  assigneeUser   User?        @relation("TaskAssignee", fields: [assigneeUserId], references: [id])
+  assignerUserId Int?
+  assignerUser   User?        @relation("TaskAssigner", fields: [assignerUserId], references: [id])
+  task           String
+  priority       TaskPriority @default(medium)
+  startDate      DateTime?
+  dueDate        DateTime?
+  status         TaskStatus   @default(todo)
+  description    String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@map("task_assignments")
+}
+
+model Conversation {
+  id           Int                       @id @default(autoincrement())
+  scopeType    String                    @default("project")
+  scopeId      Int?
+  title        String?
+  createdAt    DateTime                  @default(now())
+
+  participants ConversationParticipant[]
+  messages     Message[]
+
+  @@map("conversations")
+}
+
+model ConversationParticipant {
+  id             Int          @id @default(autoincrement())
+  conversationId Int
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         Int
+  roleInThread   String?
+  lastReadAt     DateTime?
+
+  @@map("conversation_participants")
+}
+
+model Message {
+  id             Int          @id @default(autoincrement())
+  conversationId Int
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderUserId   Int
+  senderUser     User         @relation(fields: [senderUserId], references: [id])
+  kind           String       @default("text")
+  body           String?
+  attachments    Json?
+  voiceDuration  Int?
+  repliedToId    Int?
+  readBy         Json?
+  createdAt      DateTime     @default(now())
+
+  @@map("messages")
+}
+
+model File {
+  id          Int      @id @default(autoincrement())
+  ownerUserId Int?
+  name        String
+  url         String
+  mimeType    String?
+  sizeBytes   BigInt?
+  createdAt   DateTime @default(now())
+
+  @@map("files")
+}
+
+model Transaction {
+  id           Int          @id @default(autoincrement())
+  code         String?
+  refType      TxnRefType   @default(general)
+  refId        Int?
+  projectId    Int?
+  project      Project?     @relation(fields: [projectId], references: [id])
+  direction    TxnDirection @default(credit)
+  amount       Float
+  mode         String       @default("Cash")
+  txnId        String?
+  paidByUserId Int?
+  paidToUserId Int?
+  paidByName   String?
+  status       String       @default("Paid")
+  date         DateTime     @default(now())
+  notes        String?
+
+  @@map("transactions")
+}
+
+model Expense {
+  id            Int              @id @default(autoincrement())
+  categoryId    Int?
+  subCategoryId Int?
+  category      ExpenseCategory? @relation(fields: [categoryId], references: [id])
+  amount        Float
+  paidTo        String?
+  method        String?
+  txnId         String?
+  date          DateTime         @default(now())
+  description   String?
+
+  @@map("expenses")
+}
+
+model ExpenseCategory {
+  id            Int                  @id @default(autoincrement())
+  name          String
+  expenses      Expense[]
+  subCategories ExpenseSubCategory[]
+
+  @@map("expense_categories")
+}
+
+model ExpenseSubCategory {
+  id         Int             @id @default(autoincrement())
+  categoryId Int
+  category   ExpenseCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name       String
+
+  @@map("expense_sub_categories")
+}
+
+model AcademyCourse {
+  id          Int                 @id @default(autoincrement())
+  code        String?
+  name        String
+  duration    String
+  fee         Float
+  status      String              @default("Available")
+
+  subjects    AcademySubject[]
+  enrollments AcademyEnrollment[]
+
+  @@map("academy_courses")
+}
+
+model AcademySubject {
+  id        Int            @id @default(autoincrement())
+  courseId  Int
+  course    AcademyCourse  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  name      String
+  status    String         @default("Active")
+
+  topics    AcademyTopic[]
+
+  @@map("academy_subjects")
+}
+
+model AcademyTopic {
+  id        Int            @id @default(autoincrement())
+  subjectId Int
+  subject   AcademySubject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  name      String
+  order     Int            @default(1)
+  status    String         @default("Active")
+
+  @@map("academy_topics")
+}
+
+model AcademyEnrollment {
+  id            Int                  @id @default(autoincrement())
+  traineeUserId Int
+  traineeUser   User                 @relation(fields: [traineeUserId], references: [id])
+  courseId      Int
+  course        AcademyCourse        @relation(fields: [courseId], references: [id])
+  startDate     DateTime             @default(now())
+  feePaid       Float                @default(0)
+  feeDue        Float                @default(0)
+  status        String               @default("Active")
+
+  miniProjects  AcademyMiniProject[]
+
+  @@map("academy_enrollments")
+}
+
+model AcademyMiniProject {
+  id           Int               @id @default(autoincrement())
+  enrollmentId Int
+  enrollment   AcademyEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  name         String
+  description  String?
+  status       String            @default("In Progress")
+  submittedAt  DateTime?
+
+  @@map("academy_mini_projects")
+}
+
+model CandidateProfile {
+  id                 Int              @id @default(autoincrement())
+  candidateId        String           @unique
+  userId             Int              @unique
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  preferredRole      String?
+  preferredLocation  String?
+  careerObjective    String?
+  profileCompletion  Int              @default(0)
+  readinessScore     Float            @default(0)
+
+  applications       JobApplication[]
+
+  @@map("candidate_profiles")
+}
+
+model JobOpening {
+  id           Int              @id @default(autoincrement())
+  companyName  String
+  title        String
+  roleType     String?
+  experience   String?
+  location     String?
+  salary       String?
+  openings     Int              @default(1)
+  status       String           @default("Active")
+
+  applications JobApplication[]
+
+  @@map("job_openings")
+}
+
+model JobApplication {
+  id                 Int              @id @default(autoincrement())
+  candidateProfileId Int
+  candidateProfile   CandidateProfile @relation(fields: [candidateProfileId], references: [id], onDelete: Cascade)
+  jobOpeningId       Int
+  jobOpening         JobOpening       @relation(fields: [jobOpeningId], references: [id], onDelete: Cascade)
+  status             String           @default("Applied")
+  appliedAt          DateTime         @default(now())
+
+  @@map("job_applications")
+}
+
+model FreelancerProfile {
+  id                Int                     @id @default(autoincrement())
+  code              String                  @unique
+  userId            Int                     @unique
+  user              User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  designation       String?
+  skills            String?
+  hourlyRate        Float?
+  rating            Float                   @default(5.0)
+  availability      String                  @default("Available")
+  completedProjects Int                     @default(0)
+
+  timeEntries       FreelancerTimeEntry[]
+  deliverables      FreelancerDeliverable[]
+
+  @@map("freelancer_profiles")
+}
+
+model FreelancerTimeEntry {
+  id                  Int               @id @default(autoincrement())
+  freelancerProfileId Int
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
+  projectId           Int?
+  taskDescription     String
+  hours               Float
+  date                DateTime          @default(now())
+  status              String            @default("Approved")
+
+  @@map("freelancer_time_entries")
+}
+
+model FreelancerDeliverable {
+  id                  Int               @id @default(autoincrement())
+  freelancerProfileId Int
+  freelancerProfile   FreelancerProfile @relation(fields: [freelancerProfileId], references: [id], onDelete: Cascade)
+  projectId           Int?
+  title               String
+  version             String            @default("v1.0")
+  status              String            @default("Submitted")
+  submittedAt         DateTime          @default(now())
+
+  @@map("freelancer_deliverables")
+}
+
+model InfluencerProfile {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique
+  userId             Int                @unique
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  handle             String?
+  platform           String?
+  followerCount      Int                @default(0)
+  verificationStatus String             @default("Pending")
+  tier               String             @default("Silver")
+  points             Int                @default(0)
+  approvedRevenue    Float              @default(0)
+  disbursableBalance Float              @default(0)
+
+  leads              InfluencerLead[]
+  payouts            InfluencerPayout[]
+
+  @@map("influencer_profiles")
+}
+
+model InfluencerCampaign {
+  id        Int              @id @default(autoincrement())
+  title     String
+  brand     String?
+  budget    Float            @default(0)
+  status    String           @default("Active")
+
+  leads     InfluencerLead[]
+
+  @@map("influencer_campaigns")
+}
+
+model InfluencerLead {
+  id                  Int                @id @default(autoincrement())
+  influencerProfileId Int
+  influencerProfile   InfluencerProfile  @relation(fields: [influencerProfileId], references: [id], onDelete: Cascade)
+  campaignId          Int?
+  campaign            InfluencerCampaign? @relation(fields: [campaignId], references: [id])
+  name                String
+  phone               String?
+  status              String             @default("New")
+  conversionAmount    Float              @default(0)
+  commissionEarned    Float              @default(0)
+  createdAt           DateTime           @default(now())
+
+  @@map("influencer_leads")
+}
+
+model InfluencerPayout {
+  id                  Int               @id @default(autoincrement())
+  influencerProfileId Int
+  influencerProfile   InfluencerProfile @relation(fields: [influencerProfileId], references: [id], onDelete: Cascade)
+  amount              Float
+  method              String            @default("Bank Transfer")
+  status              String            @default("Processing")
+  requestedAt         DateTime          @default(now())
+  paidAt              DateTime?
+
+  @@map("influencer_payouts")
+}
+
+model Attendance {
+  id        Int              @id @default(autoincrement())
+  userId    Int
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      DateTime         @default(now())
+  checkIn   String?
+  checkOut  String?
+  hours     String?
+  status    AttendanceStatus @default(Present)
+
+  @@map("attendance")
+}
+
+model DailyReport {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date        DateTime @default(now())
+  category    String?
+  subcategory String?
+  task        String
+  hours       Float    @default(8)
+  status      String   @default("Completed")
+  description String?
+  url         String?
+
+  @@map("daily_reports")
+}
+
+model MouDetail {
+  id            Int       @id @default(autoincrement())
+  collegeName   String
+  signingDate   DateTime?
+  expiryDate    DateTime?
+  status        String    @default("Active")
+  scope         String?
+  contactPerson String?
+  contactEmail  String?
+  contactPhone  String?
+
+  @@map("mou_details")
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  title     String
+  message   String
+  type      String   @default("info")
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
+}
