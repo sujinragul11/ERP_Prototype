@@ -1,0 +1,10 @@
+====================================================
+🚀 RORIRI ERP Full-Stack Server Running
+📡 URL: http://localhost:8080
+📂 Serving Frontend from: D:\ERP_Prototype\frontend
+🗄️  Database: PostgreSQL (roriri_erp_db)
+====================================================
+[0mGET /api/health [32m200[0m 118.337 ms - 124[0m
+[0mPOST /api/auth/login [32m200[0m 855.155 ms - 1623[0m
+[0mGET /config.js [32m200[0m 9.800 ms - 362[0m
+[0mGET / [32m200[0m 4.172 ms - 6513[0m
